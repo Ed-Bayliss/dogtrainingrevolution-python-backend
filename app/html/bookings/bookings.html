@@ -1,0 +1,1075 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<div id="calendar"></div>
+
+<div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="eventTitle" class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="eventDetails"></p>
+
+                <!-- Form Fields Start -->
+                <form id="eventForm">
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">First Name:</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName"
+                            placeholder="Enter First Name">
+                    </div>
+                    <!-- Additional fields here -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <!-- Form Fields End -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<style>
+    *,
+    *:before,
+    *:after {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    body {
+        overflow: hidden;
+        font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight",
+            "Helvetica Neue", Arial, Helvetica, sans-serif;
+        font-weight: 100;
+        color: #ececec;
+        margin: 0;
+        padding: 10px;
+        background: #1d1e22;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    #calendar {
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    #calendarForm {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        position: absolute;
+        left: calc(50% - 420px);
+        margin-left: -30px;
+        background-color: #15161b;
+    }
+
+    .header {
+        height: 50px;
+        width: 100%;
+        background: rgb(54, 56, 63);
+        text-align: center;
+        position: relative;
+        z-index: 100;
+    }
+
+    .header h1 {
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        line-height: 50px;
+        font-weight: 100;
+        letter-spacing: 1px;
+    }
+
+    .left,
+    .right {
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        border-style: solid;
+        top: 50%;
+        margin-top: -7.5px;
+        cursor: pointer;
+    }
+
+    .left {
+        border-width: 7.5px 10px 7.5px 0;
+        border-color: transparent rgb(255, 221, 64) transparent transparent;
+        left: 20px;
+    }
+
+    .right {
+        border-width: 7.5px 0 7.5px 10px;
+        border-color: transparent transparent transparent rgb(255, 221, 64);
+        right: 20px;
+    }
+
+    .month {
+        /*overflow: hidden;*/
+        opacity: 0;
+        margin-top: 30px;
+    }
+
+    .month.new {
+        -webkit-animation: fadeIn 1s ease-out;
+        opacity: 1;
+    }
+
+    .month.in.next {
+        -webkit-animation: moveFromTopFadeMonth 0.4s ease-out;
+        -moz-animation: moveFromTopFadeMonth 0.4s ease-out;
+        animation: moveFromTopFadeMonth 0.4s ease-out;
+        opacity: 1;
+    }
+
+    .month.out.next {
+        -webkit-animation: moveToTopFadeMonth 0.4s ease-in;
+        -moz-animation: moveToTopFadeMonth 0.4s ease-in;
+        animation: moveToTopFadeMonth 0.4s ease-in;
+        opacity: 1;
+    }
+
+    .month.in.prev {
+        -webkit-animation: moveFromBottomFadeMonth 0.4s ease-out;
+        -moz-animation: moveFromBottomFadeMonth 0.4s ease-out;
+        animation: moveFromBottomFadeMonth 0.4s ease-out;
+        opacity: 1;
+    }
+
+    .month.out.prev {
+        -webkit-animation: moveToBottomFadeMonth 0.4s ease-in;
+        -moz-animation: moveToBottomFadeMonth 0.4s ease-in;
+        animation: moveToBottomFadeMonth 0.4s ease-in;
+        opacity: 1;
+    }
+
+    .week {
+        background: #15161b;
+    }
+
+    .day {
+        display: inline-block;
+        width: 14.2%;
+        height: 14.2%;
+        padding: 10px;
+        text-align: center;
+        vertical-align: top;
+        cursor: pointer;
+        background: #15161b;
+        position: relative;
+        z-index: 100;
+    }
+
+    .day.other {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    .day.today {
+        color: rgb(255, 221, 64);
+    }
+
+    .day-name {
+        font-size: 9px;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.7px;
+    }
+
+    .day-number {
+        font-size: 24px;
+        letter-spacing: 1.5px;
+    }
+
+    .day .day-events {
+        list-style: none;
+        margin-top: 3px;
+        text-align: center;
+        f height: 100px;
+        line-height: 100px;
+        overflow: hidden;
+    }
+
+    .day .day-events span {
+        vertical-align: top;
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+        width: 5px;
+        height: 5px;
+        line-height: 5px;
+        margin: 0 1px;
+    }
+
+    .blue {
+        background: rgba(156, 202, 235, 1);
+    }
+
+    .orange {
+        background: rgba(247, 167, 0, 1);
+    }
+
+    .green {
+        background: rgba(153, 198, 109, 1);
+    }
+
+    .yellow {
+        background: rgba(249, 233, 0, 1);
+    }
+
+    .red {
+        background: rgba(255, 0, 0, 1);
+    }
+
+    .details {
+        position: relative;
+        width: 100%;
+        height: 20.0%;
+        background: rgb(54, 56, 63);
+        margin-top: 5px;
+        /*-border-radius: 4px;-*/
+    }
+
+    .details.in {
+        height: 20.0%;
+        -webkit-animation: moveFromTopFade 0.5s ease both;
+        -moz-animation: moveFromTopFade 0.5s ease both;
+        animation: moveFromTopFade 0.5s ease both;
+    }
+
+    .details.out {
+        -webkit-animation: moveToTopFade 0.5s ease both;
+        -moz-animation: moveToTopFade 0.5s ease both;
+        animation: moveToTopFade 0.5s ease both;
+    }
+
+    .arrow {
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        margin-left: -2px;
+        width: 0px;
+        height: 0px;
+        border-style: solid;
+        border-width: 0 5px 5px 5px;
+        border-color: transparent transparent rgb(54, 56, 63) transparent;
+        transition: all 0.7s ease;
+    }
+
+    .events {
+        height: 100.0%;
+        padding: 7px 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .events.in {
+        -webkit-animation: fadeIn 0.3s ease both;
+        -moz-animation: fadeIn 0.3s ease both;
+        animation: fadeIn 0.3s ease both;
+    }
+
+    .events.in {
+        -webkit-animation-delay: 0.3s;
+        -moz-animation-delay: 0.3s;
+        animation-delay: 0.3s;
+    }
+
+    .details.out .events {
+        -webkit-animation: fadeOutShrink 0.4s ease both;
+        -moz-animation: fadeOutShink 0.4s ease both;
+        animation: fadeOutShink 0.4s ease both;
+    }
+
+    .events.out {
+        -webkit-animation: fadeOut 0.3s ease both;
+        -moz-animation: fadeOut 0.3s ease both;
+        animation: fadeOut 0.3s ease both;
+    }
+
+    .event {
+        font-size: 16px;
+        line-height: 1.5;
+        width: 100%;
+        letter-spacing: 0.5px;
+        padding: 8px 16px;
+        /* Increase padding for button-like look */
+        vertical-align: top;
+        background-color: #007bff;
+        /* Button background color */
+        color: white;
+        /* Text color */
+        border: none;
+        /* Remove any borders */
+        border-radius: 4px;
+        /* Rounded corners */
+        cursor: pointer;
+        /* Pointer cursor for interactivity */
+        display: inline-block;
+        /* Align like a button */
+        text-align: center;
+        /* Center text */
+        text-transform: uppercase;
+        /* Optional: Make text uppercase */
+        transition: background-color 0.3s ease;
+        /* Smooth hover transition */
+    }
+
+    /* Add a hover effect for better interactivity */
+    .event:hover {
+        background-color: #0056b3;
+        /* Darker blue on hover */
+    }
+
+
+    .event.empty {
+        color: #eee;
+    }
+
+    .event-category {
+        height: 10px;
+        width: 10px;
+        display: inline-block;
+        margin: 6px 0 0;
+        vertical-align: top;
+    }
+
+    .event span {
+        display: inline-block;
+        padding: 0 0 0 7px;
+    }
+
+    .legend {
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        height: 30px;
+        background: rgb(42, 44, 53);
+        line-height: 30px;
+    }
+
+    .entry {
+        position: relative;
+        padding: 0 0 0 25px;
+        font-size: 13px;
+        display: inline-block;
+        line-height: 30px;
+        background: transparent;
+    }
+
+    .entry:after {
+        position: absolute;
+        content: "";
+        height: 5px;
+        width: 5px;
+        top: 12px;
+        left: 14px;
+    }
+
+    .entry.blue:after {
+        background: rgba(156, 202, 235, 1);
+    }
+
+    .entry.orange:after {
+        background: rgba(247, 167, 0, 1);
+    }
+
+    .entry.green:after {
+        background: rgba(153, 198, 109, 1);
+    }
+
+    .entry.yellow:after {
+        background: rgba(249, 233, 0, 1);
+    }
+
+    .entry.red:after {
+        background: rgba(255, 0, 0, 1);
+    }
+
+    /* Animations are cool!  */
+    @-webkit-keyframes moveFromTopFade {
+        from {
+            opacity: 0.3;
+            height: 0px;
+            margin-top: 0px;
+            -webkit-transform: translateY(-100%);
+        }
+    }
+
+    @-moz-keyframes moveFromTopFade {
+        from {
+            height: 0px;
+            margin-top: 0px;
+            -moz-transform: translateY(-100%);
+        }
+    }
+
+    @keyframes moveFromTopFade {
+        from {
+            height: 0px;
+            margin-top: 0px;
+            transform: translateY(-100%);
+        }
+    }
+
+    @-webkit-keyframes moveToTopFade {
+        to {
+            opacity: 0.3;
+            height: 0px;
+            margin-top: 0px;
+            opacity: 0.3;
+            -webkit-transform: translateY(-100%);
+        }
+    }
+
+    @-moz-keyframes moveToTopFade {
+        to {
+            height: 0px;
+            -moz-transform: translateY(-100%);
+        }
+    }
+
+    @keyframes moveToTopFade {
+        to {
+            height: 0px;
+            transform: translateY(-100%);
+        }
+    }
+
+    @-webkit-keyframes moveToTopFadeMonth {
+        to {
+            opacity: 0;
+            -webkit-transform: translateY(-30%) scale(0.95);
+        }
+    }
+
+    @-moz-keyframes moveToTopFadeMonth {
+        to {
+            opacity: 0;
+            -moz-transform: translateY(-30%);
+        }
+    }
+
+    @keyframes moveToTopFadeMonth {
+        to {
+            opacity: 0;
+            -moz-transform: translateY(-30%);
+        }
+    }
+
+    @-webkit-keyframes moveFromTopFadeMonth {
+        from {
+            opacity: 0;
+            -webkit-transform: translateY(30%) scale(0.95);
+        }
+    }
+
+    @-moz-keyframes moveFromTopFadeMonth {
+        from {
+            opacity: 0;
+            -moz-transform: translateY(30%);
+        }
+    }
+
+    @keyframes moveFromTopFadeMonth {
+        from {
+            opacity: 0;
+            -moz-transform: translateY(30%);
+        }
+    }
+
+    @-webkit-keyframes moveToBottomFadeMonth {
+        to {
+            opacity: 0;
+            -webkit-transform: translateY(30%) scale(0.95);
+        }
+    }
+
+    @-moz-keyframes moveToBottomFadeMonth {
+        to {
+            opacity: 0;
+            -webkit-transform: translateY(30%);
+        }
+    }
+
+    @keyframes moveToBottomFadeMonth {
+        to {
+            opacity: 0;
+            -webkit-transform: translateY(30%);
+        }
+    }
+
+    @-webkit-keyframes moveFromBottomFadeMonth {
+        from {
+            opacity: 0;
+            -webkit-transform: translateY(-30%) scale(0.95);
+        }
+    }
+
+    @-moz-keyframes moveFromBottomFadeMonth {
+        from {
+            opacity: 0;
+            -webkit-transform: translateY(-30%);
+        }
+    }
+
+    @keyframes moveFromBottomFadeMonth {
+        from {
+            opacity: 0;
+            -webkit-transform: translateY(-30%);
+        }
+    }
+
+    @-webkit-keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+    }
+
+    @-moz-keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+    }
+
+    @-webkit-keyframes fadeOut {
+        to {
+            opacity: 0;
+        }
+    }
+
+    @-moz-keyframes fadeOut {
+        to {
+            opacity: 0;
+        }
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+        }
+    }
+
+    @-webkit-keyframes fadeOutShink {
+        to {
+            opacity: 0;
+            padding: 0px;
+            height: 0px;
+        }
+    }
+
+    @-moz-keyframes fadeOutShink {
+        to {
+            opacity: 0;
+            padding: 0px;
+            height: 0px;
+        }
+    }
+
+    @keyframes fadeOutShink {
+        to {
+            opacity: 0;
+            padding: 0px;
+            height: 0px;
+        }
+    }
+
+
+    /* Modal styles */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black background with opacity */
+    }
+
+    .modal-content {
+        background-color: rgb(95, 91, 91);
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        /* Can adjust to be smaller if needed */
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    !(function () {
+        var today = moment();
+
+        function Calendar(selector, events) {
+            this.el = document.querySelector(selector);
+            this.events = events;
+            this.current = moment().date(1);
+            this.draw();
+            var current = document.querySelector(".today");
+            if (current) {
+                var self = this;
+                window.setTimeout(function () {
+                    self.openDay(current);
+                }, 500);
+            }
+            this.drawLegend();
+        }
+
+        Calendar.prototype.draw = function () {
+            // Create Header
+            this.drawHeader();
+
+            // Draw Month
+            this.drawMonth();
+        };
+
+        Calendar.prototype.drawHeader = function () {
+            var self = this;
+            if (!this.header) {
+                // Create the header elements
+                this.header = createElement("div", "header");
+                this.header.className = "header";
+
+                this.title = createElement("h1");
+
+                var right = createElement("div", "right");
+                right.addEventListener("click", function () {
+                    self.nextMonth();
+                });
+
+                var left = createElement("div", "left");
+                left.addEventListener("click", function () {
+                    self.prevMonth();
+                });
+
+                // Append the Elements
+                this.header.appendChild(this.title);
+                this.header.appendChild(right);
+                this.header.appendChild(left);
+                this.el.appendChild(this.header);
+            }
+
+            this.title.innerHTML = this.current.format("MMMM YYYY");
+        };
+
+        Calendar.prototype.drawMonth = function () {
+            var self = this;
+
+            this.events.forEach(function (ev) {
+                ev.date = moment(ev.eventTime, "YYYY-MM-DD hh:mm:ss");
+            });
+
+            if (this.month) {
+                this.oldMonth = this.month;
+                this.oldMonth.className = "month out " + (self.next ? "next" : "prev");
+                this.oldMonth.addEventListener("webkitAnimationEnd", function () {
+                    self.oldMonth.parentNode.removeChild(self.oldMonth);
+                    self.month = createElement("div", "month");
+                    self.backFill();
+                    self.currentMonth();
+                    self.fowardFill();
+                    self.el.appendChild(self.month);
+                    window.setTimeout(function () {
+                        self.month.className = "month in " + (self.next ? "next" : "prev");
+                    }, 16);
+                });
+            } else {
+                this.month = createElement("div", "month");
+                this.el.appendChild(this.month);
+                this.backFill();
+                this.currentMonth();
+                this.fowardFill();
+                this.month.className = "month new";
+            }
+        };
+
+        Calendar.prototype.backFill = function () {
+            var clone = this.current.clone();
+            var dayOfWeek = clone.isoWeekday(); // Change to isoWeekday()
+
+            if (dayOfWeek === 1) {
+                return;
+            }
+
+            clone.subtract(dayOfWeek, "days");
+
+            for (var i = dayOfWeek; i > 1; i--) {
+                this.drawDay(clone.add(1, "days"));
+            }
+        };
+
+        Calendar.prototype.fowardFill = function () {
+            var clone = this.current.clone().add(1, "months").subtract(1, "days");
+            var dayOfWeek = clone.isoWeekday(); // Change to isoWeekday()
+
+            if (dayOfWeek === 7) {
+                return;
+            }
+
+            for (var i = dayOfWeek; i < 7; i++) {
+                this.drawDay(clone.add(1, "days"));
+            }
+        };
+
+        Calendar.prototype.currentMonth = function () {
+            var clone = this.current.clone();
+
+            while (clone.month() === this.current.month()) {
+                this.drawDay(clone);
+                clone.add(1, "days");
+            }
+        };
+
+        Calendar.prototype.getWeek = function (day) {
+            if (!this.week || day.isoWeekday() === 1) { // Change to isoWeekday()
+                this.week = createElement("div", "week");
+                this.month.appendChild(this.week);
+            }
+        };
+
+        Calendar.prototype.drawDay = function (day) {
+            var self = this;
+            this.getWeek(day);
+
+            // Outer Day
+            var outer = createElement("div", this.getDayClass(day));
+            outer.addEventListener("click", function () {
+                self.openDay(this);
+            });
+
+            // Day Name
+            var name = createElement("div", "day-name", day.format("ddd"));
+
+            // Day Number
+            var number = createElement("div", "day-number", day.format("DD"));
+
+            // Events
+            var events = createElement("div", "day-events");
+            this.drawEvents(day, events);
+
+            outer.appendChild(name);
+            outer.appendChild(number);
+            outer.appendChild(events);
+            this.week.appendChild(outer);
+        };
+
+        Calendar.prototype.drawEvents = function (day, element) {
+            if (day.month() === this.current.month()) {
+                var todaysEvents = this.events.reduce(function (memo, ev) {
+                    if (ev.date.isSame(day, "day")) {
+                        memo.push(ev);
+                    }
+                    return memo;
+                }, []);
+
+                todaysEvents.forEach(function (ev) {
+                    var evSpan = createElement("span", ev.color);
+                    element.appendChild(evSpan);
+                    evSpan.style.cursor = "pointer"; // Make the span look clickable
+
+                    // Add click event listener to open the modal
+                    evSpan.addEventListener("click", function () {
+                        openModal(ev);
+                    });
+
+                    element.appendChild(evSpan);
+                });
+            }
+        };
+
+        Calendar.prototype.getDayClass = function (day) {
+            var classes = ["day"];
+            if (day.month() !== this.current.month()) {
+                classes.push("other");
+            } else if (today.isSame(day, "day")) {
+                classes.push("today");
+            }
+            return classes.join(" ");
+        };
+
+        Calendar.prototype.openDay = function (el) {
+            var details, arrow;
+            var dayNumber =
+                +el.querySelectorAll(".day-number")[0].innerText ||
+                +el.querySelectorAll(".day-number")[0].textContent;
+            var day = this.current.clone().date(dayNumber);
+
+            var currentOpened = document.querySelector(".details");
+
+            if (currentOpened && currentOpened.parentNode === el.parentNode) {
+                details = currentOpened;
+                arrow = document.querySelector(".arrow");
+            } else {
+                if (currentOpened) {
+                    currentOpened.addEventListener("webkitAnimationEnd", function () {
+                        currentOpened.parentNode.removeChild(currentOpened);
+                    });
+                    currentOpened.addEventListener("oanimationend", function () {
+                        currentOpened.parentNode.removeChild(currentOpened);
+                    });
+                    currentOpened.addEventListener("msAnimationEnd", function () {
+                        currentOpened.parentNode.removeChild(currentOpened);
+                    });
+                    currentOpened.addEventListener("animationend", function () {
+                        currentOpened.parentNode.removeChild(currentOpened);
+                    });
+                    currentOpened.className = "details out";
+                }
+
+                details = createElement("div", "details in");
+
+                var arrow = createElement("div", "arrow");
+
+                details.appendChild(arrow);
+                el.parentNode.appendChild(details);
+            }
+
+            var todaysEvents = this.events.reduce(function (memo, ev) {
+                if (ev.date.isSame(day, "day")) {
+                    memo.push(ev);
+                }
+                return memo;
+            }, []);
+
+            this.renderEvents(todaysEvents, details);
+
+            arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + 27 + "px";
+        };
+
+        Calendar.prototype.renderEvents = function (events, ele) {
+            var currentWrapper = ele.querySelector(".events");
+            var wrapper = createElement(
+                "div",
+                "events in" + (currentWrapper ? " new" : "")
+            );
+
+            events.forEach(function (ev) {
+                var div = createElement("div", "event");
+                var square = createElement("div", "event-category " + ev.color);
+                var span = createElement("span", "", ev.eventName);
+
+                span.style.cursor = "pointer"; // Make the span look clickable
+                span.addEventListener("click", function () {
+                    openModal(ev); // Pass the event details to openModal function
+                });
+
+                div.appendChild(square);
+                div.appendChild(span);
+                wrapper.appendChild(div);
+            });
+
+            if (!events.length) {
+                var div = createElement("div", "event empty");
+                var span = createElement("span", "", "No Training Sessions");
+
+                div.appendChild(span);
+                wrapper.appendChild(div);
+            }
+
+            if (currentWrapper) {
+                currentWrapper.className = "events out";
+                currentWrapper.addEventListener("webkitAnimationEnd", function () {
+                    currentWrapper.parentNode.removeChild(currentWrapper);
+                    ele.appendChild(wrapper);
+                });
+                currentWrapper.addEventListener("oanimationend", function () {
+                    currentWrapper.parentNode.removeChild(currentWrapper);
+                    ele.appendChild(wrapper);
+                });
+                currentWrapper.addEventListener("msAnimationEnd", function () {
+                    currentWrapper.parentNode.removeChild(currentWrapper);
+                    ele.appendChild(wrapper);
+                });
+                currentWrapper.addEventListener("animationend", function () {
+                    currentWrapper.parentNode.removeChild(currentWrapper);
+                    ele.appendChild(wrapper);
+                });
+            } else {
+                ele.appendChild(wrapper);
+            }
+        };
+
+        Calendar.prototype.drawLegend = function () {
+            var legend = createElement("div", "legend");
+            var calendars = this.events
+                .map(function (e) {
+                    return e.calendar + "|" + e.color;
+                })
+                .reduce(function (memo, e) {
+                    if (memo.indexOf(e) === -1) {
+                        memo.push(e);
+                    }
+                    return memo;
+                }, [])
+                .forEach(function (e) {
+                    var parts = e.split("|");
+                    var entry = createElement("span", "entry " + parts[1], parts[0]);
+                    legend.appendChild(entry);
+                });
+            this.el.appendChild(legend);
+        };
+
+        Calendar.prototype.nextMonth = function () {
+            this.current.add(1, "months");
+            this.next = true;
+            this.draw();
+        };
+
+        Calendar.prototype.prevMonth = function () {
+            this.current.subtract(1, "months");
+            this.next = false;
+            this.draw();
+        };
+
+        window.Calendar = Calendar;
+
+        function createElement(tagName, className, innerText) {
+            var ele = document.createElement(tagName);
+            if (className) {
+                ele.className = className;
+            }
+            if (innerText) {
+                ele.innderText = ele.textContent = innerText;
+            }
+            return ele;
+        }
+    })();
+
+
+    !(function () {
+
+        // Function to fetch data from an API
+        function fetchData() {
+            return fetch('http://localhost:5000/bookings/data') // Replace with your API endpoint
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json(); // Parse the JSON data from the response
+                })
+                .then(data => {
+                    // Assuming 'data' is an array of event objects from your API
+                    return data;
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+
+        // Fetch data and initialize the calendar
+        fetchData().then(data => {
+            if (data) {
+                var calendar = new Calendar("#calendar", data); // Pass the fetched data to the calendar
+            } else {
+                console.error("No data returned from the API");
+            }
+        });
+
+
+        function addDate(ev) { }
+
+
+        var calendar = new Calendar("#calendar", data);
+    })();
+
+    document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("eventModal").style.display = "none";
+    });
+
+    // Close the modal if user clicks anywhere outside of the modal
+    window.addEventListener("click", function (event) {
+        var modal = document.getElementById("eventModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    function openModal(event) {
+        var modalElement = document.getElementById("eventModal");
+
+        // Populate modal with event data
+        var eventTitle = document.getElementById("eventTitle");
+        var eventDetails = document.getElementById("eventDetails");
+
+        eventTitle.innerText = event.eventName;
+        eventDetails.innerText = "Date: " + event.date.format("YYYY-MM-DD HH:mm:ss");
+
+        // Use Bootstrap Modal API to show the modal
+        var modal = new bootstrap.Modal(modalElement);
+        modal.show();
+    }
+
+    function closeModal() {
+        var modalElement = document.getElementById("eventModal");
+
+        // Use Bootstrap Modal API to hide the modal
+        var modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) {
+            modal.hide();
+        }
+    }
+
+    // Optional: Automatically hide the modal when clicking outside of it
+    window.addEventListener("click", function (event) {
+        var modalElement = document.getElementById("eventModal");
+        var modal = bootstrap.Modal.getInstance(modalElement);
+
+        if (event.target === modalElement && modal) {
+            modal.hide();
+        }
+    });
+
+
+
+
+
+</script>

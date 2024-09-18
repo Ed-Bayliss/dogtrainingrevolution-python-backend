@@ -1,0 +1,41 @@
+FROM python:3.10.0 AS build
+
+WORKDIR /app
+
+COPY ./requirements-new.txt ./
+RUN pip install --no-cache-dir --upgrade pip setuptools && \
+    pip install --no-cache-dir -r ./requirements-new.txt
+
+FROM python:3.10.0-slim-buster AS production
+
+# create the app user, should always use non root user in prod
+RUN addgroup --system app && adduser --system --group app
+
+WORKDIR /home
+
+# Install wkhtmltopdf
+RUN apt-get update && apt-get install -y wkhtmltopdf
+
+# Copy generated site-packages and other resources:
+COPY --from=build /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
+COPY --from=build /usr/local/bin/gunicorn /usr/local/bin/gunicorn
+COPY ./app ./app
+COPY ./server_logs ./server_logs
+COPY wsgi.py ./
+COPY config.py ./
+COPY STAR.pawtul.com_key.txt ./
+COPY STAR.pawtul.com.crt ./
+ 
+
+# chown all the files to the app user
+RUN chown -R app:app /home
+RUN mkdir /home/persistance
+RUN chown -R app:app /home/persistance
+
+
+# change to the app user
+USER app
+
+ENTRYPOINT ["gunicorn", "wsgi:app", "--log-level", "debug", "-b", "0.0.0.0:9192", "--keyfile", "/home/STAR.pawtul.com_key.txt", "--certfile", "/home/STAR.pawtul.com.crt" , "--workers", "4", "--threads", "16", "--access-logfile", "/home/server_logs/access.log", "--error-logfile", "/home/server_logs/error.log"]
+
+EXPOSE 9192
