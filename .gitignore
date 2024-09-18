@@ -1,0 +1,184 @@
+# Created by https://www.toptal.com/developers/gitignore/api/macos,venv,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,venv,windows
+
+### macOS ###
+# General
+venv*
+.DS_Store
+.AppleDouble
+.LSOverride
+app/static/images/maps/*
+
+# Icon must end with two \r
+Icon
+.*pyc
+.pyc
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### macOS Patch ###
+# iCloud generated files
+*.icloud
+
+### venv ###
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# End of https://www.toptal.com/developers/gitignore/api/macos,venv,windows
+__pycache__/test.cpython-39.pyc
+app/blueprints/clients/__pycache__/clients_models.cpython-39.pyc
+app/blueprints/contacts/__pycache__/contacts_models.cpython-39.pyc
+app/blueprints/contacts_external/__pycache__/contact_external_blueprints.cpython-39.pyc
+app/blueprints/home/__pycache__/__init__.cpython-310.pyc
+app/blueprints/home/__pycache__/home_blueprints.cpython-310.pyc
+app/blueprints/home/__pycache__/home_models.cpython-39.pyc
+app/blueprints/home/__pycache__/home_models.cpython-310.pyc
+app/blueprints/invoices/__pycache__/invoices_models.cpython-39.pyc
+app/blueprints/login/__pycache__/__init__.cpython-310.pyc
+app/blueprints/login/__pycache__/login_blueprints.cpython-310.pyc
+app/blueprints/login/__pycache__/login_form.cpython-39.pyc
+app/blueprints/login/__pycache__/login_form.cpython-310.pyc
+app/blueprints/pets/__pycache__/pets_models.cpython-39.pyc
+app/blueprints/signup/__pycache__/__init__.cpython-310.pyc
+app/blueprints/signup/__pycache__/authentication_form.cpython-39.pyc
+app/blueprints/signup/__pycache__/signup_blueprints.cpython-310.pyc
+app/blueprints/signup/__pycache__/signup_form.cpython-39.pyc
+app/blueprints/signup/__pycache__/signup_form.cpython-310.pyc
+app/blueprints/signup/__pycache__/signup_models.cpython-39.pyc
+app/blueprints/signup/__pycache__/signup_models.cpython-310.pyc
+app/blueprints/vets/__pycache__/vets_models.cpython-39.pyc
+app/models/clients/__pycache__/clients_blueprints.cpython-39.pyc
+app/models/contacts/__pycache__/contacts_blueprints.cpython-39.pyc
+app/models/home/__pycache__/__init__.cpython-39.pyc
+app/models/home/__pycache__/__init__.cpython-310.pyc
+app/models/home/__pycache__/home_blueprints.cpython-39.pyc
+app/models/home/__pycache__/home_blueprints.cpython-310.pyc
+app/models/home/__pycache__/home_models.cpython-39.pyc
+app/models/home/__pycache__/home_models.cpython-310.pyc
+app/models/invoices/__pycache__/invoices_blueprints.cpython-39.pyc
+app/models/login/__pycache__/__init__.cpython-39.pyc
+app/models/login/__pycache__/__init__.cpython-310.pyc
+app/models/login/__pycache__/login_blueprints.cpython-39.pyc
+app/models/login/__pycache__/login_blueprints.cpython-310.pyc
+app/models/login/__pycache__/login_form.cpython-39.pyc
+app/models/login/__pycache__/login_form.cpython-310.pyc
+app/models/pets/__pycache__/pets_blueprints.cpython-39.pyc
+app/models/reset/__pycache__/reset_form.cpython-39.pyc
+app/models/signup/__pycache__/__init__.cpython-310.pyc
+app/models/signup/__pycache__/authentication_form.cpython-39.pyc
+app/models/signup/__pycache__/signup_blueprints.cpython-39.pyc
+app/models/signup/__pycache__/signup_blueprints.cpython-310.pyc
+app/models/signup/__pycache__/signup_form.cpython-39.pyc
+app/models/signup/__pycache__/signup_form.cpython-310.pyc
+app/models/signup/__pycache__/signup_models.cpython-310.pyc
+app/structs/__pycache__/free_limit.cpython-39.pyc
+<<<<<<< HEAD
+app/structs/__pycache__/stripe.cpython-39.pyc
+<<<<<<< HEAD
+=======
+__pycache__/wsgi.cpython-39.pyc
+app/__pycache__/__init__.cpython-39.pyc
+>>>>>>> dev
+__pycache__/config.cpython-39.pyc
+__pycache__/wsgi.cpython-39.pyc
+app/__pycache__/__init__.cpython-39.pyc
+app/blueprints/bookings/__pycache__/bookings_blueprints.cpython-39.pyc
+app/blueprints/clients/__pycache__/__init__.cpython-39.pyc
+app/blueprints/clients/__pycache__/clients_blueprints.cpython-39.pyc
+app/blueprints/clients_external/__pycache__/clients_external_blueprints.cpython-39.pyc
+app/blueprints/contacts/__pycache__/__init__.cpython-39.pyc
+app/blueprints/contacts/__pycache__/contacts_blueprints.cpython-39.pyc
+app/blueprints/contacts_external/__pycache__/contacts_external_blueprints.cpython-39.pyc
+app/blueprints/external/__pycache__/external_blueprints.cpython-39.pyc
+app/blueprints/home/__pycache__/__init__.cpython-39.pyc
+app/blueprints/home/__pycache__/home_blueprints.cpython-39.pyc
+app/blueprints/login/__pycache__/__init__.cpython-39.pyc
+app/blueprints/login/__pycache__/login_blueprints.cpython-39.pyc
+app/blueprints/pets/__pycache__/__init__.cpython-39.pyc
+app/blueprints/pets/__pycache__/pets_blueprints.cpython-39.pyc
+app/blueprints/pets_external/__pycache__/pets_external_blueprints.cpython-39.pyc
+app/blueprints/reset/__pycache__/reset_blueprints.cpython-39.pyc
+app/blueprints/settings/__pycache__/settings_blueprints.cpython-39.pyc
+app/blueprints/signup/__pycache__/__init__.cpython-39.pyc
+app/blueprints/signup/__pycache__/signup_blueprints.cpython-39.pyc
+app/blueprints/vets/__pycache__/__init__.cpython-39.pyc
+app/blueprints/vets/__pycache__/vets_blueprints.cpython-39.pyc
+app/forms/login/__pycache__/login_form.cpython-39.pyc
+app/forms/reset/__pycache__/reset_form.cpython-39.pyc
+app/forms/signup/__pycache__/authentication_form.cpython-39.pyc
+app/forms/signup/__pycache__/signup_form.cpython-39.pyc
+app/models/business_accounts/__pycache__/business_accounts_models.cpython-39.pyc
+app/models/clients/__pycache__/__init__.cpython-39.pyc
+app/models/clients/__pycache__/clients_models.cpython-39.pyc
+app/models/contacts/__pycache__/__init__.cpython-39.pyc
+app/models/contacts/__pycache__/contacts_models.cpython-39.pyc
+app/models/pets/__pycache__/__init__.cpython-39.pyc
+app/models/pets/__pycache__/pets_models.cpython-39.pyc
+app/models/signup/__pycache__/__init__.cpython-39.pyc
+app/models/signup/__pycache__/signup_models.cpython-39.pyc
+app/structs/__pycache__/assets.cpython-39.pyc
+app/structs/__pycache__/outlook.cpython-39.pyc
+app/structs/__pycache__/restrictions.cpython-39.pyc
+app/structs/__pycache__/string2bool.cpython-39.pyc
+app/structs/__pycache__/stripe_api.cpython-39.pyc
+=======
+app/structs/__pycache__/stripe.cpython-39.pyc
+>>>>>>> main
+gunicorn-access.log
+gunicorn-error.log
+pawtul.com_private_key.key
+pawtul.com_ssl_certificate.cer
+
