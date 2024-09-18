@@ -315,9 +315,9 @@
         padding: 8px 16px;
         /* Increase padding for button-like look */
         vertical-align: top;
-        background-color: #007bff;
+        background-color: #6FFFC3;
         /* Button background color */
-        color: white;
+        color: black;
         /* Text color */
         border: none;
         /* Remove any borders */
@@ -337,13 +337,14 @@
 
     /* Add a hover effect for better interactivity */
     .event:hover {
-        background-color: #0056b3;
-        /* Darker blue on hover */
+        background-color: #9630D8;
+        color: black
+            /* Darker blue on hover */
     }
 
 
     .event.empty {
-        color: #eee;
+        color: black;
     }
 
     .event-category {
@@ -989,7 +990,7 @@
 
         // Function to fetch data from an API
         function fetchData() {
-            return fetch('http://localhost:5000/bookings/data') // Replace with your API endpoint
+            return fetch('/bookings/data') // Replace with your API endpoint
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
