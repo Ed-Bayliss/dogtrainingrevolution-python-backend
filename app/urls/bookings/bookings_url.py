@@ -1,3 +1,4 @@
+import uuid
 from flask import (
     Blueprint,
     current_app,
@@ -14,7 +15,8 @@ from flask_mail import Message
 from sqlalchemy import desc, text, func
 import pathlib
 
-from app.models.accounts.products.products_model import Booking, Product
+from app.models.products.products_model import Booking, Product
+from app.models.pets.pets_model import Pet
 
 
 # Blueprint Configuration
@@ -30,7 +32,32 @@ from app import db
 
 @bookings_url.route("/bookings", methods=["GET"])
 def root():
-   return render_template('bookings/bookings.html')
+   pets = Pet.query.filter_by(client_id=current_user.id).all()
+   print(pets)
+   return render_template('bookings/bookings.html',
+                          pets=pets)
+
+@login_required
+@bookings_url.route('/bookings/create', methods=["POST"])
+def booking_create():
+    pet = Pet.query.filter_by(id=str(request.json['pet'])).first()
+    event_datetime = datetime.strptime(request.json['eventDetails'].replace('Date: ',''), '%d-%m-%Y %H:%M:%S')
+    uid = str(uuid.uuid4())
+    record = Booking(
+        id=str(uid),
+        product_id=request.json['eventId'],
+        pet_id=str(pet.id),
+        client_id=str(current_user.id),
+        booking_date=event_datetime,
+        status=0)
+    record.client_id=str(current_user.id)
+    db.session.add(record)
+    db.session.commit()
+    booking = Booking.query.filter_by(id=str(uid)).first()
+    booking.client_id=current_user.id,
+    db.session.commit()
+    return jsonify({})
+
 
 @bookings_url.route('/bookings/data', methods=["GET"])
 def bookings():
@@ -113,13 +140,13 @@ def generate_event_with_booking_check(row, event_date):
 
     # Calculate available spaces by deducting the number of bookings from the total spaces
     available_spaces = row.spaces - existing_bookings if row.spaces is not None else "N/A"
-
     # Generate the event with the updated spaces
     return {
         "eventName": f"{event_date.strftime('%H:%M')} {row.title} ({available_spaces} Spaces)",
         "calendar": row.category,
         "color": row.colour,
-        "eventTime": event_time_str
+        "eventTime": event_time_str,
+        "productId": row.id,
     }
 
 # Helper functions for monthly and yearly increments

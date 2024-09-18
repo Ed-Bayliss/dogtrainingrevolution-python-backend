@@ -27,14 +27,15 @@ def create_app():
         from app.urls.root.root_url import root_url
         from app.urls.auth.auth_url import auth_url
         from app.urls.bookings.bookings_url import bookings_url
+        from app.urls.home.home_url import home_url
 
         app.register_blueprint(root_url)
         app.register_blueprint(auth_url)
         app.register_blueprint(bookings_url)
+        app.register_blueprint(home_url)
 
-        from app.models.clients.clients_model import Client
         from app.models.pets.pets_model import Pet
-        from app.models.accounts.products.products_model import Booking, Product
+        from app.models.products.products_model import Booking, Product
 
         # Create Database Models
         db.create_all()

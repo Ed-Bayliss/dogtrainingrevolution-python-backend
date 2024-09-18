@@ -27,220 +27,81 @@
                 <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
             </ul>
         </nav>
-
-        <div class="landing-pg-wrapper">
-            <div class="landing-pg-wrapper-inner">
-                <div class="spine">&nbsp;</div>
-
-                <div class="landing-pg-title">
-                    <h1>Dog Training Revolution</h1>
+        <div class="container my-5">
+            <h2 class="text-center mb-4">Client Information</h2>
+            <form>
+                <!-- Client Information -->
+                <div class="mb-3">
+                    <label for="clientName" class="form-label">Client Name</label>
+                    <input type="text" class="form-control" id="clientName" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="clientEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="clientEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="clientPhone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="clientPhone" placeholder="Enter your phone number"
+                        required>
                 </div>
 
-                <div class="landing-pg-subtitle">
-                    <h4>Modern Dog Training </h4>
+                <!-- Pet Information -->
+                <h2 class="text-center mt-5 mb-4">Pet Information</h2>
+                <div class="mb-3">
+                    <label for="petName" class="form-label">Pet Name</label>
+                    <input type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label for="petType" class="form-label">Pet Type</label>
+                    <select class="form-select" id="petType" required>
+                        <option value="dog">Dog</option>
+                        <option value="cat">Cat</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="petBreed" class="form-label">Pet Breed</label>
+                    <input type="text" class="form-control" id="petBreed" placeholder="Enter your pet's breed">
+                </div>
+                <div class="mb-3">
+                    <label for="petAge" class="form-label">Pet Age</label>
+                    <input type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
+                </div>
+
+                <!-- Booking Information -->
+                <h2 class="text-center mt-5 mb-4">Booking Information</h2>
+                <div class="mb-3">
+                    <label for="bookingDate" class="form-label">Preferred Booking Date</label>
+                    <input type="date" class="form-control" id="bookingDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bookingService" class="form-label">Select a Service</label>
+                    <select class="form-select" id="bookingService" required>
+                        <option value="puppyClass">Puppy Class</option>
+                        <option value="juniorClass">Junior Class</option>
+                        <option value="adultClass">Adult Class</option>
+                        <option value="privateSession">Private Session</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="additionalNotes" class="form-label">Additional Notes</label>
+                    <textarea class="form-control" id="additionalNotes" rows="4"
+                        placeholder="Add any extra information"></textarea>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit Booking</button>
+                </div>
+            </form>
         </div>
+
+
 
         <div class="pg-down">
             <a href="#about" class="pg-down-link"> <i class="fa-chevron-down fas circle-no"></i></a>
         </div>
 
     </header>
-
-    <!-- About section -->
-    <section class="about" id="about">
-        <div class="container">
-
-            <!-- <header class="section-header">
-            <h1>Who I am</h1>
-        </header> -->
-
-            <!-- Grid container -->
-            <div class="about-grid">
-                <div class="about-title">
-                    <h1>WHO ARE WE?</h1>
-                </div>
-                <h4>Modern Dog Training Specialists</h4>
-
-                <div class="profile-img">
-                    <img src="https://dogtrainingnow.com/wp-content/uploads/2017/01/Dog-Traing-Now-2_1.png"
-                        alt="Dog Training Specialist">
-                </div>
-
-                <div class="profile-text">
-                    <p>At [Your Company Name], we are passionate about transforming the relationship between dogs and
-                        their owners. With years of experience in modern, positive reinforcement training techniques, we
-                        focus on building trust, understanding, and a strong bond between you and your dog.</p>
-
-                    <p>Our expert trainers understand that every dog is unique, which is why we tailor our training
-                        programs to meet the individual needs of your canine companion. Whether you're dealing with
-                        basic obedience or more complex behavioral issues, we are here to help guide you through the
-                        process.</p>
-
-                    <p>We believe in creating a safe, stress-free environment for your dog to learn and thrive. Our
-                        methods are rooted in science and compassion, ensuring that your dog not only learns effectively
-                        but also enjoys the process. Join us and see how we can make a difference in your dog's life.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <!-- End of about section  -->
-
-    <!-- Services section -->
-    <section class="services" id="services">
-        <div class="container">
-            <header class="section-header">
-                <h1>Classess</h1>
-                <h4>What We Can Do for You</h4>
-            </header>
-
-            <div class="service-wrapper">
-                <div class="service">
-                    <div class="icon-container">
-                        <i class="fa fa-paw"></i>
-                    </div>
-                    <h3 class="service-title">Puppy Classes</h3>
-                    <p>Our Puppy Classes are designed to give your new furry friend the best start in life. We focus on
-                        essential skills such as socialization, basic commands, and leash training, all in a fun and
-                        supportive environment. Tailored for puppies aged 8-16 weeks, these classes will help build
-                        confidence and teach positive behaviors from an early age, ensuring a well-rounded and happy
-                        companion. Join us to set your puppy on the path to success with expert guidance and gentle,
-                        effective training methods.</p>
-
-                    <a href="#projects" class="btn">Book Now</a>
-                </div>
-
-                <div class="service">
-                    <div class="icon-container">
-                        <i class="fa fa-paw"></i>
-                    </div>
-                    <h3 class="service-title">Junior Class</h3>
-
-                    <p>Our Junior Classes are perfect for adolescent dogs aged 4-12 months who have completed basic
-                        training or are ready to continue their learning journey. These sessions focus on reinforcing
-                        foundational skills, improving impulse control, and addressing common teenage behaviors such as
-                        jumping, pulling on the leash, and recall issues. With fun, interactive exercises, your dog will
-                        build confidence and develop good manners, helping them transition smoothly into adulthood.
-                        Enroll today to help your dog stay on track with expert-led training designed for this critical
-                        stage of development.</p>
-
-                    <a href="/bookings" class="btn">Book Now</a>
-                </div>
-
-                <div class="service">
-                    <div class="icon-container">
-                        <i class="fa fa-code"></i>
-                    </div>
-                    <h3 class="service-title">Adult Class</h3>
-
-                    <p>Our Adult Dog Classes are tailored for dogs over 1 year old, whether they're starting training
-                        for the first time or brushing up on existing skills. These classes focus on reinforcing
-                        obedience, improving social skills, and addressing any lingering behavioral issues such as leash
-                        pulling or reactivity. Through positive reinforcement and engaging exercises, we help your dog
-                        become a well-mannered and confident companion. Join our adult classes to ensure a lifetime of
-                        good behavior and a strong bond between you and your dog.</p>
-
-                    <a href="#projects" class="btn">Book Now</a>
-                </div>
-                <div class="service">
-                    <div class="icon-container">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3 class="service-title">Private Sessions</h3>
-                    <p>Our 1-2-1 Training Sessions offer personalized, one-on-one coaching tailored specifically to your
-                        dog’s unique needs. Whether you're addressing specific behavioral challenges, working on
-                        advanced skills, or simply prefer a more private training environment, these sessions provide
-                        dedicated attention from our expert trainers. Perfect for dogs of all ages and experience
-                        levels, we’ll create a customized training plan to help you achieve your goals and strengthen
-                        the bond between you and your dog. Book a session today for focused, results-driven training
-                        that fits your schedule.</p>
-
-                    <a href="#projects" class="btn">Book Now</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-    <!-- End of portfolio section -->
-
-    <!-- Contact section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <header class="section-header">
-                <h1>Contact</h1>
-                <h4>Let's Work Together</h4>
-            </header>
-
-            <div class="contact-wrapper">
-                <div class="channel form-wrapper">
-                    <p class="contact-subtitle">Send an email </p>
-                    <form action="">
-                        <label for="name">Name:</label>
-                        <input type="text" name="name" id="name" placeholder="Enter your name..." required>
-
-                        <label for="email">Email:</label>
-                        <input type="email" name="email" id="email" placeholder="Enter your email..." required>
-
-                        <label for="service">Services:</label>
-                        <select name="services" id="service">
-                            <option value="web-design">Web Design</option>
-                            <option value="web-development">Web Development</option>
-                            <option value="web-design-and-development">Web Design/Development</option>
-                        </select>
-
-                        <label for="subject">Subject:</label>
-                        <textarea name="subject" id="subject" cols="10" rows="10"></textarea>
-
-                        <input class="btn-2" type="submit" value="Submit">
-                    </form>
-                </div>
-
-                <div class="channel location-wrapper">
-                    <p class="contact-subtitle">Pop in</p>
-                    <p>
-                        ABC Building <br>
-                        Rm. 123<br>
-                        Some street, <br>
-                        Nairobi
-                    </p>
-                </div>
-
-                <div class="channel phone-wrapper">
-                    <p class="contact-subtitle">Call me</p>
-                    <p><i class="fas fa-mobile fa-2x"></i> <span class="icon-text">0720 000 000</span></p>
-                </div>
-
-                <div class="channel social-wrapper">
-                    <p class="contact-subtitle">Social</p>
-
-                    <ul class="social-media">
-                        <li class="social-media-item">
-                            <a href="https://www.facebook.com/kevin.njoroge/" class="profile-link" target="_blank"><i
-                                    class="fab fa-facebook-square fa-2x"> <span class="icon-text">Facebook</span>
-                                </i></a>
-                        </li>
-
-                        <li class="social-media-item">
-                            <a href="https://twitter.com/kevinnjoroge" class="profile-link" target="_blank"><i
-                                    class="fab fa-twitter-square fa-2x"> <span class="icon-text">Twitter</span></i></a>
-                        </li>
-
-                        <li class="social-media-item">
-                            <a href="https://github.com/kevoh99/" class="profile-link" id="profile-link"
-                                target="_blank"><i class="fab fa-github-square fa-2x"> <span
-                                        class="icon-text">GitHub</span></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="footer" id="footer">
         <div class="container">
