@@ -6,33 +6,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<div id="calendar"></div>
+<div id="calendar">
+    <div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="eventTitle" class="modal-title"></h5>
+                    <p id="eventId" hidden></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="eventDetails"></p>
+                    <!-- Form Fields Start -->
+                    <form id="eventForm">
+                        <div class="mb-3">
+                            {%if (pets|length == 0) %}
+                            <button type="button" class="btn btn-primary">Add Pet</button>
+                            {%else%}
+                            <label for="petNameDropdown" class="form-label">Select Pet:</label>
+                            <select class="form-select" id="petNameDropdown" name="petName" required>
+                                <option selected disabled value="">Choose a pet...</option>
+                                {% for pet in pets%}
+                                <option value="{{pet.id}}">{{pet.name}}</option>
+                                {%endfor%}
+                            </select>
+                            <button type="button" onclick="createBooking()" class="btn btn-primary">Submit</button>
+                            {%endif%}
+                        </div>
 
-<div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 id="eventTitle" class="modal-title"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p id="eventDetails"></p>
-
-                <!-- Form Fields Start -->
-                <form id="eventForm">
-                    <div class="mb-3">
-                        <label for="firstName" class="form-label">First Name:</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName"
-                            placeholder="Enter First Name">
-                    </div>
-                    <!-- Additional fields here -->
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-                <!-- Form Fields End -->
+                    </form>
+                    <!-- Form Fields End -->
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 
 
@@ -608,7 +619,7 @@
         /* Hidden by default */
         position: fixed;
         /* Stay in place */
-        z-index: 1;
+        z-index: 1001;
         /* Sit on top */
         left: 0;
         top: 0;
@@ -1036,17 +1047,59 @@
 
     function openModal(event) {
         var modalElement = document.getElementById("eventModal");
-
-        // Populate modal with event data
         var eventTitle = document.getElementById("eventTitle");
         var eventDetails = document.getElementById("eventDetails");
 
+        // Set event details in the modal
         eventTitle.innerText = event.eventName;
-        eventDetails.innerText = "Date: " + event.date.format("YYYY-MM-DD HH:mm:ss");
+        eventId.innerText = event.productId;
+        eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
 
-        // Use Bootstrap Modal API to show the modal
-        var modal = new bootstrap.Modal(modalElement);
+        // Initialize and show the modal using Bootstrap 5
+        var modal = new bootstrap.Modal(modalElement, {
+            backdrop: false, // This prevents closing the modal when clicking outside
+            keyboard: false     // Prevent closing the modal with the Esc key
+        });
         modal.show();
+    }
+
+    function downloadUrl(url, callback) {
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                callback(myArr, this.status)
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        console.log(url);
+        console.log(window.location.href);
+        xmlhttp.send();
+        xmlhttp.onerror = function () {
+            alert("Request failed");
+        };
+    }
+
+    function sendDataUrl(url, data2Send, callback) {
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                callback(myArr, this.status)
+            }
+        };
+
+        xmlhttp.open('POST', url)
+        console.log(url);
+        console.log(window.location.href);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.onerror = function () {
+            alert('It appears the file is too large');
+        };
+        xmlhttp.send(data2Send);
+        // console.log('done..')
     }
 
     function closeModal() {
@@ -1059,15 +1112,26 @@
         }
     }
 
-    // Optional: Automatically hide the modal when clicking outside of it
-    window.addEventListener("click", function (event) {
-        var modalElement = document.getElementById("eventModal");
-        var modal = bootstrap.Modal.getInstance(modalElement);
+    function createBooking() {
 
-        if (event.target === modalElement && modal) {
-            modal.hide();
-        }
-    });
+        var pet = document.getElementById('petNameDropdown').value;
+        var eventTitle = document.getElementById("eventTitle").innerText;
+        var eventDetails = document.getElementById("eventDetails").innerText;
+        var eventId = document.getElementById("eventId").innerText;
+
+        var data = {
+            pet: pet,
+            eventTitle: eventTitle,
+            eventDetails: eventDetails,
+            eventId: eventId
+        };
+        sendDataUrl('/bookings/create', JSON.stringify(data), function (data) {
+            closeModal();
+            alert("Your booking has been made. You will recieve confirmation via email.")
+        });
+    }
+
+
 
 
 

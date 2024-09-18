@@ -33,6 +33,8 @@ class Product(BaseModel):
     recurrence_interval = db.Column(db.Integer, nullable=True)  # e.g., every 2 days/weeks
     recurrence_end = db.Column(db.String(64), nullable=True)  # End date for recurrence
     recurrence_days = db.Column(db.ARRAY(db.String(10)), nullable=True)  # Days of week (e.g., ['Monday', 'Wednesday'])
+    
+    price = db.Column(db.Float, nullable=True, unique=False)
 
     def __init__(
         self,
@@ -49,6 +51,7 @@ class Product(BaseModel):
         recurrence_interval=None,
         recurrence_end=None,
         recurrence_days=None,
+        price=None,
     ):
         self.id = id
         self.title = title
@@ -63,7 +66,7 @@ class Product(BaseModel):
         self.recurrence_interval = recurrence_interval
         self.recurrence_end = recurrence_end
         self.recurrence_days = recurrence_days
-
+        self.price = price
 
 class Booking(BaseModel):
     """Booking model."""
@@ -76,7 +79,7 @@ class Booking(BaseModel):
     # Foreign keys linking to Product, Pet, and Client
     product_id = db.Column(UUID(), db.ForeignKey('public.products.id'), nullable=False)
     pet_id = db.Column(UUID(), db.ForeignKey('public.pets.id'), nullable=False)
-    client_id = db.Column(UUID(), db.ForeignKey('public.clients.id'), nullable=False)
+    client_id = db.Column(UUID(), db.ForeignKey('public.accounts.id'), nullable=False)
     
     # Other fields
     booking_date = db.Column(db.DateTime, nullable=False)
@@ -85,7 +88,7 @@ class Booking(BaseModel):
     # Relationships
     product = db.relationship("Product", backref="bookings")
     pet = db.relationship("Pet", backref="bookings")
-    client = db.relationship("Client", backref="bookings")
+    client = db.relationship("User", backref="bookings")
 
     def __init__(self, id, product_id, pet_id, client_id, booking_date, status=None):
         self.id = id
