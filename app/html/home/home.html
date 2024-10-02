@@ -1,693 +1,283 @@
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-    integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
-    integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css?family=Baloo+Tammudu+2&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style2.css">
-<title>Dog Training Revolution - Modern Dog Trainers | Home</title>
-</head>
+{% extends "/master/initial_page.html" %}
+{% block content %}
+    <video class="img-fluid w-100" loop="" autoplay="" muted="" playsinline>
+        <source src="/static/videos/dtr.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        Your browser does not support the video tag.
+    </video>
 
-<body>
-
-    <!-- Header -->
-    <header class="header" id="welcome-section">
-
-        <!-- Navigation bar -->
-        <div class="nav-toggler"><span class="bar"></span> </div>
-
-        <nav class="nav" id="navbar">
-            <ul class="nav-list">
-                <!-- <li class="nav-item"><a href="#welcome-section" class="nav-link">Home</a></li> -->
-                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="#services" class="nav-link">Classes</a></li>
-                <li class="nav-item"><a href="#reviews" class="nav-link">Reviews</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-            </ul>
-        </nav>
-        <div class="container my-5">
-            <h2 class="text-center mb-4">Client Information</h2>
-            <form>
-                <!-- Client Information -->
-                <div class="mb-3">
-                    <label for="clientName" class="form-label">Client Name</label>
-                    <input type="text" class="form-control" id="clientName" placeholder="Enter your name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="clientEmail" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="clientEmail" placeholder="Enter your email" required>
-                </div>
-                <div class="mb-3">
-                    <label for="clientPhone" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="clientPhone" placeholder="Enter your phone number"
-                        required>
-                </div>
-
-                <!-- Pet Information -->
-                <h2 class="text-center mt-5 mb-4">Pet Information</h2>
-                <div class="mb-3">
-                    <label for="petName" class="form-label">Pet Name</label>
-                    <input type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="petType" class="form-label">Pet Type</label>
-                    <select class="form-select" id="petType" required>
-                        <option value="dog">Dog</option>
-                        <option value="cat">Cat</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="petBreed" class="form-label">Pet Breed</label>
-                    <input type="text" class="form-control" id="petBreed" placeholder="Enter your pet's breed">
-                </div>
-                <div class="mb-3">
-                    <label for="petAge" class="form-label">Pet Age</label>
-                    <input type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
-                </div>
-
-                <!-- Booking Information -->
-                <h2 class="text-center mt-5 mb-4">Booking Information</h2>
-                <div class="mb-3">
-                    <label for="bookingDate" class="form-label">Preferred Booking Date</label>
-                    <input type="date" class="form-control" id="bookingDate" required>
-                </div>
-                <div class="mb-3">
-                    <label for="bookingService" class="form-label">Select a Service</label>
-                    <select class="form-select" id="bookingService" required>
-                        <option value="puppyClass">Puppy Class</option>
-                        <option value="juniorClass">Junior Class</option>
-                        <option value="adultClass">Adult Class</option>
-                        <option value="privateSession">Private Session</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="additionalNotes" class="form-label">Additional Notes</label>
-                    <textarea class="form-control" id="additionalNotes" rows="4"
-                        placeholder="Add any extra information"></textarea>
-                </div>
-
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Submit Booking</button>
-                </div>
-            </form>
-        </div>
-
-
-
-        <div class="pg-down">
-            <a href="#about" class="pg-down-link"> <i class="fa-chevron-down fas circle-no"></i></a>
-        </div>
-
-    </header>
-    <!-- Footer -->
-    <footer class="footer" id="footer">
+    <section id="about">
         <div class="container">
-            <p>Copyright &copy; 2020. Kevin Njoroge</p>
-            <div class="up" id="up" tabindex="0">
-                <a href="#top" tabindex="-1"><i class=" fas fa-chevron-up"></i></a>
+          <h1>Welcome to Dog Training Revolution</h1>
+          <h3 class="pb-3">Where Excellence in Puppy Training Begins</h3>
+          <div class="row align-items-center">
+            <div class="col-md-5" data-aos="fade-right" data-aos-anchor-placement="top-center">
+              <img src="/static/images/profile.png" alt="Dog Training Specialist" class="img-fluid">
             </div>
+            <div class="col-md-7" data-aos="fade-left" data-aos-anchor-placement="top-center">
+              <p>
+                we offer the most exclusive and effective puppy training classes based on the renowned Life Skills for Puppies program developed by Lincoln University. Our approach goes beyond obedience, focusing on developing real-life skills that ensure your puppy grows into a confident, well-behaved dog, ready to face the world.
+              </p>
+              <p>
+                Laura has been working as a dog trainer and behaviourist since 2018 and has gained a Higher Diploma in Canine Behaviour and Psychology and also in Canine Aggression amongst additional qualifications in various areas of dog training and behavioural work. Specialising in life with guarding breeds, she is passionate about the importance of strong bonds and relationships when it comes to addressing any issues of dog ownership. 
+In her spare time, she is also training as a decoy in dog protection sports (PSA) and personal protection (PP).
+
+            </p>
+            </div>
+          </div>
+            
         </div>
-    </footer>
-
-
-
-
-
-    <style>
-        /**************************************************
-****************** Global Styles ******************
-**************************************************/
-
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #070721;
-            --secondary-color: #6effc4;
-            --tertiary-color: #9630d8;
-            --text-color: #fff;
-            --ff-primary: "Baloo Tammudu 2", cursive;
-        }
-
-        body {
-            font-family: var(--ff-primary);
-            width: 100%;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        p {
-            margin-bottom: 1em;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        a {
-            text-decoration: none;
-            color: var(--text-color);
-        }
-
-        img {
-            display: block;
-            margin: auto;
-            max-width: 100%;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Utilities/reusable styles*/
-        .container {
-            max-width: 1100px;
-            margin: 2em auto;
-            padding: 1em 0.7em;
-            /* background: chocolate; */
-        }
-
-        @media (min-width: 450px) {
-            .container {
-                padding: 1em 2em;
-            }
-        }
-
-        .section-header {
-            text-align: center;
-        }
-
-        .section-header h1 {
-            text-transform: uppercase;
-            color: var(--text-color);
-            opacity: 0.3;
-            position: relative;
-            margin-bottom: 1em;
-        }
-
-        .section-header h1::before {
-            content: "";
-            width: 3em;
-            height: 3px;
-            background-color: rgba(255, 255, 255, 0.9);
-            /* background: var(--tertiary-color); */
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translate(-50%, -100%);
-        }
-
-        .section-header h1::after {
-            content: "";
-            width: 0.5em;
-            height: 0.5em;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.9);
-            position: absolute;
-            top: 119.5%;
-            left: 50%;
-            transform: translate(-50%, -119.5%);
-        }
-
-        .section-header h2,
-        .section-header h3,
-        .section-header h4 {
-            margin-bottom: 2em;
-        }
-
-        .btn-2 {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            display: inline-block;
-            cursor: pointer;
-            border: none;
-            border-radius: 3px;
-            width: 100%;
-            height: 2rem;
-            padding: 0 1rem;
-            margin-bottom: 1em;
-            transition: all 300ms ease-out;
-        }
-
-        .btn {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            display: block;
-            cursor: pointer;
-            border: none;
-            border-radius: 3px;
-            width: 10em;
-            height: 2.5rem;
-            padding: 1em 1em 2em 1em;
-            margin: auto;
-            margin-bottom: 1em;
-            font-weight: bold;
-            text-align: center;
-            transition: all 300ms ease-out;
-        }
-
-        .btn:hover,
-        .btn-2:hover {
-            transform: scale(1.1);
-        }
-
-        .btn-2:focus,
-        .btn:focus {
-            outline: 3px solid var(--secondary-color);
-            transform: scale(1.1);
-            outline-offset: 3px;
-        }
-
-        /**************************************************
-****************** General Styles ******************
-**************************************************/
-
-        /* Start header */
-        .header {
-            background-color: var(--primary-color);
-            height: 100vh;
-        }
-
-        .nav {
-            background-color: var(--primary-color);
-            /* background-color: violet; */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 10;
-        }
-
-        .nav-list {
-            /* padding: 2em 3em; */
-            padding: 1.5em 0.5em 0.5em;
-            display: flex;
-            /* To remove when implementing the hamburger menu */
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .nav-item {
-            display: inline-block;
-            margin-bottom: 1em;
-        }
-
-        .nav-item+.nav-item {
-            margin-left: 0.5em;
-        }
-
-        .nav-link {
-            padding: 0.5em 0.5em 0 0.5em;
-        }
-
-        .nav-link:focus,
-        .nav-link:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-
-        .nav-link:focus {
-            outline: 3px solid var(--secondary-color);
-            text-decoration: none;
-        }
-
-        .landing-pg-wrapper {
-            position: absolute;
-            /* background: red; */
-            /* padding: 5em 1em; */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,
-                    -50%);
-            /* To center the content NB: value the same as top and left, but negative values are used */
-        }
-
-        .landing-pg-wrapper-inner {
-            position: relative;
-            /* background: yellow; */
-            display: grid;
-            grid-template-columns: auto 1fr;
-            grid-gap: 0 1em;
-            grid-template-areas:
-                "spine heading"
-                "spine sub-heading";
-        }
-
-        .spine {
-            height: 100%;
-            padding: 0.7em;
-            background-color: var(--tertiary-color);
-            grid-area: spine;
-            width: 2.5em;
-            grid-row: 1/-1;
-            position: absolute;
-            left: 0em;
-            bottom: -5em;
-            height: calc(100% + 5em);
-            z-index: 3;
-        }
-
-        .landing-pg-title {
-            padding-left: 2.2em;
-            font-size: 1.5rem;
-            /* background: chartreuse; */
-        }
-
-        .landing-pg-subtitle {
-            background: var(--secondary-color);
-            color: var(--primary-color);
-            padding: 1em 0.6em 0.5em 0.6em;
-            grid-area: sub-heading;
-            text-align: right;
-            align-self: start;
-            grid-column: -1/1;
-            grid-row: 2;
-            position: absolute;
-            left: -1.5em;
-            width: calc(100% + 1.5em);
-            padding-left: calc(0.7em + 1.5em + 2em);
-        }
-
-        .pg-down-link:focus>i,
-        .pg-down-link:hover>i {
-            transform: scale(1.2);
-        }
-
-        .pg-down-link:focus>i {
-            outline: 3px solid var(--secondary-color);
-        }
-
-        .pg-down-link {
-            position: absolute;
-            top: 95%;
-            left: 50%;
-            transform: translate(-50%, -95%);
-            color: var(--secondary-color);
-        }
-
-        .pg-down-link i {
-            font-size: 30px;
-            padding: 0.3em 1em;
-        }
-
-        @media (min-width: 450px) {
-            .nav-item+.nav-item {
-                margin-left: 2em;
-            }
-
-            .nav-list {
-                justify-content: flex-end;
-            }
-        }
-
-        /* End header */
-
-        /* Start services */
-        .service-wrapper {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            grid-gap: 1em;
-        }
-
-        .service {
-            padding: 1em 0.5em;
-            /* background: red; */
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .service .p:last-child,
-        .service .service-title {
-            margin-bottom: 1em;
-        }
-
-        .icon-container {
-            width: 5em;
-            height: 5em;
-            border: 3px solid var(--secondary-color);
-            background: var(--tertiary-color);
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform: rotate(45deg);
-            margin-bottom: 2em;
-        }
-
-        .icon-container i {
-            color: var(--secondary-color);
-            font-size: 2rem;
-            transform: rotate(-45deg);
-        }
-
-        /* End services */
-
-        /* Start contact */
-
-        .contact-wrapper {
-            padding: 1em 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            grid-gap: 1em 2em;
-        }
-
-        .form-wrapper label,
-        .form-wrapper input,
-        .form-wrapper select,
-        .form-wrapper textarea {
-            width: 100%;
-            height: 2rem;
-            padding: 1rem 1rem 0.5rem 0.2rem;
-            margin-bottom: 1em;
-            border-radius: 3px;
-            border: none;
-        }
-
-        .form-wrapper select {
-            padding: 0 0.5rem;
-        }
-
-        .form-wrapper input,
-        .form-wrappertextarea {
-            padding: 1rem 1rem 0.5rem 0.5rem;
-        }
-
-        .form-wrapper textarea {
-            height: 150px;
-        }
-
-        .form-wrapper .btn-2 {
-            width: 40%;
-            font-weight: bold;
-            padding: 1em 1em 1.5em;
-        }
-
-        .contact-subtitle {
-            color: var(--tertiary-color);
-            margin-bottom: 1em;
-            margin-top: 2em;
-        }
-
-        .contact-subtitle:last-child {
-            margin-bottom: 0;
-        }
-
-        .icon-text {
-            font-family: var(--ff-primary);
-            font-size: 1rem;
-        }
-
-        .fa-mobile {
-            margin-right: 0.5em;
-        }
-
-        .social-media-item+.social-media-item {
-            margin-top: 1em;
-        }
-
-        /* End contact */
-
-        /* Start footer */
-        .footer {
-            border-top: 4px solid rgba(255, 255, 255, 0.2);
-            height: 5em;
-        }
-
-        .footer .container {
-            max-width: 100%;
-            text-align: center;
-            position: relative;
-            padding: 2rem 2rem 1rem 2rem;
-            margin-bottom: 0;
-            margin-top: 0;
-            /* background: red; */
-        }
-
-        .up {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 100%;
-            background-color: var(--text-color);
-            position: absolute;
-            top: -1.6rem;
-            right: 1rem;
-            cursor: pointer;
-            display: flex;
-        }
-
-        .up:focus,
-        .up:hover {
-            animation: pulse 1000ms infinite;
-            outline: 0;
-            /* box-shadow: 0 0 0 0.3rem var(--tertiary-color); */
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(253, 87, 191, 0.99);
-            }
-
-            70% {
-                box-shadow: 0 0 0 2rem rgba(253, 87, 191, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(253, 87, 191, 0);
-            }
-        }
-
-        .up a {
-            margin: auto;
-        }
-
-        .up a i {
-            text-decoration: none;
-            color: var(--primary-color);
-        }
-
-        /*************Test start - redesign about section ****************
-*****************************************************************/
-        .about {
-            background-color: var(--primary-color);
-            /* background: url(../img/laptop_1.jpg) no-repeat bottom/cover; */
-            background-color: var(--text-color);
-        }
-
-        .about h1 {
-            color: var(--primary-color);
-            opacity: 1;
-        }
-
-        .about-title {
-            /* background: purple; */
-            grid-area: title;
-        }
-
-        .about-grid h4 {
-            background: var(--secondary-color);
-            color: var(--primary-color);
-            grid-area: subtitle;
-            padding: 1.5em 1em 1em 1em;
-            border-radius: 3px;
-        }
-
-        .profile-img {
-            width: 200px;
-            grid-area: img;
-            position: relative;
-            z-index: 3;
-        }
-
-        .profile-text {
-            /* background-color: chartreuse; */
-            color: var(--primary-color);
-            grid-area: text;
-            padding: 1em 0.7em;
-        }
-
-        .about-grid {
-            max-width: 860px;
-            margin: auto;
-            /* background-color: chocolate; */
-            display: grid;
-            grid-gap: 0.5em;
-            grid-template-areas:
-                "title"
-                "subtitle"
-                "img"
-                "text";
-        }
-
-        @media (min-width: 650px) {
-            .about-grid {
-                grid-template-rows: 70px auto auto auto;
-                grid-template-areas:
-                    "title img"
-                    "subtitle img"
-                    "text img";
-            }
-
-            .about-grid h4 {
-                position: relative;
-                grid-column: -1/1;
-                left: -1em;
-                width: calc(100% + 3em);
-                padding-left: 3em;
-                padding-right: calc(200px + 2em + 1em);
-            }
-        }
-
-        /* End of about section */
-
-        /* Start portfolio section */
-
-        .portfolio {
-            background-color: var(--tertiary-color);
-        }
-
-        .portfolio .container {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            max-width: 97%;
-            margin: auto;
-        }
-
-        .portfolio .section-header h1,
-        .portfolio .section-header h4 {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            opacity: 1;
-        }
-
-        .portfolio .section-header h1::before,
-        .portfolio .section-header h1::after {
-            opacity: 1;
-            background-color: var(--tertiary-color);
-        }
-
-        .projects-wrapper {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            /* grid-template-rows: repeat(3, 300px); */
-            grid-gap: 3.5em 1em;
-        }
-
-        @media (min-width: 550px) {
-            .projects-wrapper {
-                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-                grid-gap: 2em;
-            }
-        }
-
-        .project-link figcaption {
-            color: var(--primary-color);
-        }
-    </style>
+    </section>
+
+    <section id="why" class="pt-5 pb-3" style="background-color: rgba(255,255,255,0.1);">
+
+        <!-- Section Title -->
+        <div class="container section-title aos-init aos-animate text-center pb-4" data-aos="fade-up">
+          <h2>Why Choose Our Puppy Training Classes?</h2>
+          <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
+        </div><!-- End Section Title -->
+  
+        <div class="container">
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-anchor-placement="top-center">
+              <div class="d-flex">
+                <div class="icon flex-shrink-0"><i class="bi bi-briefcase"></i></div>
+                <div>
+                  <h4 class="title">Small Group Sizes for Personalised Attention</h4>
+                  <p class="description">We limit our puppy classes to small, select groups to provide each owner and puppy with the intensive, one-to-one tuition they deserve. Our professional trainers give you the personal focus that larger classes simply can’t offer, ensuring both you and your puppy receive the highest level of support and guidance.</p>
+                </div>
+              </div>
+            </div>
+            <!-- End Service Item -->
+  
+            <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200" data-aos-anchor-placement="top-center">
+              <div class="d-flex">
+                <div class="icon flex-shrink-0"><i class="bi bi-card-checklist"></i></div>
+                <div>
+                  <h4 class="title">Real-Life Training for Real-World Results</h4>
+                  <p class="description">Our Life Skills for Puppies curriculum emphasises training in real-life situations. From learning how to be calm and confident in public to managing everyday challenges like walking on a lead or meeting new people, your puppy will develop essential life skills that integrate seamlessly into your day-to-day life.
+                    </p>
+                </div>
+              </div>
+            </div><!-- End Service Item -->
+  
+            <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="300" data-aos-anchor-placement="top-center">
+              <div class="d-flex">
+                <div class="icon flex-shrink-0"><i class="bi bi-bar-chart"></i></div>
+                <div>
+                  <h4 class="title">Lifetime Support and Premium Resources</h4>
+                  <p class="description">When you enrol in our puppy classes, you gain access to our exclusive members’ area, filled with high-quality resources to support your puppy's ongoing development. From video tutorials to expert advice, you will benefit from a lifetime of professional guidance, ensuring that both you and your puppy are set up for long-term success.
+                    </p>
+                </div>
+              </div>
+            </div><!-- End Service Item -->
+  
+            <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="400" data-aos-anchor-placement="top-center">
+              <div class="d-flex">
+                <div class="icon flex-shrink-0"><i class="bi bi-binoculars"></i></div>
+                <div>
+                  <h4 class="title">Led by Award-Winning Dog Training Experts</h4>
+                  <p class="description">Our lead trainer, Rachel Trafford, is ABTC and IAABC certified, bringing decades of experience to every class. Recognised for her innovative approach to dog training, Rachel was awarded the People's Pet Award for Innovation by the Mirror Newspaper in 2024. She continues to work alongside veterinary surgeons to tackle more complex behavioural challenges, ensuring you receive the best possible guidance.</p>
+                  <div class="d-flex justify-content-evenly">
+                    <img src="/static/images/ABTC.jpg" class="img-fluid me-3" style="max-width: 100px;">
+                    <img src="/static/images/IAABC.png" class="img-fluid me-3 bg-white" style="max-width: 100px;">
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Service Item -->
+  
+          </div>
+  
+        </div>
+  
+    </section>
+    <section id="what" class="pt-5">
+        <div class="container">
+            <h5>What Makes Our Life Skills Program Special?</h5>
+            <p>
+                Our puppy training classes focus on the 10 Life Skills every puppy needs, including:
+                <ul>
+                    <li>Confidence-building: Helping puppies feel safe and secure in their environment.</li>
+                    <li>Surprise tolerance: Teaching puppies to handle sudden changes with calmness.</li>
+                    <li>Handling and self-control: Preparing puppies for vet visits and grooming with ease.</li>
+                    <li>Learning to listen and follow rules: Ensuring your puppy knows how to behave in every situation.</li>
+                    <li>Making the right choices: Encouraging puppies to think and act in ways that reduce tension and promote harmony.</li>
+                </ul>
+                These skills are taught in practical, real-world environments to ensure your puppy is well-prepared for daily life.
+                                
+                <div class="row align-items-center pt-5">
+                  <div class="col-12"><h5>Science-Based, Modern Training Techniques</h5></div>
+                  <div class="col-md-3 pb-2">
+                    <img src="/static/images/waiting_patiently.jpg" class="img-fluid">
+                  </div>
+                  <div class="col-md-9 pb-2">
+                    At Dog Training Revolution, we use only science-based, positive reinforcement methods that are rooted in the latest research. Our trainers continually expand their knowledge through ongoing professional development, ensuring your puppy benefits from the most up-to-date and effective training techniques available.
+                  </div>
+                </div>
+
+                <div class="row align-items-center pt-5">
+                  <div class="col-12"><h5>Start Your Puppy’s Journey with Dog Training Revolution Today</h5></div>
+                  <div class="col-md-9 pb-2">
+                    If you’re ready to give your puppy the best start in life with a personalised, exclusive training experience, contact us today. Our limited class sizes mean spaces fill up quickly, so don’t miss out on securing a spot in the most elite puppy training program available.
+                  </div>
+                  <div class="col-md-3 pb-2">
+                    <img src="/static/images/learning_that_hands_are_great.jpg" class="img-fluid">
+                  </div>
+                </div>               
+
+            </p>
+        </div>
+    </section>
+    <section id="classes" class="pt-5 pb-3" style="background-color: rgba(255,255,255,0.1);">
+
+      <!-- Section Title -->
+      <div class="container section-title aos-init aos-animate text-center pb-4" data-aos="fade-up">
+        <h2>Start Your Personalised Dog Training Journey Today</h2>
+        <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4 align-items-center justify-content-evenly d-flex align-items-stretch">
+          <div class="col-md-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-anchor-placement="top-center">
+            <div class="service-item text-center rounded-4">
+              <div>
+                <h4 class="title">Taster</h4>
+                <p class="description">2 sessions</p>
+                <p class="price">£120</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Service Item -->
+          <div class="col-md-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-anchor-placement="top-center">
+            <div class="service-item text-center rounded-4">
+              <div>
+                <h4 class="title">Introduction package</h4>
+                <p class="description">3 sessions</p>
+                <p class="price">£160</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Service Item -->
+          <div class="col-md-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-anchor-placement="top-center">
+            <div class="service-item text-center rounded-4">
+              <div>
+                <h4 class="title">Development package</h4>
+                <p class="description">5 sessions</p>
+                <p class="price">£250</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Service Item -->
+          <div class="col-md-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-anchor-placement="top-center">
+            <div class="service-item text-center rounded-4">
+              <div>
+                <h4 class="title">Puppy life skills course</h4>
+                <p class="description">6 sessions</p>
+                <p class="price">£125</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Service Item -->
+          <div class="col-md-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" data-aos-anchor-placement="top-center">
+            <div class="service-item text-center rounded-4">
+              <div>
+                <h4 class="title">Walk and Train</h4>
+                <p class="description">per session</p>
+                <p class="price">£POA</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Service Item -->
+        </div>
+
+      </div>
+
+  </section>
+  <section id="contact" class="pt-5 pb-3">
+    <div class="container">
+      <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100"></div>
+
+        <div class="row gy-4">
+
+          <div class="col-md-7">
+            <div class="info-wrap">
+              <div class="info-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h3>Address</h3>
+                  <p>A108 Adam Street, New York, NY 535022</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+                <i class="bi bi-telephone flex-shrink-0"></i>
+                <div>
+                  <h3>Call Us</h3>
+                  <p>+1 5589 55488 55</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
+                <i class="bi bi-envelope flex-shrink-0"></i>
+                <div>
+                  <h3>Email Us</h3>
+                  <p>info@example.com</p>
+                </div>
+              </div><!-- End Info Item -->
+            </div>
+          </div>
+          <div class="col-md-5">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <div class="col">
+            <form action="forms/contact.php" method="post" class="php-email-form aos-init" data-aos="fade-up" data-aos-delay="200">
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <label for="name-field" class="pb-2">Your Name</label>
+                  <input type="text" name="name" id="name-field" class="form-control" required="">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="email-field" class="pb-2">Your Email</label>
+                  <input type="email" class="form-control" name="email" id="email-field" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <label for="subject-field" class="pb-2">Subject</label>
+                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <label for="message-field" class="pb-2">Message</label>
+                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-outline-light">Send Message</button>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+          <div class="col-12">
+            <h4 class="pb-3">Follow Us</h4>
+            <div class="social-links d-flex">
+              <a href=""><i class="fa-brands fa-twitter social_links"></i></a>
+              <a href=""><i class="fa-brands fa-facebook social_links"></i></a>
+              <a href=""><i class="fa-brands fa-instagram social_links"></i></a>
+              <a href=""><i class="fa-brands fa-linkedin social_links"></i></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+{% endblock %}

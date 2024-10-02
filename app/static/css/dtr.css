@@ -1,0 +1,88 @@
+body{
+    background-color: black;
+    color: white!important;
+}
+
+.site-text{
+    color: white!important;
+}
+
+/* Default navbar background: transparent */
+.navbar {
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    color: white!important;
+}
+/* Make the navbar links white */
+.navbar-nav .nav-link {
+    color: white;
+}
+
+/* Optional: Change color on hover */
+.navbar-nav .nav-link:hover {
+    color: lightgray; /* Change this to any color you want */
+}
+
+/* When the navbar is collapsed and opened (showing), make the background black */
+.navbar-collapse.show {
+    background-color: black;
+    padding-left: 20px;
+}
+
+/* Ensure the nav links are still visible when the collapsed menu is open */
+.navbar-collapse.show .nav-link {
+    color: white;
+}
+
+/* Navbar when scrolled */
+.scrolled .navbar {
+    background-color: var(--background-color, rgba(0, 0, 0, 0.9)); /* Apply background when scrolled */
+}
+
+/* Initially hide the brand logo */
+.brand-logo {
+    display: none;
+}
+
+/* Show the brand logo on mobile screens (768px and smaller) */
+@media (max-width: 768px) {
+    .brand-logo {
+        display: block;
+    }
+}
+
+/* Show the brand logo when the navbar is scrolled */
+.scrolled .brand-logo {
+    display: block;
+}
+
+h1{
+    /* font-size: 21px; */
+    font-weight: bold;
+    color: #d8b077;
+}
+h2{
+    font-weight: bold;
+    color: #d8b077;
+}
+h3{
+    font-size: 18px;
+}
+h4{
+    font-weight: bold;
+    color: #d8b077
+}
+h5{
+    font-weight: bold;
+    color: #d8b077
+}
+.social_links{
+    color: white!important;
+    font-size: 28px;
+    padding-right: 10px;
+}
+
+.service-item{
+    border: white 1px solid;
+    padding-top: 20px;
+}
