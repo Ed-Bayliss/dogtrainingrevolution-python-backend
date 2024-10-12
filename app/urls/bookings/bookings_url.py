@@ -34,7 +34,7 @@ from app import db
 def root():
    pets = Pet.query.filter_by(client_id=current_user.id).all()
    print(pets)
-   return render_template('bookings/bookings.html',
+   return render_template('loggedin/bookings.html',
                           pets=pets)
 
 @login_required

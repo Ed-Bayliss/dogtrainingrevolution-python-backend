@@ -1,4 +1,10 @@
+import base64
 import datetime
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import secrets
+import smtplib
 from uuid import uuid4
 from flask import (
     Blueprint,
@@ -37,9 +43,16 @@ def login():
         existing_user = User.query.filter_by(
             email=data['email'].lower()
         ).first()
-        if existing_user and existing_user.check_password(password=data["password"].strip()):
-            login_user(existing_user)
-            return jsonify({})
+        
+        if existing_user and existing_user.check_password(password=data["login_passwd"].strip())[0] == True:
+            if existing_user.verified == True:
+                login_user(existing_user)
+                return jsonify({"message": "success"})
+            else:
+                return jsonify({"message": "unverified"})
+        else:
+            return jsonify({"message": "incorrect"})
+        
    return render_template('login/login.html')
 
 @auth_url.route("/logout")
@@ -62,37 +75,52 @@ def signup():
     import random
 
     image = random.randint(0, 25)
+    password_length = 13
+    new_password = secrets.token_urlsafe(password_length)
     data = request.json
     
     existing_user = User.query.filter_by(
-        email=data['email'].lower()
+        email=data['registerEmail'].lower()
     ).first()
 
     if existing_user is None:
     
         user = User(
             id=str(uuid4()),
-            firstname="",
-            surname="",
-            email=data['email'],
+            firstname=data['registerName'],
+            surname=data['registersurName'],
+            email=data['registerEmail'].lower(),
             account_type='client',
             verified=False,
             password="",
             created_on=datetime.datetime.now(),
             last_login=datetime.datetime.now(),
+            phone=data['registerPhone'],
         )
-        user.set_password(data['password'])
-        print(user.password)
+        user.set_password(new_password)
+        # print(user.password)
 
         db.session.add(user)
         db.session.commit()
 
         existing_user = User.query.filter_by(
-            email=data['email'].lower()
+            email=data['registerEmail'].lower()
         ).first()
-    login_user(existing_user)
+        with open("app/static/emails/signup.html", "r") as body:
+                body = body.read()
+                body = body.replace("#FIRSTNAME#", data['registerName'])
+                body = body.replace("#SURNAME#", data['registersurName'])
+                body = body.replace("#USERNAME#", data['registerEmail'])
+                body = body.replace("#PASSWORD#", new_password)
+        # send email with username password
+        send_email(data['registerEmail'], "david.greaves@pawtul.com", "Dog Training Revolution - Signup", body)
 
-    return jsonify({'successful': 200})
+        login_user(existing_user)
+        return jsonify({'successful': 200})
+
+    else:
+        login_user(existing_user)
+        return jsonify({'error': 500})
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -107,3 +135,23 @@ def unauthorized():
     """Redirect unauthorized users to Login page."""
     flash("You must be logged in to view that page.")
     return redirect(url_for("login_blueprints.login"))
+
+def send_email(receiver, cc_email, subject, body):
+    try:
+        # Create a multipart message
+        message = MIMEMultipart()
+        message["From"] = "no-reply@pawtul.com"
+        message["To"] = receiver
+        message["Cc"] = cc_email
+        message["Subject"] = subject
+
+        message.attach(MIMEText(body, "html"))
+
+        # Connect to the SMTP server and send the email
+        with smtplib.SMTP("smtp.exchange2019.ionos.co.uk", 587) as server:
+            server.starttls()
+            server.login("no-reply@pawtul.com", "Ej-?bq5[X;?zfbzhX]Yf")
+            server.send_message(message)
+
+    except:
+        flash("Email Error: Please check clients email address")

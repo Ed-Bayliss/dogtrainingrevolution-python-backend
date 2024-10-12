@@ -1,53 +1,49 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 
+{% extends "/master/logged_in.html" %}
+{% block content %}
+<div class="container pt-5">
+    <div id="calendar" class="pt-5">
+        <div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 id="eventTitle" class="modal-title"></h5>
+                        <p id="eventId" hidden></p>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="eventDetails"></p>
+                        <!-- Form Fields Start -->
+                        <form id="eventForm">
+                            <div class="mb-3">
+                                {%if (pets|length == 0) %}
+                                <button type="button" class="btn btn-primary">Add Pet</button>
+                                {%else%}
+                                <label for="petNameDropdown" class="form-label">Select Pet:</label>
+                                <select class="form-select" id="petNameDropdown" name="petName" required>
+                                    <option selected disabled value="">Choose a pet...</option>
+                                    {% for pet in pets%}
+                                    <option value="{{pet.id}}">{{pet.name}}</option>
+                                    {%endfor%}
+                                </select>
+                                <button type="button" onclick="createBooking()" class="btn btn-primary">Submit</button>
+                                {%endif%}
+                            </div>
 
-<div id="calendar">
-    <div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 id="eventTitle" class="modal-title"></h5>
-                    <p id="eventId" hidden></p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="eventDetails"></p>
-                    <!-- Form Fields Start -->
-                    <form id="eventForm">
-                        <div class="mb-3">
-                            {%if (pets|length == 0) %}
-                            <button type="button" class="btn btn-primary">Add Pet</button>
-                            {%else%}
-                            <label for="petNameDropdown" class="form-label">Select Pet:</label>
-                            <select class="form-select" id="petNameDropdown" name="petName" required>
-                                <option selected disabled value="">Choose a pet...</option>
-                                {% for pet in pets%}
-                                <option value="{{pet.id}}">{{pet.name}}</option>
-                                {%endfor%}
-                            </select>
-                            <button type="button" onclick="createBooking()" class="btn btn-primary">Submit</button>
-                            {%endif%}
-                        </div>
-
-                    </form>
-                    <!-- Form Fields End -->
+                        </form>
+                        <!-- Form Fields End -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 <style>
     *,
     *:before,
@@ -65,7 +61,7 @@
         color: #ececec;
         margin: 0;
         padding: 10px;
-        background: #1d1e22;
+        /* background: #1d1e22; */
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -216,7 +212,7 @@
         list-style: none;
         margin-top: 3px;
         text-align: center;
-        f height: 100px;
+        height: 100px;
         line-height: 100px;
         overflow: hidden;
     }
@@ -658,6 +654,7 @@
 </style>
 
 <script>
+        showLoadingOverlay();
     !(function () {
         var today = moment();
 
@@ -1021,120 +1018,116 @@
         fetchData().then(data => {
             if (data) {
                 var calendar = new Calendar("#calendar", data); // Pass the fetched data to the calendar
+                hideLoadingOverlay();
             } else {
                 console.error("No data returned from the API");
+                hideLoadingOverlay();
             }
         });
 
 
         function addDate(ev) { }
 
-
-        var calendar = new Calendar("#calendar", data);
     })();
 
-    document.querySelector(".close").addEventListener("click", function () {
-        document.getElementById("eventModal").style.display = "none";
-    });
+        
+    // document.querySelector(".close").addEventListener("click", function () {
+    //     document.getElementById("eventModal").style.display = "none";
+    // });
 
-    // Close the modal if user clicks anywhere outside of the modal
-    window.addEventListener("click", function (event) {
-        var modal = document.getElementById("eventModal");
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    });
+    // // Close the modal if user clicks anywhere outside of the modal
+    // window.addEventListener("click", function (event) {
+    //     var modal = document.getElementById("eventModal");
+    //     if (event.target === modal) {
+    //         modal.style.display = "none";
+    //     }
+    // });
 
-    function openModal(event) {
-        var modalElement = document.getElementById("eventModal");
-        var eventTitle = document.getElementById("eventTitle");
-        var eventDetails = document.getElementById("eventDetails");
+    // function openModal(event) {
+    //     var modalElement = document.getElementById("eventModal");
+    //     var eventTitle = document.getElementById("eventTitle");
+    //     var eventDetails = document.getElementById("eventDetails");
 
-        // Set event details in the modal
-        eventTitle.innerText = event.eventName;
-        eventId.innerText = event.productId;
-        eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
+    //     // Set event details in the modal
+    //     eventTitle.innerText = event.eventName;
+    //     eventId.innerText = event.productId;
+    //     eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
 
-        // Initialize and show the modal using Bootstrap 5
-        var modal = new bootstrap.Modal(modalElement, {
-            backdrop: false, // This prevents closing the modal when clicking outside
-            keyboard: false     // Prevent closing the modal with the Esc key
-        });
-        modal.show();
-    }
+    //     // Initialize and show the modal using Bootstrap 5
+    //     var modal = new bootstrap.Modal(modalElement, {
+    //         backdrop: false, // This prevents closing the modal when clicking outside
+    //         keyboard: false     // Prevent closing the modal with the Esc key
+    //     });
+    //     modal.show();
+    // }
 
-    function downloadUrl(url, callback) {
+    // function downloadUrl(url, callback) {
 
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var myArr = JSON.parse(this.responseText);
-                callback(myArr, this.status)
-            }
-        };
-        xmlhttp.open("GET", url, true);
-        console.log(url);
-        console.log(window.location.href);
-        xmlhttp.send();
-        xmlhttp.onerror = function () {
-            alert("Request failed");
-        };
-    }
+    //     var xmlhttp = new XMLHttpRequest();
+    //     xmlhttp.onreadystatechange = function () {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             var myArr = JSON.parse(this.responseText);
+    //             callback(myArr, this.status)
+    //         }
+    //     };
+    //     xmlhttp.open("GET", url, true);
+    //     console.log(url);
+    //     console.log(window.location.href);
+    //     xmlhttp.send();
+    //     xmlhttp.onerror = function () {
+    //         alert("Request failed");
+    //     };
+    // }
 
-    function sendDataUrl(url, data2Send, callback) {
+    // function sendDataUrl(url, data2Send, callback) {
 
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var myArr = JSON.parse(this.responseText);
-                callback(myArr, this.status)
-            }
-        };
+    //     var xmlhttp = new XMLHttpRequest();
+    //     xmlhttp.onreadystatechange = function () {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             var myArr = JSON.parse(this.responseText);
+    //             callback(myArr, this.status)
+    //         }
+    //     };
 
-        xmlhttp.open('POST', url)
-        console.log(url);
-        console.log(window.location.href);
-        xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.onerror = function () {
-            alert('It appears the file is too large');
-        };
-        xmlhttp.send(data2Send);
-        // console.log('done..')
-    }
+    //     xmlhttp.open('POST', url)
+    //     console.log(url);
+    //     console.log(window.location.href);
+    //     xmlhttp.setRequestHeader("Content-Type", "application/json");
+    //     xmlhttp.onerror = function () {
+    //         alert('It appears the file is too large');
+    //     };
+    //     xmlhttp.send(data2Send);
+    //     // console.log('done..')
+    // }
 
-    function closeModal() {
-        var modalElement = document.getElementById("eventModal");
+    // function closeModal() {
+    //     var modalElement = document.getElementById("eventModal");
 
-        // Use Bootstrap Modal API to hide the modal
-        var modal = bootstrap.Modal.getInstance(modalElement);
-        if (modal) {
-            modal.hide();
-        }
-    }
+    //     // Use Bootstrap Modal API to hide the modal
+    //     var modal = bootstrap.Modal.getInstance(modalElement);
+    //     if (modal) {
+    //         modal.hide();
+    //     }
+    // }
 
-    function createBooking() {
+    // function createBooking() {
 
-        var pet = document.getElementById('petNameDropdown').value;
-        var eventTitle = document.getElementById("eventTitle").innerText;
-        var eventDetails = document.getElementById("eventDetails").innerText;
-        var eventId = document.getElementById("eventId").innerText;
+    //     var pet = document.getElementById('petNameDropdown').value;
+    //     var eventTitle = document.getElementById("eventTitle").innerText;
+    //     var eventDetails = document.getElementById("eventDetails").innerText;
+    //     var eventId = document.getElementById("eventId").innerText;
 
-        var data = {
-            pet: pet,
-            eventTitle: eventTitle,
-            eventDetails: eventDetails,
-            eventId: eventId
-        };
-        sendDataUrl('/bookings/create', JSON.stringify(data), function (data) {
-            closeModal();
-            alert("Your booking has been made. You will recieve confirmation via email.")
-        });
-    }
-
-
-
-
-
-
+    //     var data = {
+    //         pet: pet,
+    //         eventTitle: eventTitle,
+    //         eventDetails: eventDetails,
+    //         eventId: eventId
+    //     };
+    //     sendDataUrl('/bookings/create', JSON.stringify(data), function (data) {
+    //         closeModal();
+    //         alert("Your booking has been made. You will recieve confirmation via email.")
+    //     });
+    // }
 
 </script>
+{% endblock %}
