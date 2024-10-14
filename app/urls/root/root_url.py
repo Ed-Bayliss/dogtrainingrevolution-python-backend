@@ -28,4 +28,5 @@ from app import db
 
 @root_url.route("/", methods=["GET"])
 def root():
-   return render_template('root/root.html')
+   return render_template('home/home.html')
+    # return render_template('root/root.html')

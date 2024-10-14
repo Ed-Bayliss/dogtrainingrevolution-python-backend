@@ -1,0 +1,113 @@
+<div id="spinner-overlay" class="overlay"></div>
+<div id="loading-spinner" class="loading-spinner">
+     
+    <div class="dbl-spin-1"></div>
+    <div class="dbl-spin-2"></div>
+    <img class="dbl-bg icon-coloured" src="static/images/apple-touch-icon.png"></img>
+</div>
+
+<style>
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9998; /* Set a z-index value lower than the loading spinner to ensure it's below it */
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+}
+
+.dbl-bg {
+    position: relative;
+    z-index: 9999;
+    top: 32%;
+    left: 35%;
+    height:100px;
+    width: 75px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+
+.loading-spinner {
+position: fixed;
+z-index: 9999;
+top: calc(50% - 40px);
+left: calc(50% - 52px);
+height:80px;
+width: 104px;
+display: flex;
+flex-flow: column nowrap;
+justify-content: center;
+align-content: center;
+align-items: center;
+display: none;
+}
+
+.dbl-spin-1,
+.dbl-spin-2 {
+position: absolute;
+box-sizing: border-box;
+display: block;
+margin: auto;
+border-radius: 50%;
+}
+.dbl-spin-1 {
+height: 126px;
+width: 126px;
+top: 12px;
+left: 11px;
+border-top: 8px solid #d8b077; 
+    border-left: 8px solid #d8b077; 
+border-radius: 75%;
+-webkit-animation: loading-spinner-4-dblspin 5s linear infinite;
+        animation: loading-spinner-4-dblspin 5s linear infinite;
+}
+   .dbl-spin-2 {
+    height: 150px;
+    width: 150px;
+    border-bottom: 10px solid #c28938; 
+    border-left: 10px solid #c28938; 
+    border-radius: 50%;
+    -webkit-animation: loading-spinner-4-dblspin2 3s linear infinite;
+            animation: loading-spinner-4-dblspin2 3s linear infinite;
+  }
+
+  
+  
+  @keyframes loading-spinner-4-dblspin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-720deg);
+    }
+  }
+ 
+  @keyframes loading-spinner-4-dblspin2 {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+
+<script>
+    function showLoadingOverlay() {
+        document.getElementById("spinner-overlay").style.display = "block";
+        document.getElementById("loading-spinner").style.display = "block";
+    }
+
+    function hideLoadingOverlay() {
+        document.getElementById("spinner-overlay").style.display = "none";
+        document.getElementById("loading-spinner").style.display = "none";
+    }
+</script>

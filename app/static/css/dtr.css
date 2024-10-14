@@ -86,3 +86,66 @@ h5{
     border: white 1px solid;
     padding-top: 20px;
 }
+
+.dtr_light_bg{
+    background-color: rgb(120,120,120) !important;
+}
+
+.login_button{
+    background-color: #d8b077;
+    border-color: #d8b077;
+    color: black;
+}
+
+.login_button:hover{
+    background-color: #915601;
+    border-color: #d8b077;
+    color: white;
+}
+
+.nav-pills .nav-link.active{
+    background-color: #915601 !important;
+}
+
+.login_a {
+    color: #d8b077;
+    font-weight: bold;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+  }
+  .carousel-item {
+    padding: 30px;
+    text-align: center;
+  }
+  .carousel-item h5 {
+    color: #f8b400;
+  }
+  .carousel-item p {
+    font-style: italic;
+  }
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    color: #f8b400;
+  }
+
+  @media (min-width: 992px) {
+    .container, .container-lg, .container-md, .container-sm {
+        max-width: 778px;
+    }
+}
+
+.table_icon{
+    width: 60px; 
+    text-align: center;
+}
+.table_count{
+    width: 60px; 
+    text-align: center;
+}
+
+.form-label{
+    color: black;
+}

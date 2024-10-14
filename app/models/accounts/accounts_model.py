@@ -28,8 +28,9 @@ class User(UserMixin, BaseModel):
     last_login = db.Column(db.DateTime, index=False, unique=False, nullable=True)
     verified = db.Column(db.Boolean, unique=False, nullable=False)
     account_type = db.Column(db.String(64), nullable=False, unique=False)
+    phone = db.Column(db.String(64), unique=True, nullable=False)
 
-    def __init__(self, id, firstname, surname, email, password, created_on, last_login, verified, account_type):
+    def __init__(self, id, firstname, surname, email, password, created_on, last_login, verified, account_type, phone):
         self.id = id
         self.firstname = firstname
         self.surname = surname
@@ -39,6 +40,7 @@ class User(UserMixin, BaseModel):
         self.last_login = last_login
         self.verified = verified
         self.account_type = account_type
+        self.phone = phone
 
     def set_password(self, password):
         """Create hashed password."""
@@ -48,7 +50,21 @@ class User(UserMixin, BaseModel):
         """Check hashed password."""
     
         return check_password_hash(self.password, password),
-       
+    
+    def to_dict(self):
+        """Convert User object to dictionary for JSON serialization."""
+        return {
+            "id": str(self.id),  # Convert UUID to string for JSON compatibility
+            "firstname": self.firstname,
+            "surname": self.surname,
+            "email": self.email,
+            "created_on": self.created_on.isoformat() if self.created_on else None,  # Convert datetime to ISO format
+            "last_login": self.last_login.isoformat() if self.last_login else None,  # Convert datetime to ISO format
+            "verified": self.verified,
+            "account_type": self.account_type,
+            "phone": self.phone,
+            # Password field is excluded for security reasons
+        }
 
     def __repr__(self):
-        return "<User {}>".format(self.username)
+        return "<User {}>".format(self.email)

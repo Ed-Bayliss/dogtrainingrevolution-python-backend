@@ -24,14 +24,12 @@ class Pet(BaseModel):
     gender = db.Column(db.Boolean, nullable=True, unique=False)
     neutered = db.Column(db.Boolean, nullable=True, unique=False)
     
-
     def __init__(
         self,
         id,
         client_id,
         name,
         breed,
-        type,
         dob,
         microchip,
         gender,
@@ -41,8 +39,21 @@ class Pet(BaseModel):
         self.client_id = client_id
         self.name = name
         self.breed = breed
-        self.type = type
         self.dob = dob
         self.microchip = microchip
         self.gender = gender
         self.neutered = neutered
+        
+    def to_dict(self):
+        """Convert User object to dictionary for JSON serialization."""
+        return {
+            "id": str(self.id),  # Convert UUID to string for JSON compatibility
+            "client_id": self.client_id,
+            "name": self.name,
+            "breed": self.breed,
+            "dob": self.dob,
+            "microchip": self.microchip,
+            "gender": self.gender,
+            "neutered": self.neutered,
+            # Password field is excluded for security reasons
+        }
