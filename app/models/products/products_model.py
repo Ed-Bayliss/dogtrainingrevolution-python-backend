@@ -8,10 +8,6 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 
 BaseModel: DeclarativeMeta = db.Model
 
-
-
-
-
 class Product(BaseModel):
     """Product model."""
 
@@ -44,7 +40,7 @@ class Product(BaseModel):
         start,
         end=None,  # Optional field
         category=None,  # Optional field
-        space=None,  # Optional field
+        spaces=None,  # Optional field
         colour=None,
         is_recurring=False,
         recurrence_pattern=None,
@@ -59,7 +55,7 @@ class Product(BaseModel):
         self.start = start
         self.end = end
         self.category = category
-        self.spaces = space
+        self.spaces = spaces
         self.colour = colour
         self.is_recurring = is_recurring
         self.recurrence_pattern = recurrence_pattern
@@ -67,6 +63,24 @@ class Product(BaseModel):
         self.recurrence_end = recurrence_end
         self.recurrence_days = recurrence_days
         self.price = price
+
+    def to_dict(self):
+        """Convert User object to dictionary for JSON serialization."""
+        return {
+            "id": str(self.id),  # Convert UUID to string for JSON compatibility
+            "title": self.title,
+            "start": self.start,
+            "end": self.end,
+            "spaces": self.spaces,
+            "colour": self.colour,
+            "is_recurring": self.is_recurring,
+            "recurrence_pattern": self.recurrence_pattern,
+            "recurrence_interval": self.recurrence_interval,
+            "recurrence_end": self.recurrence_end,
+            "recurrence_days": self.recurrence_days,
+        }
+
+
 
 class Booking(BaseModel):
     """Booking model."""

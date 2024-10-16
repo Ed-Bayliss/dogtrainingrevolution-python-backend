@@ -822,6 +822,7 @@
 
                 todaysEvents.forEach(function (ev) {
                     var evSpan = createElement("span", ev.color);
+                    evSpan.style = "background-color:" + ev.color;
                     element.appendChild(evSpan);
                     evSpan.style.cursor = "pointer"; // Make the span look clickable
 
@@ -903,7 +904,9 @@
 
             events.forEach(function (ev) {
                 var div = createElement("div", "event");
-                var square = createElement("div", "event-category " + ev.color);
+                var square = createElement("div", "event-category ");
+                // var square = createElement("div", "event-category " + ev.color);
+                square.style = "background-color:" + ev.color;
                 var span = createElement("span", "", ev.eventName);
 
                 span.style.cursor = "pointer"; // Make the span look clickable
