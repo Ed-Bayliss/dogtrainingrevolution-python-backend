@@ -15,6 +15,7 @@ from flask_mail import Message
 from sqlalchemy import desc, text, func
 import pathlib
 
+from app.models.accounts.accounts_model import User
 from app.models.products.products_model import Booking, Product
 from app.models.pets.pets_model import Pet
 
@@ -32,10 +33,16 @@ from app import db
 
 @bookings_url.route("/bookings", methods=["GET"])
 def root():
-   pets = Pet.query.filter_by(client_id=current_user.id).all()
-   print(pets)
-   return render_template('loggedin/bookings.html',
-                          pets=pets)
+    if "_user_id" in session:
+        existing_user = User.query.filter_by(
+            id=session["_user_id"]
+        ).first()
+    else:
+        return redirect("/logout")
+    pets = Pet.query.filter_by(client_id=current_user.id).all()
+    return render_template('loggedin/bookings.html',
+                            pets=pets,
+                            existing_user=existing_user)
 
 @login_required
 @bookings_url.route('/bookings/create', methods=["POST"])
@@ -66,7 +73,7 @@ def bookings():
             "SELECT * FROM public.products ORDER BY start"
         )
     ).fetchall()
-    
+    # products = []
     # Generate all events, including recurring ones
     all_events = []
     for product in products:
@@ -85,7 +92,8 @@ from sqlalchemy import text
 def generate_recurring_events(row):
     events = []
     start_date = datetime.strptime(row.start, "%Y-%m-%d %H:%M:%S")  # Parse the start date
-    end_date = datetime.strptime(row.recurrence_end, "%Y-%m-%d %H:%M:%S") if row.recurrence_end else None
+    end_date = datetime.strptime(row.recurrence_end, "%Y-%m-%d") if row.recurrence_end else None
+    # end_date = datetime.strptime(row.recurrence_end, "%Y-%m-%d %H:%M:%S") if row.recurrence_end else None
 
     if not row.is_recurring:
         # If the event is not recurring, just return the single event with booking check

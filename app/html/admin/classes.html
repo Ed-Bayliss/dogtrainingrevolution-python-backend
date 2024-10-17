@@ -3,8 +3,8 @@
 <div class="container pt-5">
     <div class="row pt-5">
         <div class="col-12">
-            <button type="button" class="btn btn-sm btn-outline-light float-end" title="Add New" data-bs-toggle="modal" data-bs-target="#mdlogin"><i class="fas fa-add me-2"></i>Add New</button>
-            <h5><span id="usercount" class="me-2">0</span>Classes</h5>
+            <button type="button" class="btn btn-sm btn-outline-light float-end" title="Add New" data-bs-toggle="modal" data-bs-target="#mdadduser"><i class="fas fa-add me-2"></i>Add New</button>
+            <h5><span id="usercount" class="me-2">{{products|length}}</span>Classes</h5>
         </div>
         <div class="col-12 pt-2">
             <table class="table table-striped">
@@ -12,23 +12,21 @@
                     <tr>
                       <th scope="col" class="table_icon">&nbsp;</th>
                       <th scope="col">Class Name</th>
-                      <th scope="col">Days</th>
-                      <th scope="col" class="table_icon">Spaces</th>
+                      <th scope="col">Start</th>
+                      <th scope="col">Recurrence</th>
+                      <th scope="col">Colour</th>
+                      <th scope="col">Spaces</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for user in users %}
+                    {% for product in products %}
                     <tr>
-                        <th scope="row" class="table_icon"><i class="fas fa-edit" onclick="showeditmd('{{user.id}}');"></i></th>
-                        <td>{{user.firstname}} {{user.surname}}</td>
-                        <td><i class="fas fa-envelope me-1"></i>{{user.email}}</td>
-                        <td class="table_icon">
-                        {% if user.account_type == "admin" %}
-                            <i class="fas fa-certificate"></i>
-                        {% else %}
-                            <i class="fas fa-user"></i>
-                        {% endif %}
-                        </td>
+                        <th scope="row" class="table_icon"><i class="fas fa-edit" onclick="showeditmd('{{product.id}}');"></i></th>
+                        <td>{{product.title}}</td>
+                        <td>{{product.start}}</td>
+                        <td>{{product.recurrence_pattern}}</td>
+                        <td style="background-color: {{product.colour}};">&nbsp;</td>
+                        <td>{{product.spaces}}</td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -38,107 +36,243 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="mdedituser" tabindex="-1" aria-labelledby="mdedituser" aria-hidden="true">
+<div class="modal fade" id="mdeditproduct" tabindex="-1" aria-labelledby="mdeditproduct" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5">Edit User</h1>
+          <h1 class="modal-title fs-5">Edit Class</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input type="hidden" id="hfuserRef">
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editfirstname">First Name</label>
-                <input type="text" id="editfirstname" class="form-control"/>                      
+            <input type="hidden" id="hfproductRef">
+            <div class="row">
+                <div class="col-9">
+                    <div class="form-outline mb-2">
+                        <label class="form-label" for="editproductName">Class Name</label>
+                        <input type="text" id="editproductName" class="form-control form-control-sm" required/>                      
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-outline mb-2">
+                        <label class="form-label" for="editproductcolour">Colour</label>
+                        <input type="color" id="editproductcolour" class="form-control form-control-sm"/>                      
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-2">
+                        <label class="form-label" for="editproductstart">Start</label>
+                        <input type="datetime-local" id="editproductstart" class="form-control form-control-sm"/>                      
+                    </div>  
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-2">
+                        <label class="form-label" for="editproductend">End</label>
+                        <input type="datetime-local" id="editproductend" class="form-control form-control-sm"/>                      
+                    </div>  
+                </div>
             </div>
-            <!-- Name input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editsurname">Surname</label>
-                <input type="text" id="editsurname" class="form-control"/>                      
-            </div>
-
-            <!-- Email input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editemail">Email</label>
-                <input type="email" id="editemail" class="form-control"/>
-            </div>
-
-            <!-- Phone input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editphone">Phone Number</label>
-                <input type="phone" id="editphone" class="form-control"/>
-            </div>   
-            <!-- Phone input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editlevel">User Level</label>
-                <select id="editlevel" class="form-select">
-                    <option value="admin">Admin</option>
-                    <option value="client">Client</option>
-                </select>
-            </div>   
+            <div class="card">
+                <div class="card-header">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="editchkrecurr" checked>
+                        <label class="form-check-label text-black" for="editchkrecurr">
+                        Is Recurring
+                        </label>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-outline mb-2">
+                                <label class="form-label" for="editproductRecurrence">Recurrence</label>
+                                <select type="text" id="editproductRecurrence" class="form-select form-select-sm">
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="yearly">Yearly</option>
+                                    <option value="oneoff">One Off</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-outline mb-2">
+                                <label class="form-label" for="editproductInterval">Interval</label>
+                                <input type="number" id="editproductInterval" class="form-control form-control-sm" value="1"/>      
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                  <input class="form-check-input me-1" type="checkbox" value="" id="editchkSunday">
+                                  <label class="form-check-label stretched-link" for="editchkSunday">Sunday</label>
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" id="editchkMonday">
+                                    <label class="form-check-label stretched-link" for="editchkMonday">Monday</label>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" id="editchkTuesday">
+                                    <label class="form-check-label stretched-link" for="editchkTuesday">Tuesday</label>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" id="editchkWednesday">
+                                    <label class="form-check-label stretched-link" for="editchkWednesday">Wednesday</label>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" id="editchkThursday">
+                                    <label class="form-check-label stretched-link" for="editchkThursday">Thursday</label>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" id="editchkFriday">
+                                    <label class="form-check-label stretched-link" for="editchkFriday">Friday</label>
+                                  </li>
+                                  <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="checkbox" value="" id="editchkSaturday">
+                                    <label class="form-check-label stretched-link" for="editchkSaturday">Saturday</label>
+                                  </li>
+                              </ul>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-outline mb-2">
+                                <label class="form-label" for="editproductSpaces">Spaces</label>
+                                <input type="number" id="editproductSpaces" class="form-control form-control-sm" required value="1"/>                      
+                            </div>
+                            <div class="form-outline mb-2">
+                                <label class="form-label" for="editproductRecurringend">End Recurrence</label>
+                                <input type="date" id="editproductRecurringend" class="form-control form-control-sm"/>                      
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div> 
         </div>
         <div class="modal-footer" style="justify-content: space-between;">
-            <button type="button" class="btn btn-danger" onclick="deleteuser();"><i class="fas fa-trash me-2"></i>Delete user</button>
-            <button type="button" class="btn login_button" onclick="updateuser();"><i class="fas fa-save me-2"></i>Save changes</button>
+            <button type="button" class="btn btn-danger" onclick="deleteproduct();"><i class="fas fa-trash me-2"></i>Delete Class</button>
+            <button type="button" class="btn login_button" onclick="updateproduct();"><i class="fas fa-save me-2"></i>Save changes</button>
         </div>
       </div>
     </div>
 </div>
 
-<div class="modal fade" id="mdlogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdlogin" aria-hidden="true">
+<div class="modal fade" id="mdadduser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdadduser" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         
         <!-- Modal header -->
         <div class="modal-header">
-            <h1 class="modal-title fs-5">Add User</h1>
+            <h1 class="modal-title fs-5">Add Class</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
   
         <!-- Modal body -->
         <div class="modal-body">
             <form>
-            <!-- Name input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="registerName">First Name</label>
-                <input type="text" id="registerName" class="form-control" required/>                      
-            </div>
-            <!-- Name input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="registersurName">Surname</label>
-                <input type="text" id="registersurName" class="form-control" required/>                      
-            </div>
-
-            <!-- Email input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="registerEmail">Email</label>
-                <input type="email" id="registerEmail" class="form-control" required/>
-            </div>
-
-            <!-- Phone input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="registerPhone">Phone Number</label>
-                <input type="phone" id="registerPhone" class="form-control" required/>
-            </div>            
-
-            <div id="signupAlertPlaceholder">
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-9 d-flex justify-content-start">
-                    <!-- Checkbox -->
-                    <div class="form-check d-flex justify-content-center mb-4">
-                        <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" />
-                        <label class="form-check-label text-black" for="registerCheck">
-                        I have read and agree to the terms
-                        </label>
+                <div class="row">
+                    <div class="col-9">
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="productName">Class Name</label>
+                            <input type="text" id="productName" class="form-control form-control-sm" required/>                      
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="productcolour">Colour</label>
+                            <input type="color" id="productcolour" class="form-control form-control-sm"/>                      
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="productstart">Start</label>
+                            <input type="datetime-local" id="productstart" class="form-control form-control-sm"/>                      
+                        </div>  
+                    </div>
+                    <div class="col-6">
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="productend">End</label>
+                            <input type="datetime-local" id="productend" class="form-control form-control-sm"/>                      
+                        </div>  
                     </div>
                 </div>
-                <div class="col-3 d-flex justify-content-end">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="chkrecurr" checked>
+                            <label class="form-check-label text-black" for="chkrecurr">
+                            Is Recurring
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" for="productRecurrence">Recurrence</label>
+                                    <select type="text" id="productRecurrence" class="form-select form-select-sm">
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                        <option value="yearly">Yearly</option>
+                                        <option value="oneoff">One Off</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" for="productInterval">Interval</label>
+                                    <input type="number" id="productInterval" class="form-control form-control-sm" value="1"/>      
+                                </div>
+                            </div>
+                            <div class="col-8">
+
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                      <input class="form-check-input me-1" type="checkbox" value="" id="chkSunday">
+                                      <label class="form-check-label stretched-link" for="chkSunday">Sunday</label>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" id="chkMonday">
+                                        <label class="form-check-label stretched-link" for="chkMonday">Monday</label>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" id="chkTuesday">
+                                        <label class="form-check-label stretched-link" for="chkTuesday">Tuesday</label>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" id="chkWednesday">
+                                        <label class="form-check-label stretched-link" for="chkWednesday">Wednesday</label>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" id="chkThursday">
+                                        <label class="form-check-label stretched-link" for="chkThursday">Thursday</label>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" id="chkFriday">
+                                        <label class="form-check-label stretched-link" for="chkFriday">Friday</label>
+                                      </li>
+                                      <li class="list-group-item">
+                                        <input class="form-check-input me-1" type="checkbox" value="" id="chkSaturday">
+                                        <label class="form-check-label stretched-link" for="chkSaturday">Saturday</label>
+                                      </li>
+                                  </ul>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" for="productSpaces">Spaces</label>
+                                    <input type="number" id="productSpaces" class="form-control form-control-sm" required value="1"/>                      
+                                </div>
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" for="productRecurringend">End Recurrence</label>
+                                    <input type="date" id="productRecurringend" class="form-control form-control-sm"/>                      
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>                 
+                <div class="col-12 d-flex justify-content-center mt-2 pt-2">
                     <!-- Submit button -->
-                    <button type="button" class="btn btn-primary btn-block mb-3 login_button" onclick="signup();">Sign up</button>
+                    <button type="button" class="btn btn-primary btn-block mb-3 login_button" onclick="add_product();">Add New</button>
                 </div>
-            </div>                    
+
             </form>  
         </div>
       </div>
@@ -146,21 +280,67 @@
 </div>
 
 <script>
-    function showeditmd(userRef){
+    function showeditmd(productRef){
         showLoadingOverlay();
-        document.getElementById("hfuserRef").value = userRef;
-        var data = {userRef: userRef};
-        sendDataUrl('/loaduserdetails', JSON.stringify(data), function (response) {
-            document.getElementById("editfirstname").value = response[0]['firstname'];
-            document.getElementById("editsurname").value = response[0]['surname'];
-            document.getElementById("editemail").value = response[0]['email'];
-            document.getElementById("editphone").value = response[0]['phone'];
-            document.getElementById("editlevel").value = response[0]['account_type'];
-            $('#mdedituser').modal('show');
+        document.getElementById("hfproductRef").value = productRef;
+        var data = {productRef: productRef};
+        sendDataUrl('/loadproductdetails', JSON.stringify(data), function (response) {
+            document.getElementById("editproductName").value = response[0]['title'];
+            document.getElementById("editproductcolour").value = response[0]['colour'];
+            document.getElementById("editproductstart").value = response[0]['start'];
+            document.getElementById("editproductend").value = response[0]['end'];
+            document.getElementById("editchkrecurr").value = response[0]['is_recurring'];
+            document.getElementById("editproductRecurrence").value = response[0]['recurrence_pattern'];
+            document.getElementById("editproductSpaces").value = response[0]['spaces'];
+
+            document.getElementById("editproductInterval").value = response[0]['recurrence_interval'];
+            document.getElementById("editproductRecurringend").value = response[0]['recurrence_end'];
+            
+            console.log(response[0]['recurrence_days']);
+
+            // Check if response[0] and recurrence_days exist and recurrence_days is an array
+            if (response?.[0]?.['recurrence_days'] && Array.isArray(response[0]['recurrence_days'])) {
+                if (response[0]['recurrence_days'].includes('0')) {
+                    document.getElementById("editchkSunday").checked = true;
+                }
+                if (response[0]['recurrence_days'].includes('1')) {
+                    document.getElementById("editchkMonday").checked = true;
+                }
+                if (response[0]['recurrence_days'].includes('2')) {
+                    document.getElementById("editchkTuesday").checked = true;
+                }
+                if (response[0]['recurrence_days'].includes('3')) {
+                    document.getElementById("editchkWednesday").checked = true;
+                }
+                if (response[0]['recurrence_days'].includes('4')) {
+                    document.getElementById("editchkThursday").checked = true;
+                }
+                if (response[0]['recurrence_days'].includes('5')) {
+                    document.getElementById("editchkFriday").checked = true;
+                }
+                if (response[0]['recurrence_days'].includes('6')) {
+                    document.getElementById("editchkSaturday").checked = true;
+                }
+            } else {
+                console.error("recurrence_days is undefined or not an array");
+            }
+
+            // if (0 in response && 'recurrence_days' in response[0]) {
+            //     if(response[0]['recurrence_days'].includes('0')){document.getElementById("editchkSunday").checked = true;}
+            //     if(response[0]['recurrence_days'].includes('1')){document.getElementById("editchkMonday").checked = true;}
+            //     if(response[0]['recurrence_days'].includes('2')){document.getElementById("editchkTuesday").checked = true;}
+            //     if(response[0]['recurrence_days'].includes('3')){document.getElementById("editchkWednesday").checked = true;}
+            //     if(response[0]['recurrence_days'].includes('4')){document.getElementById("editchkThursday").checked = true;}
+            //     if(response[0]['recurrence_days'].includes('5')){document.getElementById("editchkFriday").checked = true;}
+            //     if(response[0]['recurrence_days'].includes('6')){document.getElementById("editchkSaturday").checked = true;}
+            // } else {
+            //     console.log("recurrence_days does not exist");
+            // }
+
+            $('#mdeditproduct').modal('show');
             hideLoadingOverlay();
         });        
     }
-
     function signup(){
         // Get the values from the input fields
         showLoadingOverlay();
@@ -213,29 +393,109 @@
             hideLoadingOverlay();
         }
     }
-
-    function updateuser(){
+    function updateproduct(){
         showLoadingOverlay();
-        var data = {userRef: document.getElementById("hfuserRef").value, 
-        firstname: document.getElementById("editfirstname").value, 
-        surname: document.getElementById("editsurname").value, 
-        email: document.getElementById("editemail").value, 
-        phone: document.getElementById("editphone").value, 
-        account_type: document.getElementById("editlevel").value};
 
-        sendDataUrl('/updateduserdetails', JSON.stringify(data), function (response) {
+        var rec_int_update = [];
+        if (document.getElementById("editchkSunday").checked == true) { rec_int_update.push(0); }
+        if (document.getElementById("editchkMonday").checked == true) { rec_int_update.push(1); }
+        if (document.getElementById("editchkTuesday").checked == true) { rec_int_update.push(2); }
+        if (document.getElementById("editchkWednesday").checked == true) { rec_int_update.push(3); }
+        if (document.getElementById("editchkThursday").checked == true) { rec_int_update.push(4); }
+        if (document.getElementById("editchkFriday").checked == true) { rec_int_update.push(5); }
+        if (document.getElementById("editchkSaturday").checked == true) { rec_int_update.push(6); }
+
+        var data = {
+            productRef: document.getElementById("hfproductRef").value,
+            productTitle: document.getElementById("editproductName").value.toLowerCase(),
+            productStart: document.getElementById("editproductstart").value,
+            productEnd: document.getElementById("editproductend").value,
+            productSpaces: document.getElementById("editproductSpaces").value,
+            productColour: document.getElementById("editproductcolour").value,
+            productRecur: document.getElementById("editchkrecurr").checked,
+            productRecurrence: document.getElementById("editproductRecurrence").value,
+            productinterval: document.getElementById("editproductInterval").value,
+            productRecurEnd: document.getElementById("editproductRecurringend").value,
+            productrecurrence_days: rec_int_update,
+        };
+
+        sendDataUrl('/updatedproductdetails', JSON.stringify(data), function (response) {
             location.reload();
         });
     }
-    function deleteuser(){
-        if (confirm("Do you want to delete this user") == true) {
+    function deleteproduct(){
+        if (confirm("Do you want to delete this class") == true) {
             showLoadingOverlay();
-            var data = {userRef: document.getElementById("hfuserRef").value}
-            sendDataUrl('/deleteuserdetails', JSON.stringify(data), function (response) {
+            var data = {productRef: document.getElementById("hfproductRef").value}
+            sendDataUrl('/product_delete', JSON.stringify(data), function (response) {
                 location.reload();
             });
         }
     }
+    function setDateTimeFields() {
+        // Get today's date
+        let now = new Date();
+        let yearFromNow = new Date();
+        
+        // Add one year to the current date
+        yearFromNow.setHours(now.getHours() + 1);
+        
+        // Format the dates as 'YYYY-MM-DDTHH:MM' for datetime-local input
+        let formatDateTime = (date) => {
+            let year = date.getFullYear();
+            let month = ('0' + (date.getMonth() + 1)).slice(-2);
+            let day = ('0' + date.getDate()).slice(-2);
+            let hours = ('0' + date.getHours()).slice(-2);
+            let minutes = ('0' + date.getMinutes()).slice(-2);
+            
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        };
+        
+        // Set the input values
+        document.getElementById('productstart').value = formatDateTime(now);
+        document.getElementById('productend').value = formatDateTime(yearFromNow);
+    }
+    window.onload = setDateTimeFields;
+    function add_product(){
+        var rec_int = [];
+        if (document.getElementById("chkSunday").checked == true) { rec_int.push(0); }
+        if (document.getElementById("chkMonday").checked == true) { rec_int.push(1); }
+        if (document.getElementById("chkTuesday").checked == true) { rec_int.push(2); }
+        if (document.getElementById("chkWednesday").checked == true) { rec_int.push(3); }
+        if (document.getElementById("chkThursday").checked == true) { rec_int.push(4); }
+        if (document.getElementById("chkFriday").checked == true) { rec_int.push(5); }
+        if (document.getElementById("chkSaturday").checked == true) { rec_int.push(6); }
 
+        var data = {
+            productTitle: document.getElementById("productName").value.toLowerCase(),
+            productStart: document.getElementById("productstart").value,
+            productEnd: document.getElementById("productend").value,
+            productSpaces: document.getElementById("productSpaces").value,
+            productColour: document.getElementById("productcolour").value,
+            productRecur: document.getElementById("chkrecurr").checked,
+            productRecurrence: document.getElementById("productRecurrence").value,
+            productrecurrence_days: rec_int,
+            productinterval: document.getElementById("productInterval").value,
+            productRecurEnd: document.getElementById("productRecurringend").value,
+        };
+
+        sendDataUrl('/product_add', JSON.stringify(data), function (response) {
+            if (response['error'] == 500) {
+                var alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-warning alert-dismissible fade show';
+                alertDiv.role = 'alert';
+                alertDiv.textContent = 'error adding product';
+                var closeButton = document.createElement('button');
+                closeButton.type = 'button';
+                closeButton.className = 'btn-close';
+                closeButton.setAttribute('data-bs-dismiss', 'alert');
+                closeButton.setAttribute('aria-label', 'Close');
+                alertDiv.appendChild(closeButton);
+                document.getElementById('signupAlertPlaceholder').appendChild(alertDiv);
+            } else {
+                location.reload();
+            }
+        });
+    }
 </script>
 {% endblock %}

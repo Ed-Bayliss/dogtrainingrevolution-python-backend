@@ -1,3 +1,4 @@
+import datetime
 import uuid
 from flask import (
     Blueprint,
@@ -34,14 +35,20 @@ from app import db
 @login_required
 @admin_url.route("/users", methods=["GET"])
 def root():
-#    users = User.query.filter_by().all()
-   all_users = (
-        User.query.filter_by()
-        .order_by(User.email)
-        .all()
-    )
-   return render_template('admin/users.html',
-                          users=all_users)
+    if "_user_id" in session:
+        existing_user = User.query.filter_by(
+            id=session["_user_id"]
+        ).first()
+    else:
+        return redirect("/logout")
+    all_users = (
+            User.query.filter_by()
+            .order_by(User.email)
+            .all()
+        )
+    return render_template('admin/users.html', 
+                           users=all_users,
+                           existing_user=existing_user)
 
 
 @admin_url.route("/loaduserdetails", methods=["POST"])
@@ -92,23 +99,104 @@ def classes_root():
         ).first()
     else:
         return redirect("/logout")
-#    all_users = (
-#         User.query.filter_by()
-#         .order_by(User.email)
-#         .all()
-#     )
+    
+    if existing_user.account_type == "admin":
+        products = Product.query.filter_by().all()
+    else:
+        products = []
     return render_template('admin/classes.html',
-                          users=[])
+                          users=[],
+                          existing_user=existing_user,
+                          products=products)
+
+@login_required
+@admin_url.route("/product_add", methods=["GET", "POST"])
+def product_add():
+    if "_user_id" in session:
+        existing_user = User.query.filter_by(
+            id=session["_user_id"]
+        ).first()
+    else:
+        return redirect("/logout")
+    
+
+    product = Product(
+        id=str(uuid.uuid4()),
+        title=request.json['productTitle'],
+        start=request.json['productStart'],
+        end=request.json['productEnd'],
+        spaces=request.json['productSpaces'],
+        colour=request.json['productColour'],
+        is_recurring=request.json['productRecur'] == '1',
+        recurrence_pattern=request.json['productRecurrence'],
+        location='Leek',
+        recurrence_days=request.json['productrecurrence_days'],
+        recurrence_interval=request.json['productinterval'],
+        recurrence_end=request.json['productRecurEnd'],
+    )
+
+    db.session.add(product)
+    db.session.commit()
+    return jsonify({"msg": "complete"})
+
+@login_required
+@admin_url.route("/loadproductdetails", methods=["GET", "POST"])
+def loadproductdetails():
+    product_details = (
+        Product.query.filter_by(id=str(request.json["productRef"]))
+        .order_by(Product.title)
+        .all()
+    )
+    product_details_list = [Product.to_dict() for Product in product_details]
+    return jsonify(product_details_list)
+
+@admin_url.route("/updatedproductdetails", methods=["POST"])
+@login_required
+def updatedproductdetails():
+    product_details = Product.query.filter_by(id=str(request.json["productRef"])).first()
+    
+    product_start = datetime.datetime.fromisoformat(request.json["productStart"])
+    formatted_startdate = product_start.strftime('%Y-%m-%d %H:%M:00')
+
+    product_end = datetime.datetime.fromisoformat(request.json["productEnd"])
+    formatted_enddate = product_end.strftime('%Y-%m-%d %H:%M:00')
+
+    if product_details is not None:
+        product_details.title = request.json["productTitle"]
+        product_details.start = formatted_startdate
+        product_details.end = formatted_enddate
+        product_details.spaces = request.json["productSpaces"]
+        product_details.colour = request.json['productColour']
+        product_details.is_recurring = request.json['productRecur'] == '1'
+        product_details.recurrence_pattern = request.json['productRecurrence']
+        product_details.recurrence_days = request.json['productrecurrence_days']
+        product_details.recurrence_interval = request.json['productinterval']
+        product_details.recurrence_end = request.json['productRecurEnd']
+
+        db.session.commit()
+
+    return jsonify({"msg": "complete"})
+
+@admin_url.route("/product_delete", methods=["POST"])
+@login_required
+def product_delete():
+
+    product_details = Product.query.filter_by(id=str(request.json["productRef"])).first()
+    if product_details is not None:
+        db.session.delete(product_details)
+        db.session.commit()
+    
+    return jsonify({"msg": "complete"})
 
 @login_required
 @admin_url.route("/pets", methods=["GET"])
 def pets_root():
     if "_user_id" in session:
-        user_info = User.query.filter_by(id=session["_user_id"]).first()
+        existing_user = User.query.filter_by(id=session["_user_id"]).first()
     else:
         return redirect("/logout")
     
-    if user_info.account_type == "admin":
+    if existing_user.account_type == "admin":
         # pets = Pet.query.filter_by().all()
         pets_with_users = db.session.execute(
             text(
@@ -122,7 +210,8 @@ def pets_root():
     
     return render_template('user/pets.html',
                           pets=pets_with_users,
-                          users=users)
+                          users=users,
+                          existing_user=existing_user)
 
 @login_required
 @admin_url.route("/pets_add", methods=["GET", "POST"])
