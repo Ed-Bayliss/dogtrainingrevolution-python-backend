@@ -654,7 +654,7 @@
 </style>
 
 <script>
-        showLoadingOverlay();
+    showLoadingOverlay();
     !(function () {
         var today = moment();
 
@@ -1033,104 +1033,104 @@
 
     })();
 
-        
-    // document.querySelector(".close").addEventListener("click", function () {
-    //     document.getElementById("eventModal").style.display = "none";
-    // });
 
-    // // Close the modal if user clicks anywhere outside of the modal
-    // window.addEventListener("click", function (event) {
-    //     var modal = document.getElementById("eventModal");
-    //     if (event.target === modal) {
-    //         modal.style.display = "none";
-    //     }
-    // });
+    document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("eventModal").style.display = "none";
+    });
 
-    // function openModal(event) {
-    //     var modalElement = document.getElementById("eventModal");
-    //     var eventTitle = document.getElementById("eventTitle");
-    //     var eventDetails = document.getElementById("eventDetails");
+    // Close the modal if user clicks anywhere outside of the modal
+    window.addEventListener("click", function (event) {
+        var modal = document.getElementById("eventModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
 
-    //     // Set event details in the modal
-    //     eventTitle.innerText = event.eventName;
-    //     eventId.innerText = event.productId;
-    //     eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
+    function openModal(event) {
+        var modalElement = document.getElementById("eventModal");
+        var eventTitle = document.getElementById("eventTitle");
+        var eventDetails = document.getElementById("eventDetails");
 
-    //     // Initialize and show the modal using Bootstrap 5
-    //     var modal = new bootstrap.Modal(modalElement, {
-    //         backdrop: false, // This prevents closing the modal when clicking outside
-    //         keyboard: false     // Prevent closing the modal with the Esc key
-    //     });
-    //     modal.show();
-    // }
+        // Set event details in the modal
+        eventTitle.innerText = event.eventName;
+        eventId.innerText = event.productId;
+        eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
 
-    // function downloadUrl(url, callback) {
+        // Initialize and show the modal using Bootstrap 5
+        var modal = new bootstrap.Modal(modalElement, {
+            backdrop: false, // This prevents closing the modal when clicking outside
+            keyboard: false     // Prevent closing the modal with the Esc key
+        });
+        modal.show();
+    }
 
-    //     var xmlhttp = new XMLHttpRequest();
-    //     xmlhttp.onreadystatechange = function () {
-    //         if (this.readyState == 4 && this.status == 200) {
-    //             var myArr = JSON.parse(this.responseText);
-    //             callback(myArr, this.status)
-    //         }
-    //     };
-    //     xmlhttp.open("GET", url, true);
-    //     console.log(url);
-    //     console.log(window.location.href);
-    //     xmlhttp.send();
-    //     xmlhttp.onerror = function () {
-    //         alert("Request failed");
-    //     };
-    // }
+    function downloadUrl(url, callback) {
 
-    // function sendDataUrl(url, data2Send, callback) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                callback(myArr, this.status)
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        console.log(url);
+        console.log(window.location.href);
+        xmlhttp.send();
+        xmlhttp.onerror = function () {
+            alert("Request failed");
+        };
+    }
 
-    //     var xmlhttp = new XMLHttpRequest();
-    //     xmlhttp.onreadystatechange = function () {
-    //         if (this.readyState == 4 && this.status == 200) {
-    //             var myArr = JSON.parse(this.responseText);
-    //             callback(myArr, this.status)
-    //         }
-    //     };
+    function sendDataUrl(url, data2Send, callback) {
 
-    //     xmlhttp.open('POST', url)
-    //     console.log(url);
-    //     console.log(window.location.href);
-    //     xmlhttp.setRequestHeader("Content-Type", "application/json");
-    //     xmlhttp.onerror = function () {
-    //         alert('It appears the file is too large');
-    //     };
-    //     xmlhttp.send(data2Send);
-    //     // console.log('done..')
-    // }
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                callback(myArr, this.status)
+            }
+        };
 
-    // function closeModal() {
-    //     var modalElement = document.getElementById("eventModal");
+        xmlhttp.open('POST', url)
+        console.log(url);
+        console.log(window.location.href);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.onerror = function () {
+            alert('It appears the file is too large');
+        };
+        xmlhttp.send(data2Send);
+        // console.log('done..')
+    }
 
-    //     // Use Bootstrap Modal API to hide the modal
-    //     var modal = bootstrap.Modal.getInstance(modalElement);
-    //     if (modal) {
-    //         modal.hide();
-    //     }
-    // }
+    function closeModal() {
+        var modalElement = document.getElementById("eventModal");
 
-    // function createBooking() {
+        // Use Bootstrap Modal API to hide the modal
+        var modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) {
+            modal.hide();
+        }
+    }
 
-    //     var pet = document.getElementById('petNameDropdown').value;
-    //     var eventTitle = document.getElementById("eventTitle").innerText;
-    //     var eventDetails = document.getElementById("eventDetails").innerText;
-    //     var eventId = document.getElementById("eventId").innerText;
+    function createBooking() {
 
-    //     var data = {
-    //         pet: pet,
-    //         eventTitle: eventTitle,
-    //         eventDetails: eventDetails,
-    //         eventId: eventId
-    //     };
-    //     sendDataUrl('/bookings/create', JSON.stringify(data), function (data) {
-    //         closeModal();
-    //         alert("Your booking has been made. You will recieve confirmation via email.")
-    //     });
-    // }
+        var pet = document.getElementById('petNameDropdown').value;
+        var eventTitle = document.getElementById("eventTitle").innerText;
+        var eventDetails = document.getElementById("eventDetails").innerText;
+        var eventId = document.getElementById("eventId").innerText;
+
+        var data = {
+            pet: pet,
+            eventTitle: eventTitle,
+            eventDetails: eventDetails,
+            eventId: eventId
+        };
+        sendDataUrl('/bookings/create', JSON.stringify(data), function (data) {
+            closeModal();
+            alert("Your booking has been made. You will recieve confirmation via email.")
+        });
+    }
 
 </script>
 {% endblock %}

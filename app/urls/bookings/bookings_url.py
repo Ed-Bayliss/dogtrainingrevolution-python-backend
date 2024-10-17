@@ -10,6 +10,12 @@ from flask import (
     session,
     url_for,
 )
+
+from datetime import datetime, timedelta
+
+from datetime import datetime, timedelta
+from sqlalchemy import text
+
 from flask_login import current_user, login_required, logout_user, login_user
 from flask_mail import Message
 from sqlalchemy import desc, text, func
@@ -83,17 +89,13 @@ def bookings():
 
     return all_events
    
-from datetime import datetime, timedelta
 
-from datetime import datetime, timedelta
-from sqlalchemy import text
 
 # Utility function to handle recurrence generation and booking check
 def generate_recurring_events(row):
     events = []
     start_date = datetime.strptime(row.start, "%Y-%m-%d %H:%M:%S")  # Parse the start date
     end_date = datetime.strptime(row.recurrence_end, "%Y-%m-%d") if row.recurrence_end else None
-    # end_date = datetime.strptime(row.recurrence_end, "%Y-%m-%d %H:%M:%S") if row.recurrence_end else None
 
     if not row.is_recurring:
         # If the event is not recurring, just return the single event with booking check
@@ -103,36 +105,50 @@ def generate_recurring_events(row):
     current_date = start_date
     recurrence_pattern = row.recurrence_pattern
     interval = row.recurrence_interval or 1  # Default to 1 if interval is not set
-    days_of_week = row.recurrence_days or []
+    days_of_week = [int(day) for day in row.recurrence_days] or []
+
+    # Adjust days_of_week to match Python's weekday convention if necessary
+    days_of_week = [(day + 6) % 7 for day in days_of_week]  # Shift days so that 0=Monday
 
     while True:
-        if end_date and current_date > end_date:
-            break  # Stop if the current date exceeds the recurrence end date
+        if end_date and current_date > end_date:  # Break if we go past the recurrence end date
+            break
 
-        # Add event for this occurrence with booking check
-        events.append(generate_event_with_booking_check(row, current_date))
+        # Handle weekly recurrence
+        if recurrence_pattern == 'weekly' and days_of_week:
+            week_start = current_date - timedelta(days=current_date.weekday())  # Get the Monday of the current week
+            for day in days_of_week:
+                event_date = week_start + timedelta(days=day)
+                # Ensure we add the event if it's on or before the end_date
+                if event_date >= start_date and (not end_date or event_date <= end_date):
+                    events.append(generate_event_with_booking_check(row, event_date))
+            current_date += timedelta(weeks=interval)
 
-        # Increment the date based on the recurrence pattern
-        if recurrence_pattern == 'daily':
+        # Handle daily recurrence
+        elif recurrence_pattern == 'daily':
+            if not end_date or current_date <= end_date:  # Ensure current date is before or on end_date
+                events.append(generate_event_with_booking_check(row, current_date))
             current_date += timedelta(days=interval)
-        elif recurrence_pattern == 'weekly':
-            if days_of_week:
-                # Add only if the current date matches the day of the week
-                next_event_day = next((d for d in days_of_week if current_date.strftime('%A') == d), None)
-                if not next_event_day:
-                    current_date += timedelta(weeks=interval)
-            else:
-                current_date += timedelta(weeks=interval)
+
+        # Handle monthly recurrence
         elif recurrence_pattern == 'monthly':
+            if not end_date or current_date <= end_date:
+                events.append(generate_event_with_booking_check(row, current_date))
             current_date = add_months(current_date, interval)
+
+        # Handle yearly recurrence
         elif recurrence_pattern == 'yearly':
+            if not end_date or current_date <= end_date:
+                events.append(generate_event_with_booking_check(row, current_date))
             current_date = add_years(current_date, interval)
 
-        # Exit the loop if there is no end date (for demonstration, you might limit the number of recurrences)
+        # Exit the loop if there is no end date and we have enough recurrences
         if not end_date and len(events) > 50:  # Limit to 50 occurrences if no end date
             break
 
     return events
+
+
 
 # Helper function to generate an event and check for existing bookings
 def generate_event_with_booking_check(row, event_date):
