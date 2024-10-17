@@ -41,11 +41,19 @@ def root():
         ).first()
     else:
         return redirect("/logout")
-    all_users = (
+    if existing_user.account_type == "admin":
+        all_users = (
             User.query.filter_by()
             .order_by(User.email)
             .all()
         )
+    else:
+        all_users = (
+            User.query.filter_by(id=str(existing_user.id))
+            .order_by(User.email)
+            .all()
+        )
+    
     return render_template('admin/users.html', 
                            users=all_users,
                            existing_user=existing_user)

@@ -37,6 +37,45 @@ UPLOAD_FOLDER = "app/static/uploads/"
 
 from app import db
 
+@bookings_url.route("/manage_bookings", methods=["GET"])
+def manage_bookings():
+    if "_user_id" in session:
+        existing_user = User.query.filter_by(
+            id=session["_user_id"]
+        ).first()
+    else:
+        return redirect("/logout")
+    
+    if existing_user.account_type == "admin":
+        bookings = db.session.execute(
+            text(
+                "SELECT public.bookings.id, public.bookings.booking_date, public.bookings.status, public.accounts.firstname, public.accounts.surname, public.pets.name, public.products.title "
+                "FROM public.bookings "
+                "INNER JOIN public.accounts ON public.bookings.client_id = public.accounts.id "
+                "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
+                "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
+                "ORDER BY booking_date DESC"
+            )
+        ).fetchall()
+    else:
+        bookings = db.session.execute(
+            text(
+                "SELECT public.bookings.id, public.bookings.booking_date, public.bookings.status, public.accounts.firstname, public.accounts.surname, public.pets.name, public.products.title "
+                "FROM public.bookings "
+                "INNER JOIN public.accounts ON public.bookings.client_id = public.accounts.id "
+                "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
+                "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
+                "WHERE public.bookings.client_id = :client_id "
+                "ORDER BY booking_date DESC"
+            ),
+            {"client_id": existing_user.id}  # Binding the parameter safely
+        ).fetchall()
+
+
+    return render_template('loggedin/booking_list.html',
+                            bookings=bookings,
+                            existing_user=existing_user)
+
 @bookings_url.route("/bookings", methods=["GET"])
 def root():
     if "_user_id" in session:
