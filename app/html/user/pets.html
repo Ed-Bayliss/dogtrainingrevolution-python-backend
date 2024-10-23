@@ -4,30 +4,10 @@
     <div class="row pt-5">
         <div class="col-12">
             <button type="button" class="btn btn-sm btn-outline-light float-end" title="Add New" data-bs-toggle="modal" data-bs-target="#mdaddpet"><i class="fas fa-add me-2"></i>Add New</button>
-            <h5><span id="usercount" class="me-2">{{pets|length}}</span>Pets</h5>
+            <h5><span id="usercount" class="me-2">0</span>Pets</h5>
         </div>
         <div class="col-12 pt-2">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                      <th scope="col" class="table_icon">&nbsp;</th>
-                      <th scope="col">Client Name</th>
-                      <th scope="col">Pet Name</th>
-                      <th scope="col">Breed</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for pet in pets %}
-                    <tr>
-                        <th scope="row" class="table_icon"><i class="fas fa-edit" onclick="showeditmd('{{pet.id}}');"></i></th>
-                        <td>{{pet.firstname}} {{pet.surname}}</td>
-                        <td>{{pet.name}}</td>
-                        <td>{{pet.breed}}</td>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-            </table>
+            <div id="example-table" class="mb-3"></div>
         </div>
     </div>
 </div>
@@ -42,43 +22,49 @@
         </div>
         <div class="modal-body">
             <input type="hidden" id="hfpetRef">
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editname">Name</label>
-                <input type="text" id="editname" class="form-control"/>                      
-            </div>
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editbreed">Breed</label>
-                <input type="text" id="editbreed" class="form-control"/>                      
-            </div>
             <div class="row">
-                <div class="col-5">
+                <div class="col-9">
                     <div class="form-outline mb-2">
-                        <label class="form-label" for="editdob">DOB</label>
-                        <input type="date" id="editdob" class="form-control"/>                      
+                        <label class="form-label small" for="editname">Name</label>
+                        <input type="text" id="editname" class="form-control"/>                      
                     </div>
                 </div>
-                <div class="col-7">
+                <div class="col-3">
                     <div class="form-outline mb-2">
-                        <label class="form-label" for="editchip">Microchip</label>
-                        <input type="text" id="editchip" class="form-control"/>                      
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-outline mb-2">
-                        <label class="form-label" for="editgender">Gender</label>
+                        <label class="form-label small" for="editgender">Gender</label>
                         <select type="text" id="editgender" class="form-select">
                             <option value="1">Male</option>
                             <option value="0">Female</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-9">
                     <div class="form-outline mb-2">
-                        <label class="form-label" for="editneutered">Neutered</label>
+                        <label class="form-label small" for="editbreed">Breed</label>
+                        <input type="text" id="editbreed" class="form-control"/>                      
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-outline mb-2">
+                        <label class="form-label small" for="editneutered">Neutered</label>
                         <select type="text" id="editneutered" class="form-select">
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-7">
+                    <div class="form-outline mb-2">
+                        <label class="form-label" for="editchip">Microchip</label>
+                        <input type="text" id="editchip" class="form-control"/>                      
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="form-outline mb-2">
+                        <label class="form-label" for="editdob">DOB</label>
+                        <input type="date" id="editdob" class="form-control"/>                      
                     </div>
                 </div>
             </div>
@@ -106,50 +92,58 @@
             <form>
             <!-- Name input -->
             <div class="form-outline mb-2">
-                <label class="form-label" for="clientName">Client</label>
+                <label class="form-label small" for="clientName">Client</label>
                 <select type="text" id="clientName" class="form-select">
                     {% for user in users %}
                     <option value="{{user.id}}">{{user.firstname}} {{user.surname}}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="form-outline mb-2">
-                <label class="form-label" for="addname">Name</label>
-                <input type="text" id="addname" class="form-control"/>                      
-            </div>
-            <div class="form-outline mb-2">
-                <label class="form-label" for="addbreed">Breed</label>
-                <input type="text" id="addbreed" class="form-control"/>                      
-            </div>
             <div class="row">
-                <div class="col-5">
+                <div class="col-9">
                     <div class="form-outline mb-2">
-                        <label class="form-label" for="adddob">DOB</label>
-                        <input type="date" id="adddob" class="form-control"/>                      
+                        <label class="form-label small" for="addname">Name</label>
+                        <input type="text" id="addname" class="form-control"/>                      
                     </div>
                 </div>
-                <div class="col-7">
+                <div class="col-3">
                     <div class="form-outline mb-2">
-                        <label class="form-label" for="addchip">Microchip</label>
-                        <input type="text" id="addchip" class="form-control"/>                      
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-outline mb-2">
-                        <label class="form-label" for="addgender">Gender</label>
+                        <label class="form-label small" for="addgender">Gender</label>
                         <select type="text" id="addgender" class="form-select">
                             <option value="1">Male</option>
                             <option value="0">Female</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-9">
                     <div class="form-outline mb-2">
-                        <label class="form-label" for="addneutered">Neutered</label>
+                        <label class="form-label small" for="addbreed">Breed</label>
+                        <input type="text" id="addbreed" class="form-control"/>                      
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-outline mb-2">
+                        <label class="form-label small" for="addneutered">Neutered</label>
                         <select type="text" id="addneutered" class="form-select">
                             <option value="1">Yes</option>
                             <option value="0">No</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="row">
+                <div class="col-7">
+                    <div class="form-outline mb-2">
+                        <label class="form-label small" for="addchip">Microchip</label>
+                        <input type="text" id="addchip" class="form-control"/>                      
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="form-outline mb-2">
+                        <label class="form-label small" for="adddob">DOB</label>
+                        <input type="date" id="adddob" class="form-control"/>                      
                     </div>
                 </div>
             </div>
@@ -168,6 +162,48 @@
 </div>
 
 <script>
+
+    var menuIcon = function(cell, formatterParams, onRendered){ //plain text value
+        return "<i class='fa fa-edit'></i>";
+    };
+    var table = new Tabulator("#example-table", {
+        layout:"fitColumns",
+        columns:[
+        {title:"id", field:"id", field:"secret", download:false, visible:false},
+        {title:"firstname", field:"firstname", field:"secret", download:false, visible:false},
+        {title:"surname", field:"surname", field:"secret", download:false, visible:false},
+        {
+            title:"Owner", 
+            field:"Owner", 
+            sorter:"string", 
+            resizable:true, 
+            headerFilter:"input", 
+            widthGrow: 1,
+            mutator: function(value, data, type, params, component) {
+                // Combine firstname and surname
+                return data.firstname + " " + data.surname;
+            }
+        },
+        {title:"Name", field:"name", headerFilter:"input", sorter:"String", resizable:true, widthGrow: 1},
+        {title:"Breed", field:"breed", headerFilter:"input", sorter:"String", resizable:true, widthGrow: 1},
+        {formatter:menuIcon, width:40, hozAlign:"center", cellClick:function(e, cell){showeditmd(cell.getRow().getData().id)}, headerSort:false},
+        ],
+    });
+
+    table.on("dataFiltered", function (filters, rows) {
+      document.getElementById("usercount").innerHTML = rows.length;
+    });
+
+    $(document).ready(function () {
+        var ajaxConfig = {
+            method:"POST", //set request type to Position
+            headers: {
+                "Content-type": 'application/json; charset=utf-8', //set specific content type
+            },
+        };
+        table.setData("/pets_json");
+    });
+
     function addpet(){
         showLoadingOverlay();
         var data = {client_id: document.getElementById("clientName").value, 

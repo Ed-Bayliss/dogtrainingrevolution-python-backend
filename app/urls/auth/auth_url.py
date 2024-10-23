@@ -60,7 +60,7 @@ def login():
 def logout():
     """User log-out logic."""
     logout_user()
-    return redirect("/login")
+    return redirect("/")
 
 
 
@@ -122,6 +122,46 @@ def signup():
         login_user(existing_user)
         return jsonify({'error': 500})
 
+@auth_url.route("/forgotPassword", methods=["POST"])
+def forgotPassword():
+    """
+    User sign-up page.
+
+    GET requests serve sign-up page.
+    POST requests validate form & user creation.
+    """
+    import random
+
+    image = random.randint(0, 25)
+    password_length = 13
+    new_password = secrets.token_urlsafe(password_length)
+    data = request.json
+    
+    existing_user = User.query.filter_by(
+        email=data['email'].lower()
+    ).first()
+
+    if existing_user:
+    
+        existing_user.set_password(new_password)
+        db.session.commit()
+
+        with open("app/static/emails/forgot.html", "r") as body:
+                body = body.read()
+                body = body.replace("#FIRSTNAME#", existing_user.firstname)
+                body = body.replace("#SURNAME#", existing_user.surname)
+                body = body.replace("#USERNAME#", existing_user.email)
+                body = body.replace("#PASSWORD#", new_password)
+        # send email with username password
+        send_email(existing_user.email, "david.greaves@pawtul.com", "Dog Training Revolution - Forgot Password", body)
+
+        return jsonify({'successful': 200})
+
+    else:
+        login_user(existing_user)
+        return jsonify({'error': 500})
+
+
 @login_manager.user_loader
 def load_user(user_id):
     """Check if user is logged-in upon page load."""
@@ -155,3 +195,20 @@ def send_email(receiver, cc_email, subject, body):
 
     except:
         flash("Email Error: Please check clients email address")
+
+    """
+    Logs a user out. (You do not need to pass the actual user.) This will
+    also clean up the remember me cookie if it exists.
+    """
+
+    if "_user_id" in session:
+        session.pop("_user_id")
+
+    if "_fresh" in session:
+        session.pop("_fresh")
+
+    if "_id" in session:
+        session.pop("_id")
+
+    # current_app.login_manager._update_request_context_with_user()
+    return True

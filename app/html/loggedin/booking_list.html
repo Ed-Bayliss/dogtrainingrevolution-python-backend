@@ -4,32 +4,10 @@
     <div class="row pt-5">
         <div class="col-12">
             <a href="/bookings" class="btn btn-sm btn-outline-light float-end" title="Add New"><i class="fas fa-add me-2"></i>Add New</a>
-            <h5><span id="usercount" class="me-2">{{bookings|length}}</span>Bookings</h5>
+            <h5><span id="usercount" class="me-2">0</span>Bookings</h5>
         </div>
         <div class="col-12 pt-2">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                      <th scope="col" class="table_icon">&nbsp;</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Class</th>
-                      <th scope="col">Pet Name</th>
-                      <th scope="col">Paid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for booking in bookings %}
-                    <tr>
-                        <th scope="row" class="table_icon"><i class="fas fa-edit" onclick="showeditmd('{{booking.id}}');"></i></th>
-                        <td>{{booking.booking_date}}</td>
-                        <td>{{booking.title}}</td>
-                        <td>{{booking.name}} <small>{{booking.firstname}} {{booking.surname}}</small></td>
-                        <td>{{booking.status}}</td>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-            </table>
+            <div id="example-table" class="mb-3"></div>
         </div>
     </div>
 </div>
@@ -170,6 +148,48 @@
 </div>
 
 <script>
+    var menuIcon = function(cell, formatterParams, onRendered){ //plain text value
+        return "<i class='fa fa-edit'></i>";
+    };
+    var table = new Tabulator("#example-table", {
+        layout:"fitColumns",
+        columns:[
+        {title:"id", field:"id", field:"secret", download:false, visible:false},
+        {title:"firstname", field:"firstname", field:"secret", download:false, visible:false},
+        {title:"surname", field:"surname", field:"secret", download:false, visible:false},
+        {title:"Name", field:"title", sorter:"String", resizable:true, headerFilter:"input", widthGrow: 1},
+        {
+            title:"Owner", 
+            field:"Owner", 
+            sorter:"string", 
+            resizable:true, 
+            headerFilter:"input", 
+            widthGrow: 1,
+            mutator: function(value, data, type, params, component) {
+                // Combine firstname and surname
+                return data.firstname + " " + data.surname;
+            }
+        },
+        {title:"Date", field:"booking_date", sorter:"String", resizable:true, widthGrow: 1},
+        {title:"Paid", field:"status", headerSort:false, resizable:true, width: 60, hozAlign:"center"},
+        {formatter:menuIcon, width:40, hozAlign:"center", cellClick:function(e, cell){showeditmd(cell.getRow().getData().id)}, headerSort:false},
+        ],
+    });
+
+    table.on("dataFiltered", function (filters, rows) {
+      document.getElementById("usercount").innerHTML = rows.length;
+    });
+
+    $(document).ready(function () {
+        var ajaxConfig = {
+            method:"POST", //set request type to Position
+            headers: {
+                "Content-type": 'application/json; charset=utf-8', //set specific content type
+            },
+        };
+        table.setData("/bookings_json");
+    });
+
     function addpet(){
         showLoadingOverlay();
         var data = {client_id: document.getElementById("clientName").value, 

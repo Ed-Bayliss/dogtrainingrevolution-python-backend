@@ -1,54 +1,18 @@
 {% extends "/master/logged_in.html" %}
 {% block content %}
+<input type="hidden" id="hfuserType" value="{{existing_user.account_type}}">
+<input type="hidden" id="hfuserID" value="{{existing_user.id}}">
+
 <div class="container pt-5">
     <div class="row pt-5">
         <div class="col-12">
             {% if existing_user.account_type == "admin" %}
             <button type="button" class="btn btn-sm btn-outline-light float-end" title="Add New" data-bs-toggle="modal" data-bs-target="#mdlogin"><i class="fas fa-add me-2"></i>Add New</button>
             {% endif %}
-            <h5><span id="usercount" class="me-2">{{users|length}}</span>Users</h5>
+            <h5><span id="usercount" class="me-2">0</span>Users</h5>
         </div>
         <div class="col-12 pt-2">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                      <th scope="col" class="table_icon">&nbsp;</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Phone</th>
-                      <th scope="col" class="table_icon">Level</th>
-                      <th scope="col" class="table_count">Pets</th>
-                      <th scope="col" class="table_count">Verified</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for user in users %}
-                    <tr>
-                      <th scope="row" class="table_icon"><i class="fas fa-edit" onclick="showeditmd('{{user.id}}');"></i></th>
-                      <td>{{user.firstname}} {{user.surname}}</td>
-                      <td><i class="fas fa-envelope me-1"></i>{{user.email}}</td>
-                      <td><i class="fas fa-phone me-1"></i>{{user.phone}}</td>
-                      <td class="table_icon">
-                        {% if user.account_type == "admin" %}
-                            <i class="fas fa-certificate"></i>
-                        {% else %}
-                            <i class="fas fa-user"></i>
-                        {% endif %}
-                        </td>
-                      <td scope="col" class="table_count">
-                        {{user.pets}}
-                      </td>
-                      <td scope="col" class="table_count">
-                        {% if user.verified == true %}
-                            <i class="fas fa-check"></i>
-                        {% else %}
-                            <i class="fas fa-x"></i>
-                        {% endif %}
-                      </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-            </table>
+            <div id="example-table" class="mb-3"></div>
         </div>
     </div>
 </div>
@@ -64,42 +28,56 @@
         <div class="modal-body">
           <input type="hidden" id="hfuserRef">
             <div class="form-outline mb-2">
-                <label class="form-label" for="editfirstname">First Name</label>
-                <input type="text" id="editfirstname" class="form-control"/>                      
-            </div>
-            <!-- Name input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editsurname">Surname</label>
-                <input type="text" id="editsurname" class="form-control"/>                      
-            </div>
-
-            <!-- Email input -->
-            <div class="form-outline mb-2">
                 <label class="form-label" for="editemail">Email</label>
                 <input type="email" id="editemail" class="form-control"/>
             </div>
-
-            <!-- Phone input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editphone">Phone Number</label>
-                <input type="phone" id="editphone" class="form-control"/>
-            </div>   
-            <!-- Phone input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="editlevel">User Level</label>
-                <select id="editlevel" class="form-select">
-                    {% if existing_user.account_type == "admin" %}
-                        <option value="admin">Admin</option>
-                    {% endif %}                    
-                    <option value="client">Client</option>
-                </select>
-            </div>   
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="cbVerified" {% if existing_user.account_type != "admin" %}disabled{% endif %} >
-                <label class="form-check-label text-black" for="cbVerified">
-                  Is Verified
-                </label>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-outline mb-2">
+                        <label class="form-label small" for="editfirstname">First Name</label>
+                        <input type="text" id="editfirstname" class="form-control"/>                      
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-2">
+                        <label class="form-label small" for="editsurname">Surname</label>
+                        <input type="text" id="editsurname" class="form-control"/>                      
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-2">
+                        <label class="form-label small" for="editphone">Phone Number</label>
+                        <input type="phone" id="editphone" class="form-control"/>
+                    </div> 
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-2">
+                        <label class="form-label small" for="editlevel">User Level</label>
+                        <select id="editlevel" class="form-select">
+                            {% if existing_user.account_type == "admin" %}
+                                <option value="admin">Admin</option>
+                            {% endif %}                    
+                            <option value="client">Client</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" value="" id="cbVerified" {% if existing_user.account_type != "admin" %}disabled{% endif %} >
+                        <label class="form-check-label text-black" for="cbVerified">
+                          Is Verified
+                        </label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-2">
+                        <label class="form-label small" for="editpassword">Update Password <small>if needed</small></label>
+                        <input type="password" id="editpassword" class="form-control"/>                      
+                    </div>
+                </div>
             </div>
+        
+            
         </div>
         <div class="modal-footer" style="justify-content: space-between;">
             {% if existing_user.account_type == "admin" %}
@@ -124,47 +102,50 @@
         <!-- Modal body -->
         <div class="modal-body">
             <form>
-            <!-- Name input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="registerName">First Name</label>
-                <input type="text" id="registerName" class="form-control" required/>                      
-            </div>
-            <!-- Name input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="registersurName">Surname</label>
-                <input type="text" id="registersurName" class="form-control" required/>                      
-            </div>
-
-            <!-- Email input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="registerEmail">Email</label>
-                <input type="email" id="registerEmail" class="form-control" required/>
-            </div>
-
-            <!-- Phone input -->
-            <div class="form-outline mb-2">
-                <label class="form-label" for="registerPhone">Phone Number</label>
-                <input type="phone" id="registerPhone" class="form-control" required/>
-            </div>            
-
-            <div id="signupAlertPlaceholder">
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-9 d-flex justify-content-start">
-                    <!-- Checkbox -->
-                    <div class="form-check d-flex justify-content-center mb-4">
-                        <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" />
-                        <label class="form-check-label text-black" for="registerCheck">
-                        I have read and agree to the terms
-                        </label>
+                <!-- Email input -->
+                <div class="form-outline mb-2">
+                    <label class="form-label" for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" class="form-control" required/>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="registerName">First Name</label>
+                            <input type="text" id="registerName" class="form-control" required/>                      
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="registersurName">Surname</label>
+                            <input type="text" id="registersurName" class="form-control" required/>                      
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="registerPhone">Phone Number</label>
+                            <input type="phone" id="registerPhone" class="form-control" required/>
+                        </div>   
                     </div>
                 </div>
-                <div class="col-3 d-flex justify-content-end">
-                    <!-- Submit button -->
-                    <button type="button" class="btn btn-primary btn-block mb-3 login_button" onclick="signup();">Sign up</button>
+
+                <div id="signupAlertPlaceholder">
                 </div>
-            </div>                    
+
+                <div class="row mt-2">
+                    <div class="col-9 d-flex justify-content-start">
+                        <!-- Checkbox -->
+                        <div class="form-check d-flex justify-content-center mb-4">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" />
+                            <label class="form-check-label text-black" for="registerCheck">
+                            I have read and agree to the terms
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-3 d-flex justify-content-end">
+                        <!-- Submit button -->
+                        <button type="button" class="btn btn-primary btn-block mb-3 login_button" onclick="signup();">Sign up</button>
+                    </div>
+                </div>                    
             </form>  
         </div>
       </div>
@@ -172,9 +153,58 @@
 </div>
 
 <script>
+
+    var menuIcon = function(cell, formatterParams, onRendered){ //plain text value
+        return "<i class='fa fa-edit'></i>";
+    };
+    var table = new Tabulator("#example-table", {
+        layout:"fitColumns",
+        columns:[
+        {title:"id", field:"id", field:"secret", download:false, visible:false},
+        {title:"firstname", field:"firstname", field:"secret", download:false, visible:false},
+        {title:"surname", field:"surname", field:"secret", download:false, visible:false},
+        {
+            title:"Name", 
+            field:"name", 
+            sorter:"string", 
+            resizable:true, 
+            headerFilter:"input", 
+            widthGrow: 3,
+            mutator: function(value, data, type, params, component) {
+                // Combine firstname and surname
+                return data.firstname + " " + data.surname;
+            }
+        },
+        {title:"Email", field:"email", sorter:"String", resizable:true, headerFilter:"input", widthGrow: 1},
+        {title:"Phone", field:"phone", sorter:"String", resizable:true, widthGrow: 1},
+        {title:"Type", field:"account_type", headerSort:false, resizable:true, headerFilter:"input", width: 60},
+        {title:"Pets", field:"pets", headerSort:false, resizable:true, width: 60},
+        {title:"Verified", field:"verified", headerSort:false, resizable:true, width: 60, hozAlign:"center", formatter:"tickCross", headerFilter:"tickCross", headerFilterParams:{"tristate":false},headerFilterEmptyCheck:function(value){return value === null}},
+        {formatter:menuIcon, width:40, hozAlign:"center", cellClick:function(e, cell){showeditmd(cell.getRow().getData().id)}, headerSort:false},
+        ],
+    });
+
+    table.on("dataFiltered", function (filters, rows) {
+      document.getElementById("usercount").innerHTML = rows.length;
+    });
+
+    $(document).ready(function () {
+        var ajaxConfig = {
+            method:"POST", //set request type to Position
+            headers: {
+                "Content-type": 'application/json; charset=utf-8', //set specific content type
+            },
+        };
+        table.setData("/users_json");
+    });
+
     function showeditmd(userRef){
         showLoadingOverlay();
         document.getElementById("hfuserRef").value = userRef;
+
+        // alert(document.getElementById("hfuserType").value);
+        // alert(document.getElementById("hfuserID").value);
+        
         var data = {userRef: userRef};
         sendDataUrl('/loaduserdetails', JSON.stringify(data), function (response) {
             document.getElementById("editfirstname").value = response[0]['firstname'];
@@ -182,6 +212,16 @@
             document.getElementById("editemail").value = response[0]['email'];
             document.getElementById("editphone").value = response[0]['phone'];
             document.getElementById("editlevel").value = response[0]['account_type'];
+            document.getElementById("editpassword").value = '';
+            if (document.getElementById("hfuserType").value == 'client'){
+                if(document.getElementById("hfuserID").value != response[0]['id']){
+                    document.getElementById("editpassword").disabled = true;
+                }
+            } else {
+                if(document.getElementById("hfuserID").value != response[0]['id']){
+                    document.getElementById("editpassword").disabled = true;
+                }
+            }
             document.getElementById("cbVerified").checked = response[0]['verified'];
             $('#mdedituser').modal('show');
             hideLoadingOverlay();
@@ -249,7 +289,8 @@
         email: document.getElementById("editemail").value, 
         phone: document.getElementById("editphone").value, 
         account_type: document.getElementById("editlevel").value,
-        verified: document.getElementById("cbVerified").checked};
+        verified: document.getElementById("cbVerified").checked,
+        password: document.getElementById("editpassword").value};
 
         sendDataUrl('/updateduserdetails', JSON.stringify(data), function (response) {
             location.reload();

@@ -250,7 +250,7 @@ In her spare time, she is also training as a decoy in dog protection sports (PSA
                 <i class="bi bi-geo-alt flex-shrink-0"></i>
                 <div>
                   <h3>Address</h3>
-                  <p>A108 Adam Street, New York, NY 535022</p>
+                  <p><i class="fas fa-location-dot me-2"></i>46 Kiln Lane ST13 8LQ</p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -258,7 +258,7 @@ In her spare time, she is also training as a decoy in dog protection sports (PSA
                 <i class="bi bi-telephone flex-shrink-0"></i>
                 <div>
                   <h3>Call Us</h3>
-                  <p>+1 5589 55488 55</p>
+                  <p><i class="fas fa-phone me-2"></i><a href="tel:07540959387" class="text-white">07540 959387</a></p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -266,13 +266,22 @@ In her spare time, she is also training as a decoy in dog protection sports (PSA
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
                   <h3>Email Us</h3>
-                  <p>info@example.com</p>
+                  <p><i class="fas fa-envelope me-2"></i><a href="mailto:info@example.com" class="text-white">info@example.com</a></p>
                 </div>
               </div><!-- End Info Item -->
+              <div class="col-12">
+                <h4 class="pb-3">Follow Us</h4>
+                <div class="social-links d-flex">
+                  <!-- <a href=""><i class="fa-brands fa-twitter social_links"></i></a> -->
+                  <a target="_blank" href="https://www.facebook.com/profile.php?id=61565965954785"><i class="fa-brands fa-facebook social_links me-3"></i></a>
+                  <a target="_blank" href="https://www.instagram.com/dogtrainingrevolutionk9?fbclid=IwY2xjawGF81lleHRuA2FlbQIxMAABHdMID6ZIb5uYDXS2XmJhAedynIfTLOdVs9hYUmeksuN_WtTSZdAfUSqNfA_aem_kDBzkfFByrIYd_vTL2mELg"><i class="fa-brands fa-instagram social_links"></i></a>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-md-5">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2395.069906696146!2d-2.0425919228537994!3d53.108937172221395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487a40ae0a3cc433%3A0xcca0920014ad0070!2s46%20Kiln%20Ln%2C%20Leek!5e0!3m2!1sen!2suk!4v1729697500629!5m2!1sen!2suk" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2395.069906696146!2d-2.0425919228537994!3d53.108937172221395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487a40ae0a3cc433%3A0xcca0920014ad0070!2s46%20Kiln%20Ln%2C%20Leek!5e0!3m2!1sen!2suk!4v1729697500629!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
           </div>
         </div>
 
@@ -285,53 +294,62 @@ In her spare time, she is also training as a decoy in dog protection sports (PSA
 
         <div class="row gy-4">
 
-          <div class="col">
-            <form action="forms/contact.php" method="post" class="php-email-form aos-init" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
+          <div class="col-12 col-md-8">
+            <!-- <form action="forms/contact.php" method="post" class="php-email-form aos-init" data-aos="fade-up" data-aos-delay="200"> -->
+              <div class="row gy-4" style="padding-bottom: 20px; background-color: rgba(0,0,0,0.7);" class="php-email-form aos-init" data-aos="fade-up" data-aos-delay="200">
 
                 <div class="col-md-6">
                   <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required="">
+                  <input type="text" name="name" id="name-field" class="form-control" required>
                 </div>
 
                 <div class="col-md-6">
                   <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required="">
+                  <input type="email" class="form-control" name="email" id="email-field" required>
                 </div>
 
                 <div class="col-md-12">
                   <label for="subject-field" class="pb-2">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                  <input type="text" class="form-control" name="subject" id="subject-field" required>
                 </div>
 
                 <div class="col-md-12">
                   <label for="message-field" class="pb-2">Message</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
+                  <textarea class="form-control" name="message" rows="10" id="message-field" required></textarea>
                 </div>
 
                 <div class="col-md-12 text-center">
                   <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-outline-light">Send Message</button>
+                    <button type="button" class="btn btn-outline-light" onclick="sendEmail();">Send Message</button>
                   </div>
                 </div>
 
               </div>
-            </form>
+            <!-- </form> -->
           </div><!-- End Contact Form -->
-          <div class="col-12">
-            <h4 class="pb-3">Follow Us</h4>
-            <div class="social-links d-flex">
-              <a href=""><i class="fa-brands fa-twitter social_links"></i></a>
-              <a href=""><i class="fa-brands fa-facebook social_links"></i></a>
-              <a href=""><i class="fa-brands fa-instagram social_links"></i></a>
-              <a href=""><i class="fa-brands fa-linkedin social_links"></i></a>
-            </div>
-          </div>
+          <div class="col-12 col-md-4" style="position: relative; overflow:visible;">
+            <img src="/static/images/dog1.jpg" class="img-fluid img-thumbnail" style="position: absolute; top: 0; left: -30px; transform: rotate(-15deg); z-index:-10;">
+            <img src="/static/images/dog2.jpg" class="img-fluid img-thumbnail" style="position: absolute; top: 100px; left: 70px;  transform: rotate(12deg); z-index:-9;">
+            <img src="/static/images/dog3.jpg" class="img-fluid img-thumbnail" style="position: absolute; top: 280px; left: -50px; z-index:-8;">
+        </div>
+        
+          
+        </div>
+        
         </div>
 
       </div>
     </div>
   </section>
 
+  <script>
+    function sendEmail(){
+      alert(document.getElementById("name-field").value);
+      alert(document.getElementById("email-field").value);
+      alert(document.getElementById("subject-field").value);
+      alert(document.getElementById("message-field").value);
+      
+    }
+  </script>
 
 {% endblock %}

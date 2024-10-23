@@ -58,6 +58,41 @@ def root():
                            users=all_users,
                            existing_user=existing_user)
 
+@admin_url.route("/users_json", methods=["POST", "GET"])
+@login_required
+def users_json():
+    if "_user_id" in session:
+        existing_user = User.query.filter_by(
+            id=session["_user_id"]
+        ).first()
+    else:
+        return redirect("/logout")
+    if existing_user.account_type == "admin":
+        all_users = (
+            User.query.filter_by()
+            .order_by(User.email)
+            .all()
+        )
+    else:
+        all_users = (
+            User.query.filter_by(id=str(existing_user.id))
+            .order_by(User.email)
+            .all()
+        )
+    list_all_users = [transaction_row(r) for r in all_users]
+    return jsonify(list_all_users)
+
+def transaction_row(row):
+    return dict(
+        id=row.id,
+        firstname=row.firstname,
+        surname=row.surname,
+        email=row.email,
+        verified=row.verified,
+        account_type=row.account_type,
+        phone=row.phone,
+    )
+
 
 @admin_url.route("/loaduserdetails", methods=["POST"])
 @login_required
@@ -81,6 +116,10 @@ def updateduserdetails():
         users_details.account_type = request.json["account_type"]
         users_details.phone = request.json["phone"]
         users_details.verified = request.json["verified"]
+
+        if request.json["password"] != '':
+            users_details.set_password(request.json["password"])
+
         db.session.commit()
     
     return jsonify({"msg": "complete"})
@@ -117,6 +156,26 @@ def classes_root():
                           existing_user=existing_user,
                           products=products)
 
+@admin_url.route("/classes_json", methods=["GET", "POST"])
+@login_required
+def classes_json():
+    if "_user_id" in session:
+        existing_user = User.query.filter_by(
+            id=session["_user_id"]
+        ).first()
+    else:
+        return redirect("/logout")
+    
+    if existing_user.account_type == "admin":
+        products = Product.query.filter_by().all()
+    else:
+        products = []
+
+    class_details_list = [Product.to_dict() for Product in products]
+
+    return jsonify(class_details_list)
+
+
 @login_required
 @admin_url.route("/product_add", methods=["GET", "POST"])
 def product_add():
@@ -127,12 +186,18 @@ def product_add():
     else:
         return redirect("/logout")
     
+    start_str = request.json['productStart']
+    start_datetime = datetime.strptime(start_str, '%Y-%m-%dT%H:%M:%S')
+    formatted_start = start_datetime.strftime('%Y-%m-%d %H:%M:%S')
+    end_str = request.json['productEnd']
+    end_datetime = datetime.strptime(end_str, '%Y-%m-%dT%H:%M:%S')
+    formatted_end = end_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
     product = Product(
         id=str(uuid.uuid4()),
         title=request.json['productTitle'],
-        start=request.json['productStart'],
-        end=request.json['productEnd'],
+        start=formatted_start,
+        end=formatted_end,
         spaces=request.json['productSpaces'],
         colour=request.json['productColour'],
         is_recurring=request.json['productRecur'] == '1',
@@ -220,6 +285,37 @@ def pets_root():
                           pets=pets_with_users,
                           users=users,
                           existing_user=existing_user)
+
+@login_required
+@admin_url.route("/pets_json", methods=["GET"])
+def pets_json():
+    if "_user_id" in session:
+        existing_user = User.query.filter_by(id=session["_user_id"]).first()
+    else:
+        return redirect("/logout")
+    
+    if existing_user.account_type == "admin":
+        # pets = Pet.query.filter_by().all()
+        pets_with_users = db.session.execute(
+            text(
+                "select public.pets.id, public.accounts.firstname, public.accounts.surname, public.pets.name, public.pets.breed From public.pets left join public.accounts on public.pets.client_id = public.accounts.id order by public.accounts.surname, public.accounts.firstname, public.pets.name"
+            )
+        ).all()
+    else:
+        pets_with_users = Pet.query.filter_by(client_id=session["_user_id"]).all()
+    
+    list_pets = [pet_rows(r) for r in pets_with_users]
+    return jsonify(list_pets)
+
+def pet_rows(row):
+    return dict(
+        id=str(row.id),
+        firstname=row.firstname,
+        surname=row.surname,
+        name=row.name,
+        breed=row.breed
+    )
+
 
 @login_required
 @admin_url.route("/pets_add", methods=["GET", "POST"])

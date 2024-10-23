@@ -4,33 +4,10 @@
     <div class="row pt-5">
         <div class="col-12">
             <button type="button" class="btn btn-sm btn-outline-light float-end" title="Add New" data-bs-toggle="modal" data-bs-target="#mdadduser"><i class="fas fa-add me-2"></i>Add New</button>
-            <h5><span id="usercount" class="me-2">{{products|length}}</span>Classes</h5>
+            <h5><span id="usercount" class="me-2">0</span>Classes</h5>
         </div>
         <div class="col-12 pt-2">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                      <th scope="col" class="table_icon">&nbsp;</th>
-                      <th scope="col">Class Name</th>
-                      <th scope="col">Start</th>
-                      <th scope="col">Recurrence</th>
-                      <th scope="col">Colour</th>
-                      <th scope="col">Spaces</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for product in products %}
-                    <tr>
-                        <th scope="row" class="table_icon"><i class="fas fa-edit" onclick="showeditmd('{{product.id}}');"></i></th>
-                        <td>{{product.title}}</td>
-                        <td>{{product.start}}</td>
-                        <td>{{product.recurrence_pattern}}</td>
-                        <td style="background-color: {{product.colour}};">&nbsp;</td>
-                        <td>{{product.spaces}}</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-            </table>
+            <div id="example-table" class="mb-3"></div>
         </div>
     </div>
 </div>
@@ -280,6 +257,37 @@
 </div>
 
 <script>
+
+var menuIcon = function(cell, formatterParams, onRendered){ //plain text value
+        return "<i class='fa fa-edit'></i>";
+    };
+    var table = new Tabulator("#example-table", {
+        layout:"fitColumns",
+        columns:[
+        {title:"id", field:"id", field:"secret", download:false, visible:false},
+        {title:"Name", field:"title", sorter:"String", resizable:true, headerFilter:"input", widthGrow: 1},
+        {title:"Start", field:"start", sorter:"String", resizable:true, width:140},
+        {title:"Recurrence", field:"is_recurring", formatter:"tickCross", headerSort:false, resizable:true, width: 60, headerFilter:"tickCross", hozAlign:"center", headerFilterParams:{"tristate":false},headerFilterEmptyCheck:function(value){return value === null}},
+        {title:"", field:"colour", formatter:"color", headerSort:false, resizable:true, width: 60},
+        {title:"Spaces", field:"spaces", headerSort:false, resizable:true, width: 60, hozAlign:"center"},
+        {formatter:menuIcon, width:40, hozAlign:"center", cellClick:function(e, cell){showeditmd(cell.getRow().getData().id)}, headerSort:false},
+        ],
+    });
+
+    table.on("dataFiltered", function (filters, rows) {
+      document.getElementById("usercount").innerHTML = rows.length;
+    });
+
+    $(document).ready(function () {
+        var ajaxConfig = {
+            method:"POST", //set request type to Position
+            headers: {
+                "Content-type": 'application/json; charset=utf-8', //set specific content type
+            },
+        };
+        table.setData("/classes_json");
+    });
+
     function showeditmd(productRef){
         showLoadingOverlay();
         document.getElementById("hfproductRef").value = productRef;

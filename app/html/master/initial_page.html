@@ -28,7 +28,7 @@
     <nav class="navbar navbar-dark navbar-expand-md fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="/static/images/dog_training_revolution.png" class="brand-logo img-fluid" style="max-width: 300px;" alt="Brand Image">
+                <img src="/static/images/dog_training_revolution.png" class="brand-logo img-fluid" style="max-width: 200px;" alt="Brand Image">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -104,7 +104,7 @@
                         </div>
                         <div class="col-md-6 d-flex justify-content-start">
                             <!-- Simple link -->
-                            <a href="#" class="login_a">Forgot password?</a>
+                            <button type="button" onclick="forgotPassword();" class="btn btn-link login_a" style="margin-top: -7px;">Forgot password?</button>
                         </div>
                         <div class="col-md-6 d-flex justify-content-end">
                         <!-- Register buttons (Switch to Register tab) -->
@@ -317,6 +317,53 @@
               document.getElementById('signupAlertPlaceholder').appendChild(alertDiv);
               hideLoadingOverlay();
           }
+        }
+
+        function forgotPassword(){
+          showLoadingOverlay();
+            // Get the values from the input fields
+            document.getElementById('liveAlertPlaceholder').innerHTML = '';
+            var email = document.getElementById('login_email').value;
+
+            // Regular expression for validating an email address
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (emailPattern.test(email) && email !='') {
+              var data = {
+                  email: email
+              };
+              sendDataUrl('/forgotPassword', JSON.stringify(data), function (response) {
+                if (response['message'] == "successful"){
+                  var alertDiv = document.createElement('div');
+                  alertDiv.className = 'alert alert-success alert-dismissible fade show';
+                  alertDiv.role = 'alert';
+                  alertDiv.textContent = 'Please check your email';
+                  var closeButton = document.createElement('button');
+                  closeButton.type = 'button';
+                  closeButton.className = 'btn-close';
+                  closeButton.setAttribute('data-bs-dismiss', 'alert');
+                  closeButton.setAttribute('aria-label', 'Close');
+                  alertDiv.appendChild(closeButton);
+                  document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
+                  hideLoadingOverlay();
+                } else {
+                  hideLoadingOverlay();
+                }
+              });
+            } else {
+              var alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-warning alert-dismissible fade show';
+                alertDiv.role = 'alert';
+                alertDiv.textContent = 'Please enter email address first';
+                var closeButton = document.createElement('button');
+                closeButton.type = 'button';
+                closeButton.className = 'btn-close';
+                closeButton.setAttribute('data-bs-dismiss', 'alert');
+                closeButton.setAttribute('aria-label', 'Close');
+                alertDiv.appendChild(closeButton);
+                document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
+                hideLoadingOverlay();
+            }
         }
 
       </script>

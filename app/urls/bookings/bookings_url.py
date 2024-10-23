@@ -76,6 +76,55 @@ def manage_bookings():
                             bookings=bookings,
                             existing_user=existing_user)
 
+@bookings_url.route("/bookings_json", methods=["GET"])
+def bookings_json():
+    if "_user_id" in session:
+        existing_user = User.query.filter_by(
+            id=session["_user_id"]
+        ).first()
+    else:
+        return redirect("/logout")
+    
+    if existing_user.account_type == "admin":
+        bookings = db.session.execute(
+            text(
+                "SELECT public.bookings.id, public.bookings.booking_date, public.bookings.status, public.accounts.firstname, public.accounts.surname, public.pets.name, public.products.title "
+                "FROM public.bookings "
+                "INNER JOIN public.accounts ON public.bookings.client_id = public.accounts.id "
+                "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
+                "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
+                "ORDER BY booking_date DESC"
+            )
+        ).fetchall()
+    else:
+        bookings = db.session.execute(
+            text(
+                "SELECT public.bookings.id, public.bookings.booking_date, public.bookings.status, public.accounts.firstname, public.accounts.surname, public.pets.name, public.products.title "
+                "FROM public.bookings "
+                "INNER JOIN public.accounts ON public.bookings.client_id = public.accounts.id "
+                "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
+                "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
+                "WHERE public.bookings.client_id = :client_id "
+                "ORDER BY booking_date DESC"
+            ),
+            {"client_id": existing_user.id}  # Binding the parameter safely
+        ).fetchall()
+
+    list_bookings = [booking_rows(r) for r in bookings]
+    return jsonify(list_bookings)
+
+
+def booking_rows(row):
+    return dict(
+        id=str(row.id),
+        booking_date=row.booking_date,
+        status=row.status,
+        firstname=row.firstname,
+        surname=row.surname,
+        name=row.name,
+        title=row.title,
+    )
+
 @bookings_url.route("/bookings", methods=["GET"])
 def root():
     if "_user_id" in session:
@@ -186,8 +235,6 @@ def generate_recurring_events(row):
             break
 
     return events
-
-
 
 # Helper function to generate an event and check for existing bookings
 def generate_event_with_booking_check(row, event_date):
