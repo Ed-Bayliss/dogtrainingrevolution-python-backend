@@ -47,6 +47,18 @@
                         <input type="datetime-local" id="editproductend" class="form-control form-control-sm"/>                      
                     </div>  
                 </div>
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label for="txtshortdesc" class="form-label">Short Description</label>
+                        <textarea class="form-control" id="txtshortdesc" rows="3"></textarea>
+                      </div>
+                </div>
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label for="txtfulldesc" class="form-label">Full Description</label>
+                        <textarea class="form-control" id="txtfulldesc" rows="8"></textarea>
+                      </div>
+                </div>
             </div>
             <div class="card">
                 <div class="card-header">
@@ -304,7 +316,10 @@ var menuIcon = function(cell, formatterParams, onRendered){ //plain text value
             document.getElementById("editproductInterval").value = response[0]['recurrence_interval'];
             document.getElementById("editproductRecurringend").value = response[0]['recurrence_end'];
             
-            console.log(response[0]['recurrence_days']);
+
+            document.getElementById("txtshortdesc").value = response[0]['short_desc'];
+            document.getElementById("txtfulldesc").value = response[0]['full_desc'];
+            
 
             // Check if response[0] and recurrence_days exist and recurrence_days is an array
             if (response?.[0]?.['recurrence_days'] && Array.isArray(response[0]['recurrence_days'])) {
@@ -425,6 +440,8 @@ var menuIcon = function(cell, formatterParams, onRendered){ //plain text value
             productinterval: document.getElementById("editproductInterval").value,
             productRecurEnd: document.getElementById("editproductRecurringend").value,
             productrecurrence_days: rec_int_update,
+            short_desc: document.getElementById("txtshortdesc").value,
+            full_desc: document.getElementById("txtfulldesc").value,
         };
 
         sendDataUrl('/updatedproductdetails', JSON.stringify(data), function (response) {
