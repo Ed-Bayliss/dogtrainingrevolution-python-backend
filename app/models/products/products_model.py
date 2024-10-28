@@ -29,6 +29,9 @@ class Product(BaseModel):
     recurrence_interval = db.Column(db.Integer, nullable=True)  # e.g., every 2 days/weeks
     recurrence_end = db.Column(db.String(64), nullable=True)  # End date for recurrence
     recurrence_days = db.Column(db.ARRAY(db.String(10)), nullable=True)  # Days of week (e.g., ['Monday', 'Wednesday'])
+
+    short_desc = db.Column(db.String(512), nullable=True)
+    full_desc = db.Column(db.String(50000), nullable=True)
     
     price = db.Column(db.Float, nullable=True, unique=False)
 
@@ -48,6 +51,8 @@ class Product(BaseModel):
         recurrence_end=None,
         recurrence_days=None,
         price=None,
+        short_desc=None,
+        full_desc=None,
     ):
         self.id = id
         self.title = title
@@ -63,6 +68,8 @@ class Product(BaseModel):
         self.recurrence_end = recurrence_end
         self.recurrence_days = recurrence_days
         self.price = price
+        self.short_desc=short_desc
+        self.full_desc=full_desc
 
     def to_dict(self):
         """Convert User object to dictionary for JSON serialization."""
@@ -78,6 +85,8 @@ class Product(BaseModel):
             "recurrence_interval": self.recurrence_interval,
             "recurrence_end": self.recurrence_end,
             "recurrence_days": self.recurrence_days,
+            "short_desc": self.short_desc,
+            "full_desc": self.full_desc,
         }
 
 

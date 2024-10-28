@@ -45,7 +45,7 @@
         </div>
     </nav>    
     
-    <main>
+    <main style="overflow: hidden;">
         {% block content %}
         {% endblock %}
     </main>
@@ -172,6 +172,14 @@
     </div>
       
       <script>
+        document.getElementById('login_passwd').addEventListener('keydown', function(event) {
+          // Check if the Enter key was pressed
+          if (event.key === 'Enter') {
+              event.preventDefault(); // Prevent the default form submission behavior (if any)
+              submit_login(); // Call your submit function
+          }
+        });
+
         document.getElementById('tab-register-link').addEventListener('click', function (event) {
           event.preventDefault();
           let registerTab = new bootstrap.Tab(document.querySelector('#tab-register'));

@@ -95,6 +95,12 @@ h5{
     background-color: #d8b077;
     border-color: #d8b077;
     color: black;
+    font-weight: bolder;
+}
+
+.login_button_outer{
+    border-color: #d8b077;
+    color: #d8b077;
 }
 
 .login_button:hover{

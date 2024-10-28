@@ -175,6 +175,16 @@ def classes_json():
 
     return jsonify(class_details_list)
 
+# @admin_url.route("/classeslist_json", methods=["GET", "POST"])
+# @login_required
+# def classeslist_json():
+   
+#     products = Product.query.filter_by().all()
+
+#     class_details_list = [Product.to_dict() for Product in products]
+
+#     return jsonify(class_details_list)
+
 
 @login_required
 @admin_url.route("/product_add", methods=["GET", "POST"])
@@ -245,6 +255,8 @@ def updatedproductdetails():
         product_details.recurrence_days = request.json['productrecurrence_days']
         product_details.recurrence_interval = request.json['productinterval']
         product_details.recurrence_end = request.json['productRecurEnd']
+        product_details.short_desc = request.json['short_desc']
+        product_details.full_desc = request.json['full_desc']
 
         db.session.commit()
 

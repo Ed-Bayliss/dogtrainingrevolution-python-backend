@@ -14,6 +14,8 @@ from flask_mail import Message
 from sqlalchemy import desc, text, func
 import pathlib
 
+from app.models.products.products_model import Product
+
 
 # Blueprint Configuration
 root_url = Blueprint(
@@ -28,5 +30,7 @@ from app import db
 
 @root_url.route("/", methods=["GET"])
 def root():
-   return render_template('home/home.html')
+   products = Product.query.filter_by().all()
+   return render_template('home/home.html', products=products)
+    # return render_template('admin/users.html', users=all_users, existing_user=existing_user)
     # return render_template('root/root.html')
