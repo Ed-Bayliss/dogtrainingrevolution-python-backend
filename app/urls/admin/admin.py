@@ -307,14 +307,41 @@ def pets_json():
         return redirect("/logout")
     
     if existing_user.account_type == "admin":
-        # pets = Pet.query.filter_by().all()
+        # Admin query to get all pets with user details
         pets_with_users = db.session.execute(
             text(
-                "select public.pets.id, public.accounts.firstname, public.accounts.surname, public.pets.name, public.pets.breed From public.pets left join public.accounts on public.pets.client_id = public.accounts.id order by public.accounts.surname, public.accounts.firstname, public.pets.name"
+                """
+                SELECT public.pets.id, 
+                       public.accounts.firstname, 
+                       public.accounts.surname, 
+                       public.pets.name, 
+                       public.pets.breed 
+                FROM public.pets 
+                LEFT JOIN public.accounts 
+                ON public.pets.client_id = public.accounts.id 
+                ORDER BY public.accounts.surname, public.accounts.firstname, public.pets.name;
+                """
             )
         ).all()
     else:
-        pets_with_users = Pet.query.filter_by(client_id=session["_user_id"]).all()
+        # Non-admin query to get only pets associated with the current user
+        pets_with_users = db.session.execute(
+            text(
+                """
+                SELECT public.pets.id, 
+                       public.accounts.firstname, 
+                       public.accounts.surname, 
+                       public.pets.name, 
+                       public.pets.breed 
+                FROM public.pets 
+                LEFT JOIN public.accounts 
+                ON public.pets.client_id = public.accounts.id 
+                WHERE public.accounts.id = :user_id
+                ORDER BY public.accounts.surname, public.accounts.firstname, public.pets.name;
+                """
+            ),
+            {"user_id": existing_user.id}
+        ).all()
     
     list_pets = [pet_rows(r) for r in pets_with_users]
     return jsonify(list_pets)

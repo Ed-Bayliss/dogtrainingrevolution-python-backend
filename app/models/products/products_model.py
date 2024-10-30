@@ -29,6 +29,7 @@ class Product(BaseModel):
     recurrence_interval = db.Column(db.Integer, nullable=True)  # e.g., every 2 days/weeks
     recurrence_end = db.Column(db.String(64), nullable=True)  # End date for recurrence
     recurrence_days = db.Column(db.ARRAY(db.String(10)), nullable=True)  # Days of week (e.g., ['Monday', 'Wednesday'])
+    block_booking = db.Column(db.Integer, nullable=True)
 
     short_desc = db.Column(db.String(512), nullable=True)
     full_desc = db.Column(db.String(50000), nullable=True)
@@ -50,6 +51,7 @@ class Product(BaseModel):
         recurrence_interval=None,
         recurrence_end=None,
         recurrence_days=None,
+        block_booking=None,
         price=None,
         short_desc=None,
         full_desc=None,
@@ -67,6 +69,7 @@ class Product(BaseModel):
         self.recurrence_interval = recurrence_interval
         self.recurrence_end = recurrence_end
         self.recurrence_days = recurrence_days
+        self.block_booking=block_booking
         self.price = price
         self.short_desc=short_desc
         self.full_desc=full_desc
@@ -85,6 +88,7 @@ class Product(BaseModel):
             "recurrence_interval": self.recurrence_interval,
             "recurrence_end": self.recurrence_end,
             "recurrence_days": self.recurrence_days,
+            "block_booking": self.block_booking,
             "short_desc": self.short_desc,
             "full_desc": self.full_desc,
         }
@@ -103,20 +107,22 @@ class Booking(BaseModel):
     product_id = db.Column(UUID(), db.ForeignKey('public.products.id'), nullable=False)
     pet_id = db.Column(UUID(), db.ForeignKey('public.pets.id'), nullable=False)
     client_id = db.Column(UUID(), db.ForeignKey('public.accounts.id'), nullable=False)
+    linked_booking_id = db.Column(UUID(), nullable=False)
     
     # Other fields
     booking_date = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.Integer, nullable=True)  # e.g., 1 = confirmed, 0 = pending, etc.
-
+    
     # Relationships
     product = db.relationship("Product", backref="bookings")
     pet = db.relationship("Pet", backref="bookings")
     client = db.relationship("User", backref="bookings")
 
-    def __init__(self, id, product_id, pet_id, client_id, booking_date, status=None):
+    def __init__(self, id, product_id, pet_id, client_id, linked_booking_id, booking_date, status=None):
         self.id = id
         self.product_id = product_id
         self.pet_id = pet_id
         self.client_id = client_id
         self.booking_date = booking_date
         self.status = status
+        self.linked_booking_id = linked_booking_id

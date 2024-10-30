@@ -1,0 +1,112 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:ics.py - http://git.io/lLljaA
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Arthur\nProduct: Puppy Classes
+DTSTART:20241120T170000Z
+SUMMARY:Puppy Classes with Arthur
+UID:4a4683f1-5c2c-45e7-a331-21d41d876dc1@4a46.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Arthur\nProduct: Puppy Classes
+DTSTART:20241030T170000Z
+SUMMARY:Puppy Classes with Arthur
+UID:8b9039d0-ad56-4a58-bfe6-e60195b4f45f@8b90.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Pippin\nProduct: Puppy Classes
+DTSTART:20241030T170000Z
+SUMMARY:Puppy Classes with Pippin
+UID:a3c97c63-0612-4083-a94f-dfa2d94e2e95@a3c9.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Arthur\nProduct: Puppy Classes
+DTSTART:20241113T170000Z
+SUMMARY:Puppy Classes with Arthur
+UID:35726d09-6a28-4b19-a8cc-bc1b8d5282d1@3572.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Gwen\nProduct: Puppy Classes
+DTSTART:20241030T170000Z
+SUMMARY:Puppy Classes with Gwen
+UID:de32d395-7fa6-45e6-9f7a-7e9e898b0aa8@de32.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Gwen\nProduct: Puppy Classes
+DTSTART:20241127T170000Z
+SUMMARY:Puppy Classes with Gwen
+UID:29e90b8e-fa31-497d-b402-82df9e4d2584@29e9.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Pippin\nProduct: Puppy Classes
+DTSTART:20241204T170000Z
+SUMMARY:Puppy Classes with Pippin
+UID:3d147d7b-918e-4da3-9d1c-b13d273a054f@3d14.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Pippin\nProduct: Puppy Classes
+DTSTART:20241127T170000Z
+SUMMARY:Puppy Classes with Pippin
+UID:4f7af269-9af0-4962-8823-fabb09de7ba0@4f7a.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Arthur\nProduct: Puppy Classes
+DTSTART:20241106T170000Z
+SUMMARY:Puppy Classes with Arthur
+UID:83b67dc2-54e7-4685-9c09-2253063846d0@83b6.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Pippin\nProduct: Puppy Classes
+DTSTART:20241106T170000Z
+SUMMARY:Puppy Classes with Pippin
+UID:ebf354a2-50bb-4ce5-b353-9e10b9556f68@ebf3.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Gwen\nProduct: Puppy Classes
+DTSTART:20241120T170000Z
+SUMMARY:Puppy Classes with Gwen
+UID:bda2d085-a1d2-42fe-9051-5e78a21eea2d@bda2.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Pippin\nProduct: Puppy Classes
+DTSTART:20241113T170000Z
+SUMMARY:Puppy Classes with Pippin
+UID:eb047b17-576b-4923-a0f1-a580e82c3ea6@eb04.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Pippin\nProduct: Puppy Classes
+DTSTART:20241120T170000Z
+SUMMARY:Puppy Classes with Pippin
+UID:a3a35408-c868-4185-a386-bf5e2d827dde@a3a3.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Arthur\nProduct: Puppy Classes
+DTSTART:20241204T170000Z
+SUMMARY:Puppy Classes with Arthur
+UID:f02e3628-cdd1-46a0-ba3f-7ca7c37c5235@f02e.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Gwen\nProduct: Puppy Classes
+DTSTART:20241204T170000Z
+SUMMARY:Puppy Classes with Gwen
+UID:0963b120-df07-4e08-b5fc-d845275de9e4@0963.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Arthur\nProduct: Puppy Classes
+DTSTART:20241127T170000Z
+SUMMARY:Puppy Classes with Arthur
+UID:6e994f54-48ca-4f56-97ac-c8cc347e8c85@6e99.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Gwen\nProduct: Puppy Classes
+DTSTART:20241113T170000Z
+SUMMARY:Puppy Classes with Gwen
+UID:bdfd7774-53df-4b17-8c4a-1db03f5301fe@bdfd.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Gwen\nProduct: Puppy Classes
+DTSTART:20241106T170000Z
+SUMMARY:Puppy Classes with Gwen
+UID:45bfab07-7ba0-445f-bde7-e811b0409edd@45bf.org
+END:VEVENT
+END:VCALENDAR

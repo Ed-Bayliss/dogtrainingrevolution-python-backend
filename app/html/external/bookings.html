@@ -1,49 +1,125 @@
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{% extends "/master/logged_in.html" %}
+{% extends "/master/external.html" %}
 {% block content %}
+
 <div class="container pt-5">
     <div id="calendar" class="pt-5">
         <div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 id="eventTitle" class="modal-title"></h5>
-                        <p id="eventId" hidden></p>
+                        <h5 id="eventTitle" class="modal-title">Add User & Pet</h5>
+                        <p id="eventId" hidden></p> <!-- Event ID tag added here -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <p id="eventDetails"></p>
-                        <!-- Form Fields Start -->
-                        <form id="eventForm">
-                            <div class="mb-3">
-                                {%if (pets|length == 0) %}
-                                <button type="button" class="btn btn-primary">Add Pet</button>
-                                {%else%}
-                                <label for="petNameDropdown" class="form-label">Select Pet:</label>
-                                <select class="form-select" id="petNameDropdown" name="petName" required>
-                                    <option selected disabled value="">Choose a pet...</option>
-                                    {% for pet in pets%}
-                                    <option value="{{pet.id}}">{{pet.name}}</option>
-                                    {%endfor%}
-                                </select>
-                                <button type="button" onclick="createBooking()" class="btn btn-primary">Submit</button>
-                                {%endif%}
+                        <!-- User Information Form -->
+                        <h6>User Information</h6>
+                        <form id="userForm">
+                            <div class="form-outline mb-2">
+                                <label class="form-label" for="registerEmail">Email</label>
+                                <input type="email" id="registerEmail" class="form-control" required />
                             </div>
-
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="registerName">First Name</label>
+                                        <input type="text" id="registerName" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="registersurName">Surname</label>
+                                        <input type="text" id="registersurName" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="registerPhone">Phone Number</label>
+                                        <input type="phone" id="registerPhone" class="form-control" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check d-flex justify-content-start mb-4">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
+                                    aria-describedby="registerCheckHelpText" />
+                                <label class="form-check-label" for="registerCheck">
+                                    I have read and agree to the terms
+                                </label>
+                            </div>
                         </form>
-                        <!-- Form Fields End -->
+
+                        <!-- Pet Information Form -->
+                        <h6>Pet Information</h6>
+                        <form id="petForm">
+                            <input type="hidden" id="hfpetRef">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label small" for="editname">Name</label>
+                                        <input type="text" id="editname" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label small" for="editgender">Gender</label>
+                                        <select type="text" id="editgender" class="form-select">
+                                            <option value="1">Male</option>
+                                            <option value="0">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label small" for="editbreed">Breed</label>
+                                        <input type="text" id="editbreed" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label small" for="editneutered">Neutered</label>
+                                        <select type="text" id="editneutered" class="form-select">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-7">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="editchip">Microchip</label>
+                                        <input type="text" id="editchip" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="editdob">DOB</label>
+                                        <input type="date" id="editdob" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="justify-content: space-between;">
+
+                        <button type="button" class="btn btn-primary login_button" onclick="createBooking();"><i
+                                class="fas fa-save me-2"></i>Save Profile</button>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
 <style>
     *,
     *:before,
@@ -1052,19 +1128,30 @@
         var modalElement = document.getElementById("eventModal");
         var eventTitle = document.getElementById("eventTitle");
         var eventDetails = document.getElementById("eventDetails");
+        var eventIdElement = document.getElementById("eventId"); // Ensure this variable is defined
 
-        // Set event details in the modal
-        eventTitle.innerText = event.eventName;
-        eventId.innerText = event.productId;
-        eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
+        // Check if elements exist before setting their properties
+        if (eventTitle) {
+            eventTitle.innerText = event.eventName || "Event Title"; // Fallback in case eventName is undefined
+        }
+        if (eventIdElement) {
+            eventIdElement.innerText = event.productId || "Unknown ID"; // Fallback in case productId is undefined
+        }
+        if (eventDetails) {
+            // Ensure date is correctly formatted if moment.js is available or use a default
+            eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
+
+        }
+        console.log(eventTitle, eventDetails, eventIdElement)
 
         // Initialize and show the modal using Bootstrap 5
         var modal = new bootstrap.Modal(modalElement, {
-            backdrop: false, // This prevents closing the modal when clicking outside
-            keyboard: false     // Prevent closing the modal with the Esc key
+            backdrop: false, // Prevent closing the modal when clicking outside
+            keyboard: false  // Prevent closing the modal with the Esc key
         });
         modal.show();
     }
+
 
     function downloadUrl(url, callback) {
 
@@ -1116,29 +1203,64 @@
     }
 
     function createBooking() {
-
-        var pet = document.getElementById('petNameDropdown').value;
+        // Event details
         var eventTitle = document.getElementById("eventTitle").innerText;
         var eventDetails = document.getElementById("eventDetails").innerText;
         var eventId = document.getElementById("eventId").innerText;
 
+        // User details
+        var email = document.getElementById("registerEmail").value;
+        var firstName = document.getElementById("registerName").value;
+        var surname = document.getElementById("registersurName").value;
+        var phoneNumber = document.getElementById("registerPhone").value;
+        var termsAgreed = document.getElementById("registerCheck").checked;
+
+        // Pet details
+        var petName = document.getElementById("editname").value;
+        var gender = document.getElementById("editgender").value;
+        var breed = document.getElementById("editbreed").value;
+        var neutered = document.getElementById("editneutered").value;
+        var microchip = document.getElementById("editchip").value;
+        var dob = document.getElementById("editdob").value;
+
+        // Prepare the data object to include all modal details
         var data = {
-            pet: pet,
+            // Event data
             eventTitle: eventTitle,
             eventDetails: eventDetails,
-            eventId: eventId
-        };
-        sendDataUrl('/bookings/payment', JSON.stringify(data), function (data) {
-            window.location.href = data['stripe_url']['url'];
-            // window.location.href = data['stirpe_url'];
+            eventId: eventId,
 
-            // sendDataUrl('/bookings/create', JSON.stringify(data), function (data) {
-            //     closeModal();
-            //     alert("Your booking has been made. You will recieve confirmation via email.")
-            //     location.reload();
-            // });
+            // User data
+            user: {
+                email: email,
+                firstName: firstName,
+                surname: surname,
+                phoneNumber: phoneNumber,
+                termsAgreed: termsAgreed
+            },
+
+            // Pet data
+            pet: {
+                name: petName,
+                gender: gender,
+                breed: breed,
+                neutered: neutered,
+                microchip: microchip,
+                dob: dob
+            }
+        };
+
+        // Send the data to the server
+        sendDataUrl('/external/bookings/payment', JSON.stringify(data), function (response) {
+            if (response && response.stripe_url && response.stripe_url.url) {
+                window.location.href = response.stripe_url.url;
+            } else {
+                console.error("Stripe URL not found in response.");
+                alert("Error processing payment. Please try again.");
+            }
         });
     }
+
 
 </script>
 {% endblock %}
