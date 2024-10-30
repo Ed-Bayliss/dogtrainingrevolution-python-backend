@@ -112,7 +112,7 @@ def generate_calendar_ics():
         calendar.events.add(event)
 
     # Write the calendar to an .ics file
-    with open("/static/calendar/bookings.ics", "w") as f:
+    with open("app/static/calendar/bookings.ics", "w") as f:
         f.writelines(calendar)
 
     return
