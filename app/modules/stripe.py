@@ -52,8 +52,8 @@ class Payments:
             allow_promotion_codes=False,
             stripe_account=None,
             client_reference_id=str(linked_booking_id),
-            success_url='http://localhost:5000/booking/confirmation/' + str(linked_booking_id),
-            cancel_url='http://localhost:5000/cancel_bookings/' + str(linked_booking_id),
+            success_url='https://dogtrainingrevolution.pawtul.combooking/confirmation/' + str(linked_booking_id),
+            cancel_url='https://dogtrainingrevolution.pawtul.com/cancel_bookings/' + str(linked_booking_id),
         )
 
         return session
