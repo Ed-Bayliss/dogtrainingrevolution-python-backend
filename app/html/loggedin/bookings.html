@@ -10,7 +10,7 @@
 <div class="container pt-5">
     <div id="calendar" class="pt-5">
         <div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 id="eventTitle" class="modal-title"></h5>
@@ -32,7 +32,8 @@
                                     <option value="{{pet.id}}">{{pet.name}}</option>
                                     {%endfor%}
                                 </select>
-                                <button type="button" onclick="createBooking()" class="btn btn-primary">Submit</button>
+                                <button type="button" onclick="createBooking()"
+                                    class="btn btn-primary btn-block mb-3 mt-2 float-end login_button">Submit</button>
                                 {%endif%}
                             </div>
 
