@@ -1,383 +1,402 @@
-<html lang="en"><head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Dog Training Revolution</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-  
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js" integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
-    <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+<html lang="en">
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Dog Training Revolution</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"
+    integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+  <script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
-    <link rel="stylesheet" href="/static/css/dtr.css"/>
-    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='/images/favicon.ico')}}"/>
-    <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png"/>
-    {%include 'master/loading_spinner.html' %}
-  </head>
-  
-  <body class="index-page" data-aos-easing="ease-in-out" data-aos-duration="600" data-aos-delay="0" data-new-gr-c-s-check-loaded="14.1198.0" data-gr-ext-installed="">
-  
-    <nav class="navbar navbar-dark navbar-expand-md fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="/static/images/dog_training_revolution.png" class="brand-logo img-fluid" style="max-width: 200px;" alt="Brand Image">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse site-text" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="#classes" class="nav-link">Classes</a></li>
-                    <li class="nav-item"><a href="#reviews" class="nav-link">Reviews</a></li>
-                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mdlogin">Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>    
-    
-    <main style="overflow: hidden;">
-        {% block content %}
-        {% endblock %}
-    </main>
+  <link rel="stylesheet" href="/static/css/dtr.css" />
+  <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='/images/favicon.ico')}}" />
+  <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png" />
+  {%include 'master/loading_spinner.html' %}
+</head>
 
-    <footer class="py-5">
-        <div class="container"></div>
-    </footer>
+<body class="index-page" data-aos-easing="ease-in-out" data-aos-duration="600" data-aos-delay="0"
+  data-new-gr-c-s-check-loaded="14.1198.0" data-gr-ext-installed="">
 
-    <div class="modal fade" id="mdlogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdlogin" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content dtr_light_bg">
-            
-            <!-- Modal header -->
-            <div class="modal-header">
-              <!-- Pills navs -->
-              <ul class="nav nav-pills nav-justified" id="ex1" role="tablist">
-                <li class="nav-item me-3" role="presentation">
-                  <a class="nav-link login_button active" id="tab-login" data-bs-toggle="tab" data-bs-target="#pills-login" aria-controls="pills-login" aria-selected="true">Login</a>
-                </li>
-                <li class="nav-item me-3" role="presentation">
-                  <a class="nav-link login_button" id="tab-register" data-bs-toggle="tab" data-bs-target="#pills-register" aria-controls="pills-register" aria-selected="false">Register</a>
-                </li>
-              </ul>
-              <!-- Close button -->
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-      
-            <!-- Modal body -->
-            <div class="modal-body">
-              
-              <!-- Pills content -->
-              <div class="tab-content">
-                
-                <!-- Login Tab -->
-                <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-                  <form>
-                    
-                    <!-- Email input -->
-                    <div class="form-outline mb-4">
-                        <label class="form-label text-white" for="loginName">Email or username</label>
-                        <input type="email" id="login_email" class="form-control" required/>
-                    </div>
-                    <!-- Password input -->
-                    <div class="form-outline mb-4">
-                        <label class="form-label text-white" for="loginPassword">Password</label>
-                        <input type="password" id="login_passwd" class="form-control" required/>
-                    </div>
-                    <div id="liveAlertPlaceholder">
-                    </div>
-
-                    <!-- 2 column grid layout -->
-                    <div class="row mt-2">
-                        <div class="col-12 d-flex justify-content-end">
-                            <!-- Submit button -->
-                            <button type="button" class="btn btn-primary btn-block mb-4 login_button" onclick="submit_login();">Sign in</button>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-start">
-                            <!-- Simple link -->
-                            <button type="button" onclick="forgotPassword();" class="btn btn-link login_a" style="margin-top: -7px;">Forgot password?</button>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-end">
-                        <!-- Register buttons (Switch to Register tab) -->
-                        <div class="text-center">
-                            <a id="tab-register-link" role="button" style="color: white;">Not a member? <span class="login_a">Register</span></a>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-      
-                <!-- Register Tab -->
-                <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-                  <form>
-                    <!-- Name input -->
-                    <div class="form-outline mb-3">
-                        <label class="form-label" for="registerName">First Name</label>
-                        <input type="text" id="registerName" class="form-control" required/>                      
-                    </div>
-                    <!-- Name input -->
-                    <div class="form-outline mb-3">
-                      <label class="form-label" for="registersurName">Surname</label>
-                      <input type="text" id="registersurName" class="form-control" required/>                      
-                  </div>
-      
-                    <!-- Email input -->
-                    <div class="form-outline mb-3">
-                        <label class="form-label" for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" class="form-control" required/>
-                    </div>
-
-                    <!-- Phone input -->
-                    <div class="form-outline mb-3">
-                        <label class="form-label" for="registerPhone">Phone Number</label>
-                        <input type="phone" id="registerPhone" class="form-control" required/>
-                    </div>            
-
-                    <div id="signupAlertPlaceholder">
-                    </div>
-
-                    <div class="row mt-2">
-                        <div class="col-9 d-flex justify-content-start">
-                            <!-- Checkbox -->
-                            <div class="form-check d-flex justify-content-center mb-4">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" />
-                                <label class="form-check-label" for="registerCheck">
-                                I have read and agree to the terms
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-3 d-flex justify-content-end">
-                            <!-- Submit button -->
-                            <button type="button" class="btn btn-primary btn-block mb-3 login_button" onclick="signup();">Sign up</button>
-                        </div>
-                    </div>                    
-                  </form>
-                </div>
-      
-              </div>
-              <!-- Pills content -->
-      
-            </div>
-          </div>
-        </div>
+  <nav class="navbar navbar-dark navbar-expand-md fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="/static/images/dog_training_revolution.png" class="brand-logo img-fluid" style="max-width: 200px;"
+          alt="Brand Image">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse site-text" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="#classes" class="nav-link">Classes</a></li>
+          <li class="nav-item"><a href="#reviews" class="nav-link">Reviews</a></li>
+          <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+          <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mdlogin">Login</a>
+          </li>
+        </ul>
+      </div>
     </div>
-      
-      <script>
-        document.getElementById('login_passwd').addEventListener('keydown', function(event) {
-          // Check if the Enter key was pressed
-          if (event.key === 'Enter') {
-              event.preventDefault(); // Prevent the default form submission behavior (if any)
-              submit_login(); // Call your submit function
-          }
-        });
+  </nav>
 
-        document.getElementById('tab-register-link').addEventListener('click', function (event) {
-          event.preventDefault();
-          let registerTab = new bootstrap.Tab(document.querySelector('#tab-register'));
-          registerTab.show();  // Switch to the register tab
-        });
+  <main style="overflow: hidden;">
+    {% block content %}
+    {% endblock %}
+  </main>
 
-        function sendDataUrl(url, data2Send, callback) {
+  <footer class="py-5">
+    <div class="container"></div>
+  </footer>
 
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    var myArr = JSON.parse(this.responseText);
-                    callback(myArr, this.status)
-                }
-            };
+  <div class="modal fade" id="mdlogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="mdlogin" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog modal-lg-centered">
+      <div class="modal-content dtr_light_bg">
 
-            xmlhttp.open('POST', url)
-            console.log(url);
-            console.log(window.location.href);
-            xmlhttp.setRequestHeader("Content-Type", "application/json");
-            xmlhttp.onerror = function () {
-                alert('It appears the file is too large');
-            };
-            xmlhttp.send(data2Send);
-            // console.log('done..')
+        <!-- Modal header -->
+        <div class="modal-header">
+          <!-- Pills navs -->
+          <ul class="nav nav-pills nav-justified" id="ex1" role="tablist">
+            <li class="nav-item me-3" role="presentation">
+              <a class="nav-link login_button active" id="tab-login" data-bs-toggle="tab" data-bs-target="#pills-login"
+                aria-controls="pills-login" aria-selected="true">Login</a>
+            </li>
+            <li class="nav-item me-3" role="presentation">
+              <a class="nav-link login_button" id="tab-register" data-bs-toggle="tab" data-bs-target="#pills-register"
+                aria-controls="pills-register" aria-selected="false">Register</a>
+            </li>
+          </ul>
+          <!-- Close button -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          <!-- Pills content -->
+          <div class="tab-content">
+
+            <!-- Login Tab -->
+            <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+              <form>
+
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <label class="form-label text-white" for="loginName">Email or username</label>
+                  <input type="email" id="login_email" class="form-control" required />
+                </div>
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                  <label class="form-label text-white" for="loginPassword">Password</label>
+                  <input type="password" id="login_passwd" class="form-control" required />
+                </div>
+                <div id="liveAlertPlaceholder">
+                </div>
+
+                <!-- 2 column grid layout -->
+                <div class="row mt-2">
+                  <div class="col-12 d-flex justify-content-end">
+                    <!-- Submit button -->
+                    <button type="button" class="btn btn-primary btn-block mb-4 login_button"
+                      onclick="submit_login();">Sign in</button>
+                  </div>
+                  <div class="col-md-6 d-flex justify-content-start">
+                    <!-- Simple link -->
+                    <button type="button" onclick="forgotPassword();" class="btn btn-link login_a"
+                      style="margin-top: -7px;">Forgot password?</button>
+                  </div>
+                  <div class="col-md-6 d-flex justify-content-end">
+                    <!-- Register buttons (Switch to Register tab) -->
+                    <div class="text-center">
+                      <a id="tab-register-link" role="button" style="color: white;">Not a member? <span
+                          class="login_a">Register</span></a>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Register Tab -->
+            <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+              <form>
+                <!-- Name input -->
+                <div class="form-outline mb-3">
+                  <label class="form-label" for="registerName">First Name</label>
+                  <input type="text" id="registerName" class="form-control" required />
+                </div>
+                <!-- Name input -->
+                <div class="form-outline mb-3">
+                  <label class="form-label" for="registersurName">Surname</label>
+                  <input type="text" id="registersurName" class="form-control" required />
+                </div>
+
+                <!-- Email input -->
+                <div class="form-outline mb-3">
+                  <label class="form-label" for="registerEmail">Email</label>
+                  <input type="email" id="registerEmail" class="form-control" required />
+                </div>
+
+                <!-- Phone input -->
+                <div class="form-outline mb-3">
+                  <label class="form-label" for="registerPhone">Phone Number</label>
+                  <input type="phone" id="registerPhone" class="form-control" required />
+                </div>
+
+                <div id="signupAlertPlaceholder">
+                </div>
+
+                <div class="row mt-2">
+                  <div class="col-9 d-flex justify-content-start">
+                    <!-- Checkbox -->
+                    <div class="form-check d-flex justify-content-center mb-4">
+                      <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
+                        aria-describedby="registerCheckHelpText" />
+                      <label class="form-check-label" for="registerCheck">
+                        I have read and agree to the terms
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-3 d-flex justify-content-end">
+                    <!-- Submit button -->
+                    <button type="button" class="btn btn-primary btn-block mb-3 login_button" onclick="signup();">Sign
+                      up</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+          <!-- Pills content -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login_passwd').addEventListener('keydown', function (event) {
+      // Check if the Enter key was pressed
+      if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent the default form submission behavior (if any)
+        submit_login(); // Call your submit function
+      }
+    });
+
+    document.getElementById('tab-register-link').addEventListener('click', function (event) {
+      event.preventDefault();
+      let registerTab = new bootstrap.Tab(document.querySelector('#tab-register'));
+      registerTab.show();  // Switch to the register tab
+    });
+
+    function sendDataUrl(url, data2Send, callback) {
+
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var myArr = JSON.parse(this.responseText);
+          callback(myArr, this.status)
         }
+      };
 
-        function submit_login(){
-            showLoadingOverlay();
-            // Get the values from the input fields
-            document.getElementById('liveAlertPlaceholder').innerHTML = '';
-            var login_passwd = document.getElementById('login_passwd').value;
-            var email = document.getElementById('login_email').value;
+      xmlhttp.open('POST', url)
+      console.log(url);
+      console.log(window.location.href);
+      xmlhttp.setRequestHeader("Content-Type", "application/json");
+      xmlhttp.onerror = function () {
+        alert('It appears the file is too large');
+      };
+      xmlhttp.send(data2Send);
+      // console.log('done..')
+    }
 
-            // Regular expression for validating an email address
-            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    function submit_login() {
+      showLoadingOverlay();
+      // Get the values from the input fields
+      document.getElementById('liveAlertPlaceholder').innerHTML = '';
+      var login_passwd = document.getElementById('login_passwd').value;
+      var email = document.getElementById('login_email').value;
 
-            if (emailPattern.test(email) && login_passwd !='') {
-                var data = {
-                    email: email,
-                    login_passwd: login_passwd
-                };
-                sendDataUrl('/login', JSON.stringify(data), function (response) {
-                  if (response['message'] == "success"){
-                      window.location.href = "/bookings"
-                    } else if(response['message'] == "unverified") {
-                      var alertDiv = document.createElement('div');
-                      alertDiv.className = 'alert alert-info alert-dismissible fade show';
-                      alertDiv.role = 'alert';
-                      alertDiv.textContent = 'Please wait for account to be verified';
-                      var closeButton = document.createElement('button');
-                      closeButton.type = 'button';
-                      closeButton.className = 'btn-close';
-                      closeButton.setAttribute('data-bs-dismiss', 'alert');
-                      closeButton.setAttribute('aria-label', 'Close');
-                      alertDiv.appendChild(closeButton);
-                      document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
-                      hideLoadingOverlay();
-                    } else {
-                      var alertDiv = document.createElement('div');
-                      alertDiv.className = 'alert alert-danger alert-dismissible fade show';
-                      alertDiv.role = 'alert';
-                      alertDiv.textContent = 'Incorrect user details entered';
-                      var closeButton = document.createElement('button');
-                      closeButton.type = 'button';
-                      closeButton.className = 'btn-close';
-                      closeButton.setAttribute('data-bs-dismiss', 'alert');
-                      closeButton.setAttribute('aria-label', 'Close');
-                      alertDiv.appendChild(closeButton);
-                      document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
-                      hideLoadingOverlay();
-                    }
-                });
-            } else {
-                var alertDiv = document.createElement('div');
-                alertDiv.className = 'alert alert-warning alert-dismissible fade show';
-                alertDiv.role = 'alert';
-                alertDiv.textContent = 'Invalid email address';
-                var closeButton = document.createElement('button');
-                closeButton.type = 'button';
-                closeButton.className = 'btn-close';
-                closeButton.setAttribute('data-bs-dismiss', 'alert');
-                closeButton.setAttribute('aria-label', 'Close');
-                alertDiv.appendChild(closeButton);
-                document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
-                hideLoadingOverlay();
-            }
-            
-        }
-        
-        function signup(){
-          // Get the values from the input fields
-          showLoadingOverlay();
-          document.getElementById('signupAlertPlaceholder').innerHTML = '';
-          var registerName = document.getElementById('registerName').value;
-          var registersurName = document.getElementById('registersurName').value;
-          var registerEmail = document.getElementById('registerEmail').value;
-          var registerPhone = document.getElementById('registerPhone').value;
-          var registerCheck = document.getElementById('registerCheck').checked;
+      // Regular expression for validating an email address
+      var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-          // Regular expression for validating an email address
-          var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-          // console.log(registerCheck);
-          if (emailPattern.test(registerEmail) && registerName !='' && registerPhone !='' & registerCheck == true) {
-              var data = {
-                registerEmail: registerEmail.toLowerCase(),
-                registerName: registerName,
-                registersurName: registersurName,
-                registerPhone: registerPhone,
-              };
-              sendDataUrl('/signup', JSON.stringify(data), function (response) {
-                if (response['error'] == 500) {
-                  var alertDiv = document.createElement('div');
-                  alertDiv.className = 'alert alert-warning alert-dismissible fade show';
-                  alertDiv.role = 'alert';
-                  alertDiv.textContent = 'user already added to system';
-                  var closeButton = document.createElement('button');
-                  closeButton.type = 'button';
-                  closeButton.className = 'btn-close';
-                  closeButton.setAttribute('data-bs-dismiss', 'alert');
-                  closeButton.setAttribute('aria-label', 'Close');
-                  alertDiv.appendChild(closeButton);
-                  document.getElementById('signupAlertPlaceholder').appendChild(alertDiv);
-                } else {
-                  let registerTab = new bootstrap.Tab(document.querySelector('#tab-login'));
-                  registerTab.show();  // Switch to the register tab
-                  hideLoadingOverlay();
-                }
-                // console.log(response);
-                  // window.location.href = "/home"
-              });
+      if (emailPattern.test(email) && login_passwd != '') {
+        var data = {
+          email: email,
+          login_passwd: login_passwd
+        };
+        sendDataUrl('/login', JSON.stringify(data), function (response) {
+          if (response['message'] == "success") {
+            window.location.href = "/bookings"
+          } else if (response['message'] == "unverified") {
+            var alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-info alert-dismissible fade show';
+            alertDiv.role = 'alert';
+            alertDiv.textContent = 'Please wait for account to be verified';
+            var closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'btn-close';
+            closeButton.setAttribute('data-bs-dismiss', 'alert');
+            closeButton.setAttribute('aria-label', 'Close');
+            alertDiv.appendChild(closeButton);
+            document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
+            hideLoadingOverlay();
           } else {
-              var alertDiv = document.createElement('div');
-              alertDiv.className = 'alert alert-warning alert-dismissible fade show';
-              alertDiv.role = 'alert';
-              alertDiv.textContent = 'please complete all fields first';
-              var closeButton = document.createElement('button');
-              closeButton.type = 'button';
-              closeButton.className = 'btn-close';
-              closeButton.setAttribute('data-bs-dismiss', 'alert');
-              closeButton.setAttribute('aria-label', 'Close');
-              alertDiv.appendChild(closeButton);
-              document.getElementById('signupAlertPlaceholder').appendChild(alertDiv);
-              hideLoadingOverlay();
+            var alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+            alertDiv.role = 'alert';
+            alertDiv.textContent = 'Incorrect user details entered';
+            var closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'btn-close';
+            closeButton.setAttribute('data-bs-dismiss', 'alert');
+            closeButton.setAttribute('aria-label', 'Close');
+            alertDiv.appendChild(closeButton);
+            document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
+            hideLoadingOverlay();
           }
-        }
+        });
+      } else {
+        var alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-warning alert-dismissible fade show';
+        alertDiv.role = 'alert';
+        alertDiv.textContent = 'Invalid email address';
+        var closeButton = document.createElement('button');
+        closeButton.type = 'button';
+        closeButton.className = 'btn-close';
+        closeButton.setAttribute('data-bs-dismiss', 'alert');
+        closeButton.setAttribute('aria-label', 'Close');
+        alertDiv.appendChild(closeButton);
+        document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
+        hideLoadingOverlay();
+      }
 
-        function forgotPassword(){
-          showLoadingOverlay();
-            // Get the values from the input fields
-            document.getElementById('liveAlertPlaceholder').innerHTML = '';
-            var email = document.getElementById('login_email').value;
+    }
 
-            // Regular expression for validating an email address
-            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    function signup() {
+      // Get the values from the input fields
+      showLoadingOverlay();
+      document.getElementById('signupAlertPlaceholder').innerHTML = '';
+      var registerName = document.getElementById('registerName').value;
+      var registersurName = document.getElementById('registersurName').value;
+      var registerEmail = document.getElementById('registerEmail').value;
+      var registerPhone = document.getElementById('registerPhone').value;
+      var registerCheck = document.getElementById('registerCheck').checked;
 
-            if (emailPattern.test(email) && email !='') {
-              var data = {
-                  email: email
-              };
-              sendDataUrl('/forgotPassword', JSON.stringify(data), function (response) {
-                if (response['message'] == "successful"){
-                  var alertDiv = document.createElement('div');
-                  alertDiv.className = 'alert alert-success alert-dismissible fade show';
-                  alertDiv.role = 'alert';
-                  alertDiv.textContent = 'Please check your email';
-                  var closeButton = document.createElement('button');
-                  closeButton.type = 'button';
-                  closeButton.className = 'btn-close';
-                  closeButton.setAttribute('data-bs-dismiss', 'alert');
-                  closeButton.setAttribute('aria-label', 'Close');
-                  alertDiv.appendChild(closeButton);
-                  document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
-                  hideLoadingOverlay();
-                } else {
-                  hideLoadingOverlay();
-                }
-              });
-            } else {
-              var alertDiv = document.createElement('div');
-                alertDiv.className = 'alert alert-warning alert-dismissible fade show';
-                alertDiv.role = 'alert';
-                alertDiv.textContent = 'Please enter email address first';
-                var closeButton = document.createElement('button');
-                closeButton.type = 'button';
-                closeButton.className = 'btn-close';
-                closeButton.setAttribute('data-bs-dismiss', 'alert');
-                closeButton.setAttribute('aria-label', 'Close');
-                alertDiv.appendChild(closeButton);
-                document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
-                hideLoadingOverlay();
-            }
-        }
+      // Regular expression for validating an email address
+      var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      // console.log(registerCheck);
+      if (emailPattern.test(registerEmail) && registerName != '' && registerPhone != '' & registerCheck == true) {
+        var data = {
+          registerEmail: registerEmail.toLowerCase(),
+          registerName: registerName,
+          registersurName: registersurName,
+          registerPhone: registerPhone,
+        };
+        sendDataUrl('/signup', JSON.stringify(data), function (response) {
+          if (response['error'] == 500) {
+            var alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-warning alert-dismissible fade show';
+            alertDiv.role = 'alert';
+            alertDiv.textContent = 'user already added to system';
+            var closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'btn-close';
+            closeButton.setAttribute('data-bs-dismiss', 'alert');
+            closeButton.setAttribute('aria-label', 'Close');
+            alertDiv.appendChild(closeButton);
+            document.getElementById('signupAlertPlaceholder').appendChild(alertDiv);
+          } else {
+            let registerTab = new bootstrap.Tab(document.querySelector('#tab-login'));
+            registerTab.show();  // Switch to the register tab
+            hideLoadingOverlay();
+          }
+          // console.log(response);
+          // window.location.href = "/home"
+        });
+      } else {
+        var alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-warning alert-dismissible fade show';
+        alertDiv.role = 'alert';
+        alertDiv.textContent = 'please complete all fields first';
+        var closeButton = document.createElement('button');
+        closeButton.type = 'button';
+        closeButton.className = 'btn-close';
+        closeButton.setAttribute('data-bs-dismiss', 'alert');
+        closeButton.setAttribute('aria-label', 'Close');
+        alertDiv.appendChild(closeButton);
+        document.getElementById('signupAlertPlaceholder').appendChild(alertDiv);
+        hideLoadingOverlay();
+      }
+    }
 
-      </script>
-    <script src="/static/js/dtr.js"></script>
-    <script>
-        AOS.init();
-    </script>
-  </body>
-  </html>
+    function forgotPassword() {
+      showLoadingOverlay();
+      // Get the values from the input fields
+      document.getElementById('liveAlertPlaceholder').innerHTML = '';
+      var email = document.getElementById('login_email').value;
+
+      // Regular expression for validating an email address
+      var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      if (emailPattern.test(email) && email != '') {
+        var data = {
+          email: email
+        };
+        sendDataUrl('/forgotPassword', JSON.stringify(data), function (response) {
+          if (response['message'] == "successful") {
+            var alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success alert-dismissible fade show';
+            alertDiv.role = 'alert';
+            alertDiv.textContent = 'Please check your email';
+            var closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'btn-close';
+            closeButton.setAttribute('data-bs-dismiss', 'alert');
+            closeButton.setAttribute('aria-label', 'Close');
+            alertDiv.appendChild(closeButton);
+            document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
+            hideLoadingOverlay();
+          } else {
+            hideLoadingOverlay();
+          }
+        });
+      } else {
+        var alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-warning alert-dismissible fade show';
+        alertDiv.role = 'alert';
+        alertDiv.textContent = 'Please enter email address first';
+        var closeButton = document.createElement('button');
+        closeButton.type = 'button';
+        closeButton.className = 'btn-close';
+        closeButton.setAttribute('data-bs-dismiss', 'alert');
+        closeButton.setAttribute('aria-label', 'Close');
+        alertDiv.appendChild(closeButton);
+        document.getElementById('liveAlertPlaceholder').appendChild(alertDiv);
+        hideLoadingOverlay();
+      }
+    }
+
+  </script>
+  <script src="/static/js/dtr.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+
+</html>

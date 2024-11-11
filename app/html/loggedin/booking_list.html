@@ -1,21 +1,49 @@
 {% extends "/master/logged_in.html" %}
 {% block content %}
 <div class="container pt-5">
-    <div class="row pt-5">
-        <div class="col-12">
-            <a href="/bookings" class="btn btn-sm btn-outline-light float-end" title="Add New"><i
-                    class="fas fa-add me-2"></i>Add New</a>
-            <h5><span id="usercount" class="me-2">0</span>Bookings</h5>
+    <!-- Tabs for switching between Table and Calendar -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" id="table-tab" data-bs-toggle="tab" href="#tableView" role="tab">Table View</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="calendar-tab" data-bs-toggle="tab" href="#calendarView" role="tab">Calendar View</a>
+        </li>
+    </ul>
+
+    <div class="tab-content pt-3">
+        <!-- Table View Content -->
+        <div class="tab-pane fade show active" id="tableView" role="tabpanel">
+            <div class="row pt-5">
+                <div class="col-12">
+                    <a href="/bookings" class="btn btn-sm btn-outline-light float-end" title="Add New">
+                        <i class="fas fa-add me-2"></i>Add New
+                    </a>
+                    <h5><span id="usercount" class="me-2">0</span>Bookings</h5>
+                </div>
+                <div class="col-12 pt-2">
+                    <div id="example-table" class="mb-3"></div>
+                </div>
+            </div>
         </div>
-        <div class="col-12 pt-2">
-            <div id="example-table" class="mb-3"></div>
+
+        <!-- Calendar View Content -->
+        <div class="tab-pane fade" id="calendarView" role="tabpanel">
+            {% if existing_user.account_type == "admin" %}
+            <iframe
+                src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Europe%2FLondon&mode=WEEK&hl=en_GB&showTz=0&showTitle=0&showPrint=0&src=MzZqdHJ0MDFlcmYzcGFqdGo5YjA5bmplMmNjYWhqYW9AaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23B39DDB"
+                style="border:solid 1px #777" width="1024" height="800" frameborder="0" scrolling="no"></iframe>
+
+            {%else%}
+            <p>The calendar view is for admin use only. You are a customer of Dog Training Revolution Ltd</p>
+            {%endif%}
         </div>
     </div>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="mdeditpet" tabindex="-1" aria-labelledby="mdeditpet" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog modal-lg-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5">Edit Pet</h1>
@@ -76,7 +104,7 @@
 
 <div class="modal fade" id="mdaddpet" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="mdaddpet" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog modal-lg-centered">
         <div class="modal-content">
 
             <!-- Modal header -->

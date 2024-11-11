@@ -43,6 +43,7 @@ from app import db
 
 @bookings_url.route("/manage_bookings", methods=["GET"])
 def manage_bookings():
+
     if "_user_id" in session:
         existing_user = User.query.filter_by(
             id=session["_user_id"]
@@ -75,7 +76,6 @@ def manage_bookings():
             {"client_id": existing_user.id}  # Binding the parameter safely
         ).fetchall()
 
-
     return render_template('loggedin/booking_list.html',
                             bookings=bookings,
                             existing_user=existing_user)
@@ -86,21 +86,45 @@ def generate_calendar_ics():
     calendar = Calendar()
     bookings = db.session.execute(
         text(
-            "SELECT public.bookings.id, public.bookings.booking_date, public.bookings.status, public.accounts.firstname, public.accounts.surname, public.pets.name, public.products.title "
-            "FROM public.bookings "
-            "INNER JOIN public.accounts ON public.bookings.client_id = public.accounts.id "
-            "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
-            "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
-            "ORDER BY booking_date DESC"
+            """SELECT 
+                public.bookings.id, 
+                public.bookings.booking_date, 
+                public.bookings.status, 
+                public.accounts.firstname, 
+                public.accounts.surname, 
+                public.pets.name, 
+                public.products.title,
+                public.products.start,
+                public.products.end
+            FROM 
+                public.bookings
+            INNER JOIN 
+                public.accounts ON public.bookings.client_id = public.accounts.id
+            INNER JOIN 
+                public.pets ON public.bookings.pet_id = public.pets.id
+            INNER JOIN 
+                public.products ON public.bookings.product_id = public.products.id
+            ORDER BY 
+                booking_date DESC;"""
         )
     ).fetchall()
 
     # Iterate over the SQL booking results and add each as an event
     for booking in bookings:
+        # Extract date and time components
+        event_date = booking.booking_date.strftime('%Y-%m-%d')
+        start_time = booking.start.split(' ')[1]  # Extract the time part
+        end_time = booking.end.split(' ')[1]  # Extract the time part
+
+        # Combine date with start and end times
+        event_start = f"{event_date} {start_time}"
+        event_end = f"{event_date} {end_time}"
+
         # Create a new event for each booking
         event = Event()
         event.name = f"{booking.title} with {booking.name}"
-        event.begin = booking.booking_date.strftime("%Y-%m-%d %H:%M:%S")
+        event.begin = datetime.strptime(event_start, "%Y-%m-%d %H:%M:%S")
+        event.end = datetime.strptime(event_end, "%Y-%m-%d %H:%M:%S")
         event.description = (
             f"Status: {booking.status}\n"
             f"Client: {booking.firstname} {booking.surname}\n"
@@ -236,7 +260,6 @@ def booking_payment():
     db.session.commit()
     stripe_obj = Payments()
     payment_url = stripe_obj.create_payment_link(linked_uuid)
-    generate_calendar_ics()
     return jsonify({'stripe_url': payment_url})
 
 
@@ -260,7 +283,8 @@ def external_booking_payment():
             password="",
             created_on=datetime.now(),
             last_login=datetime.now(),
-            phone=""
+            phone="",
+            stripe_api_key="",
         )
         user.set_password(new_password)
         db.session.add(user)

@@ -29,8 +29,9 @@ class User(UserMixin, BaseModel):
     verified = db.Column(db.Boolean, unique=False, nullable=False)
     account_type = db.Column(db.String(64), nullable=False, unique=False)
     phone = db.Column(db.String(64), unique=True, nullable=False)
+    stripe_api_key = db.Column(db.String(64), unique=True, nullable=False)
 
-    def __init__(self, id, firstname, surname, email, password, created_on, last_login, verified, account_type, phone):
+    def __init__(self, id, firstname, surname, email, password, created_on, last_login, verified, account_type, phone, stripe_api_key):
         self.id = id
         self.firstname = firstname
         self.surname = surname
@@ -41,6 +42,7 @@ class User(UserMixin, BaseModel):
         self.verified = verified
         self.account_type = account_type
         self.phone = phone
+        self.stripe_api_key = stripe_api_key
 
     def set_password(self, password):
         """Create hashed password."""

@@ -205,6 +205,7 @@ def product_add():
 
     product = Product(
         id=str(uuid.uuid4()),
+        user_id=str(session["_user_id"]),
         title=request.json['productTitle'],
         start=formatted_start,
         end=formatted_end,
@@ -216,6 +217,7 @@ def product_add():
         recurrence_days=request.json['productrecurrence_days'],
         recurrence_interval=request.json['productinterval'],
         recurrence_end=request.json['productRecurEnd'],
+        
     )
 
     db.session.add(product)
@@ -411,3 +413,5 @@ def pet_delete():
         db.session.commit()
     
     return jsonify({"msg": "complete"})
+
+

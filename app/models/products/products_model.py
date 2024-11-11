@@ -15,6 +15,7 @@ class Product(BaseModel):
     __tablename__ = "products"
     
     id = db.Column(UUID(), primary_key=True, default=uuid4())
+    user_id = db.Column(UUID(), nullable=False)
     title = db.Column(db.String(64), nullable=False, unique=False)
     location = db.Column(db.String(64), nullable=False, unique=False)
     start = db.Column(db.String(64), nullable=False, unique=False)
@@ -39,6 +40,7 @@ class Product(BaseModel):
     def __init__(
         self,
         id,
+        user_id,
         title,
         location,
         start,
@@ -57,6 +59,7 @@ class Product(BaseModel):
         full_desc=None,
     ):
         self.id = id
+        self.user_id = user_id
         self.title = title
         self.location = location
         self.start = start

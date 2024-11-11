@@ -3,11 +3,13 @@ from flask import Flask, make_response
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
+from flask_apscheduler import APScheduler
+
 
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-# scheduler = APScheduler()
+scheduler = APScheduler()
 
 
 def create_app():
@@ -19,8 +21,8 @@ def create_app():
     db.init_app(app)
     mail = Mail(app)
     login_manager.init_app(app)
-    # scheduler.init_app(app)
-    # scheduler.start()
+    scheduler.init_app(app)
+    scheduler.start()
 
     with app.app_context():
         # Register Blueprints
@@ -29,12 +31,14 @@ def create_app():
         from app.urls.bookings.bookings_url import bookings_url
         from app.urls.admin.admin import admin_url
         from app.urls.home.home_url import home_url
+        from app.urls.admin.scheduler import scheduler_
 
         app.register_blueprint(root_url)
         app.register_blueprint(auth_url)
         app.register_blueprint(bookings_url)
         app.register_blueprint(admin_url)
         app.register_blueprint(home_url)
+        app.register_blueprint(scheduler_)
 
         from app.models.pets.pets_model import Pet
         from app.models.products.products_model import Booking, Product
