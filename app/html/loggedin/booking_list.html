@@ -1,21 +1,57 @@
 {% extends "/master/logged_in.html" %}
 {% block content %}
 <div class="container pt-5">
-    <div class="row pt-5">
-        <div class="col-12">
-            <a href="/bookings" class="btn btn-sm btn-outline-light float-end" title="Add New"><i
-                    class="fas fa-add me-2"></i>Add New</a>
-            <h5><span id="usercount" class="me-2">0</span>Bookings</h5>
+    <!-- Tabs for switching between Table and Calendar -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" id="table-tab" data-bs-toggle="tab" href="#tableView" role="tab">Table View</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="calendar-tab" data-bs-toggle="tab" href="#calendarView" role="tab">Calendar View</a>
+        </li>
+    </ul>
+
+    <div class="tab-content pt-3">
+        <!-- Table View Content -->
+        <div class="tab-pane fade show active" id="tableView" role="tabpanel">
+            <div class="row pt-5">
+                <div class="col-12">
+                    {%if current_user.account_type == 'admin'%}
+                    <a href="#" class="btn btn-sm btn-outline-light float-end" title="Add New"
+                        onclick="addBookingAdmin()">
+                        <i class="fas fa-add me-2"></i>Add New
+                    </a>
+
+                    {%else%}
+                    <a href="/bookings" class="btn btn-sm btn-outline-light float-end" title="Add New">
+                        <i class="fas fa-add me-2"></i>Add New
+                    </a>
+                    {%endif%}
+                    <h5><span id="usercount" class="me-2">0</span>Bookings</h5>
+                </div>
+                <div class="col-12 pt-2">
+                    <div id="example-table" class="mb-3"></div>
+                </div>
+            </div>
         </div>
-        <div class="col-12 pt-2">
-            <div id="example-table" class="mb-3"></div>
+
+        <!-- Calendar View Content -->
+        <div class="tab-pane fade" id="calendarView" role="tabpanel">
+            {% if existing_user.account_type == "admin" %}
+            <iframe
+                src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Europe%2FLondon&mode=WEEK&hl=en_GB&showTz=0&showTitle=0&showPrint=0&src=MzZqdHJ0MDFlcmYzcGFqdGo5YjA5bmplMmNjYWhqYW9AaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23B39DDB"
+                style="border:solid 1px #777" width="1024" height="800" frameborder="0" scrolling="no"></iframe>
+
+            {%else%}
+            <p>The calendar view is for admin use only. You are a customer of Dog Training Revolution Ltd</p>
+            {%endif%}
         </div>
     </div>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="mdeditpet" tabindex="-1" aria-labelledby="mdeditpet" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog modal-lg-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5">Edit Pet</h1>
@@ -76,7 +112,7 @@
 
 <div class="modal fade" id="mdaddpet" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="mdaddpet" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog modal-lg-centered">
         <div class="modal-content">
 
             <!-- Modal header -->
@@ -152,18 +188,121 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" id="addBookingAdminModal" tabindex="-1" aria-labelledby="addBookingModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBookingModalLabel">Add New Booking</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Content for adding a new booking -->
+                <!-- Add form fields here, for example: -->
+                <div class="mb-3">
+                    <label for="bookingName" class="form-label">Booking Name</label>
+                    <select class="form-control" id="bookingName" name="bookingName" required>
+                        <option value="">Select Booking Name</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="clientNameBooking" class="form-label">Client Name</label>
+                    <select onchange="filterPets()" class="form-control" id="clientNameBooking" name="clientNameBooking"
+                        required>
+                        <option value="">Select Client Name</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="petName" class="form-label">Pet Name</label>
+                    <select class="form-control" id="petName" name="petName" required>
+                        <option value="">Select Pet Name</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="addBookingDate" class="form-label">Booking Date</label>
+                    <input type="datetime-local" class="form-control" id="addBookingDate" name="addBookingDate"
+                        required>
+                </div>
+                <!-- Additional fields as needed -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="adminCreateBooking()" class="btn btn-primary">Save Booking</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Booking Modal -->
+<div class="modal fade" id="editBookingModal" tabindex="-1" aria-labelledby="editBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBookingModalLabel">Edit Booking</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form for editing booking details -->
+                <form id="editBookingForm">
+                    <div class="mb-3">
+                        <label for="editBookingName" class="form-label">Booking Name</label>
+                        <input disabled type="text" class="form-control" id="editBookingName" name="bookingName"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBookingClient" class="form-label">Client Name</label>
+                        <input disabled type="text" class="form-control" id="editBookingClient" name="bookingClient"
+                            required>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBookingPet" class="form-label">Pet Name</label>
+                        <input disabled type="text" class="form-control" id="editBookingPet" name="bookingPet" required>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBookingDate" class="form-label">Booking Date and Time</label>
+                        <input type="datetime-local" class="form-control" id="editBookingDate" name="bookingDate"
+                            required>
+
+                    </div>
+                    <!-- Additional fields as needed -->
+                    <input type="hidden" id="editBookingId" name="id">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="saveEditBooking()" form="editBookingForm" class="btn btn-primary">Save
+                    Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     var menuIcon = function (cell, formatterParams, onRendered) { //plain text value
         return "<i class='fa fa-edit'></i>";
     };
+    var deleteIcon = function (cell, formatterParams, onRendered) { //plain text value
+        return "<i class='fa fa-trash'></i>";
+    };
     var table = new Tabulator("#example-table", {
         layout: "fitColumns",
+        // initialSort: [
+        //     { column: "booking_date", dir: "asc" }  // Sort by booking_date in ascending order
+        // ],
         columns: [
             { title: "id", field: "id", field: "secret", download: false, visible: false },
             { title: "firstname", field: "firstname", field: "secret", download: false, visible: false },
             { title: "surname", field: "surname", field: "secret", download: false, visible: false },
-            { title: "Class", field: "title", sorter: "String", resizable: true, headerFilter: "input", widthGrow: 1 },
-            { title: "Pet", field: "pet_name", sorter: "String", download: false, visible: true },
+            { title: "Class", field: "title", sorter: "string", resizable: true, headerFilter: "input", widthGrow: 1 },
+            { title: "Pet", field: "pet_name", sorter: "string", headerFilter: "input", download: false, visible: true },
             {
                 title: "Owner",
                 field: "Owner",
@@ -171,14 +310,36 @@
                 resizable: true,
                 headerFilter: "input",
                 widthGrow: 1,
+
                 mutator: function (value, data, type, params, component) {
                     // Combine firstname and surname
                     return data.firstname + " " + data.surname;
                 }
             },
-            { title: "Date", field: "booking_date", sorter: "String", resizable: true, widthGrow: 1 },
-            { title: "Paid", field: "status", headerSort: false, resizable: true, width: 60, hozAlign: "center" },
-            { formatter: menuIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) { showeditmd(cell.getRow().getData().id) }, headerSort: false },
+            { title: "Date", field: "booking_date", sorter: "string", headerFilter: "input", resizable: true, widthGrow: 1 },
+            // { title: "Paid", field: "status", headerSort: false, resizable: true, width: 60, hozAlign: "center" },
+            {%if current_user.account_type == 'admin' %}
+            {
+            formatter: menuIcon,
+            width: 40,
+            hozAlign: "center",
+            cellClick: function (e, cell) {
+                const bookingId = cell.getRow().getData().id;
+                showEditModal(bookingId);  // Call function to show the modal with booking data
+            },
+            headerSort: false
+        },
+        {
+            formatter: deleteIcon,
+            width: 40,
+            hozAlign: "center",
+            cellClick: function (e, cell) {
+                const bookingId = cell.getRow().getData().id;
+                deleteBookingAdmin(bookingId);  // Call function to show the modal with booking data
+            },
+            headerSort: false
+        }
+            {% endif %}
         ],
     });
 
@@ -195,6 +356,157 @@
         };
         table.setData("/bookings_json");
     });
+
+    function adminCreateBooking() {
+        // Get values from the form fields
+        const bookingId = document.getElementById("bookingName").value;
+        const clientId = document.getElementById("clientNameBooking").value;
+        const petId = document.getElementById("petName").value;
+        const bookingDate = document.getElementById("addBookingDate").value;
+
+        // Check if all fields are filled (simple client-side validation)
+        if (!bookingName || !clientNameBooking || !petName || !bookingDate) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        // Prepare data to send
+        const data = {
+            bookingId: bookingId,
+            clientId: clientId,
+            petId: petId,
+            bookingDate: bookingDate
+        };
+
+        sendDataUrl('/admin_create_booking', JSON.stringify(data), function (response) {
+            location.reload()
+        })
+
+    }
+
+    function deleteBookingAdmin(bookingId) {
+        // Show confirmation popup
+        if (confirm("Are you sure you want to delete this booking?")) {
+            // If the user confirms, proceed with the deletion
+            var data = {
+                booking_id: bookingId
+            };
+            sendDataUrl('/admin_delete_booking', JSON.stringify(data), function (response) {
+                location.reload();
+            });
+        } else {
+            // If the user cancels, do nothing
+            console.log("Booking deletion canceled by user.");
+        }
+    }
+    function saveEditBooking() {
+        var data = { booking_id: document.getElementById('editBookingId').value, booking_date: document.getElementById('editBookingDate').value };
+        sendDataUrl('/save_edit_booking', JSON.stringify(data), function (response) {
+            location.reload()
+        })
+    }
+
+    function showEditModal(bookingId) {
+        // Open the modal
+        const modal = new bootstrap.Modal(document.getElementById('editBookingModal'));
+
+        var data = {
+            booking_id: bookingId
+        };
+        sendDataUrl('/admin_get_booking', JSON.stringify(data), function (response) {
+            document.getElementById('editBookingId').value = response.id;
+            document.getElementById('editBookingName').value = response.title;
+            document.getElementById('editBookingClient').value = response.firstname + ' ' + response.surname;
+            document.getElementById('editBookingPet').value = response.pet_name;
+            const bookingDate = new Date(response.booking_date);
+            const formattedDate = bookingDate.toISOString().slice(0, 16);
+            console.log(formattedDate);
+            document.getElementById('editBookingDate').value = formattedDate;
+            modal.show();
+        });
+
+    }
+
+    function addBookingAdmin() {
+        // Define your data object for the requests
+        const data = { /* Add your required data here */ };
+
+        // Create two promises for the asynchronous requests
+        const productsPromise = new Promise((resolve, reject) => {
+            sendDataUrl('/get_all_products', JSON.stringify(data), function (response) {
+                console.log(response);
+                populateDropdown("bookingName", response);
+                resolve(); // Resolve the promise after populating the dropdown
+            });
+        });
+
+        const clientsPromise = new Promise((resolve, reject) => {
+            sendDataUrl('/get_all_clients', JSON.stringify(data), function (response) {
+                console.log(response);
+                populateDropdown("clientNameBooking", response);
+                filterPets();
+                resolve(); // Resolve the promise after populating the dropdown
+            });
+        });
+
+        const bookingDate = new Date();
+        const formattedDate = bookingDate.toISOString().slice(0, 16); // Format as "YYYY-MM-DDTHH:MM"
+        console.log(formattedDate);
+        document.getElementById('addBookingDate').value = formattedDate;
+
+
+        // Wait for both requests to complete before showing the modal
+        Promise.all([productsPromise, clientsPromise
+        ]).then(() => {
+            const modal = new bootstrap.Modal(document.getElementById('addBookingAdminModal'));
+            modal.show();
+        });
+    }
+
+
+    function filterPets() {
+        var data = {
+            client_id: document.getElementById('clientNameBooking').value
+        };
+        const petsPromise = new Promise((resolve, reject) => {
+            sendDataUrl('/get_filtered_pets', JSON.stringify(data), function (response) {
+
+                console.log(response);
+                populateDropdown("petName", response);
+                resolve(); // Resolve the promise after populating the dropdown
+            });
+        })
+
+    }
+
+
+    function populateDropdown(selectId, optionsData) {
+        const selectElement = document.getElementById(selectId);
+        selectElement.innerHTML = "";  // Clear existing options
+
+        // Check if optionsData is an array or object and adjust accordingly
+        if (Array.isArray(optionsData)) {
+            // If it's an array of objects with `id` and `name`, convert it to { id: name }
+            optionsData.forEach(item => {
+                const opt = document.createElement("option");
+                opt.value = item.id;
+                opt.textContent = item.name;
+                selectElement.appendChild(opt);
+            });
+        } else {
+            // If it's already in { uuid: 'displayText' } format
+            Object.entries(optionsData).forEach(([uuid, text]) => {
+                const opt = document.createElement("option");
+                opt.value = uuid;
+                opt.textContent = text;
+                selectElement.appendChild(opt);
+            });
+        }
+    }
+
+
+
+
 
     function addpet() {
         showLoadingOverlay();
@@ -308,4 +620,5 @@
     }
 
 </script>
+
 {% endblock %}

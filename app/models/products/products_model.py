@@ -15,6 +15,7 @@ class Product(BaseModel):
     __tablename__ = "products"
     
     id = db.Column(UUID(), primary_key=True, default=uuid4())
+    user_id = db.Column(UUID(), nullable=False)
     title = db.Column(db.String(64), nullable=False, unique=False)
     location = db.Column(db.String(64), nullable=False, unique=False)
     start = db.Column(db.String(64), nullable=False, unique=False)
@@ -35,10 +36,12 @@ class Product(BaseModel):
     full_desc = db.Column(db.String(50000), nullable=True)
     
     price = db.Column(db.Float, nullable=True, unique=False)
+    image_base64 = db.Column(db.String(), nullable=True)
 
     def __init__(
         self,
         id,
+        user_id,
         title,
         location,
         start,
@@ -55,8 +58,10 @@ class Product(BaseModel):
         price=None,
         short_desc=None,
         full_desc=None,
+        image_base64=None,
     ):
         self.id = id
+        self.user_id = user_id
         self.title = title
         self.location = location
         self.start = start
@@ -73,7 +78,7 @@ class Product(BaseModel):
         self.price = price
         self.short_desc=short_desc
         self.full_desc=full_desc
-
+        self.image_base64=image_base64
     def to_dict(self):
         """Convert User object to dictionary for JSON serialization."""
         return {
@@ -91,6 +96,7 @@ class Product(BaseModel):
             "block_booking": self.block_booking,
             "short_desc": self.short_desc,
             "full_desc": self.full_desc,
+            "image_base64": self.image_base64
         }
 
 

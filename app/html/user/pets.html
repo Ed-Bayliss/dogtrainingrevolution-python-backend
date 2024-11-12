@@ -3,7 +3,8 @@
 <div class="container pt-5">
     <div class="row pt-5">
         <div class="col-12">
-            <button type="button" class="btn btn-sm btn-outline-light float-end" title="Add New" data-bs-toggle="modal" data-bs-target="#mdaddpet"><i class="fas fa-add me-2"></i>Add New</button>
+            <button type="button" class="btn btn-sm btn-outline-light float-end" title="Add New" data-bs-toggle="modal"
+                data-bs-target="#mdaddpet"><i class="fas fa-add me-2"></i>Add New</button>
             <h5><span id="usercount" class="me-2">0</span>Pets</h5>
         </div>
         <div class="col-12 pt-2">
@@ -14,189 +15,195 @@
 
 <!-- Modal -->
 <div class="modal fade" id="mdeditpet" tabindex="-1" aria-labelledby="mdeditpet" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5">Edit Pet</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <input type="hidden" id="hfpetRef">
-            <div class="row">
-                <div class="col-9">
-                    <div class="form-outline mb-2">
-                        <label class="form-label small" for="editname">Name</label>
-                        <input type="text" id="editname" class="form-control"/>                      
+    <div class="modal-dialog modal-lg modal-dialog modal-lg-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Edit Pet</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="hfpetRef">
+                <div class="row">
+                    <div class="col-9">
+                        <div class="form-outline mb-2">
+                            <label class="form-label small" for="editname">Name</label>
+                            <input type="text" id="editname" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-outline mb-2">
+                            <label class="form-label small" for="editgender">Gender</label>
+                            <select type="text" id="editgender" class="form-select">
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="form-outline mb-2">
+                            <label class="form-label small" for="editbreed">Breed</label>
+                            <input type="text" id="editbreed" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-outline mb-2">
+                            <label class="form-label small" for="editneutered">Neutered</label>
+                            <select type="text" id="editneutered" class="form-select">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="form-outline mb-2">
-                        <label class="form-label small" for="editgender">Gender</label>
-                        <select type="text" id="editgender" class="form-select">
-                            <option value="1">Male</option>
-                            <option value="0">Female</option>
-                        </select>
+                <div class="row">
+                    <div class="col-7">
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="editchip">Microchip</label>
+                            <input type="text" id="editchip" class="form-control" />
+                        </div>
                     </div>
-                </div>
-                <div class="col-9">
-                    <div class="form-outline mb-2">
-                        <label class="form-label small" for="editbreed">Breed</label>
-                        <input type="text" id="editbreed" class="form-control"/>                      
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-outline mb-2">
-                        <label class="form-label small" for="editneutered">Neutered</label>
-                        <select type="text" id="editneutered" class="form-select">
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
+                    <div class="col-5">
+                        <div class="form-outline mb-2">
+                            <label class="form-label" for="editdob">DOB</label>
+                            <input type="date" id="editdob" class="form-control" />
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-7">
-                    <div class="form-outline mb-2">
-                        <label class="form-label" for="editchip">Microchip</label>
-                        <input type="text" id="editchip" class="form-control"/>                      
-                    </div>
-                </div>
-                <div class="col-5">
-                    <div class="form-outline mb-2">
-                        <label class="form-label" for="editdob">DOB</label>
-                        <input type="date" id="editdob" class="form-control"/>                      
-                    </div>
-                </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button type="button" class="btn btn-danger" onclick="deletepet();"><i
+                        class="fas fa-trash me-2"></i>Delete pet</button>
+                <button type="button" class="btn login_button" onclick="updatepet();"><i
+                        class="fas fa-save me-2"></i>Save changes</button>
             </div>
         </div>
-        <div class="modal-footer" style="justify-content: space-between;">
-            <button type="button" class="btn btn-danger" onclick="deletepet();"><i class="fas fa-trash me-2"></i>Delete pet</button>
-            <button type="button" class="btn login_button" onclick="updatepet();"><i class="fas fa-save me-2"></i>Save changes</button>
-        </div>
-      </div>
     </div>
 </div>
 
-<div class="modal fade" id="mdaddpet" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mdaddpet" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        
-        <!-- Modal header -->
-        <div class="modal-header">
-            <h1 class="modal-title fs-5">Add New Pet</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-            <form>
-            <!-- Name input -->
-            <div class="form-outline mb-2">
-                <label class="form-label small" for="clientName">Client</label>
-                <select type="text" id="clientName" class="form-select">
-                    {% for user in users %}
-                    <option value="{{user.id}}">{{user.firstname}} {{user.surname}}</option>
-                    {% endfor %}
-                </select>
+<div class="modal fade" id="mdaddpet" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="mdaddpet" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog modal-lg-centered">
+        <div class="modal-content">
+
+            <!-- Modal header -->
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Add New Pet</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="row">
-                <div class="col-9">
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+                    <!-- Name input -->
                     <div class="form-outline mb-2">
-                        <label class="form-label small" for="addname">Name</label>
-                        <input type="text" id="addname" class="form-control"/>                      
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-outline mb-2">
-                        <label class="form-label small" for="addgender">Gender</label>
-                        <select type="text" id="addgender" class="form-select">
-                            <option value="1">Male</option>
-                            <option value="0">Female</option>
+                        <label class="form-label small" for="clientName">Client</label>
+                        <select type="text" id="clientName" class="form-select">
+                            {% for user in users %}
+                            {%if user.account_type == 'client'%}
+                            <option value="{{user.id}}">{{user.firstname}} {{user.surname}}</option>
+                            {%endif%}
+                            {% endfor %}
                         </select>
                     </div>
-                </div>
-                <div class="col-9">
-                    <div class="form-outline mb-2">
-                        <label class="form-label small" for="addbreed">Breed</label>
-                        <input type="text" id="addbreed" class="form-control"/>                      
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="form-outline mb-2">
+                                <label class="form-label small" for="addname">Name</label>
+                                <input type="text" id="addname" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-outline mb-2">
+                                <label class="form-label small" for="addgender">Gender</label>
+                                <select type="text" id="addgender" class="form-select">
+                                    <option value="1">Male</option>
+                                    <option value="0">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="form-outline mb-2">
+                                <label class="form-label small" for="addbreed">Breed</label>
+                                <input type="text" id="addbreed" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-outline mb-2">
+                                <label class="form-label small" for="addneutered">Neutered</label>
+                                <select type="text" id="addneutered" class="form-select">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-outline mb-2">
-                        <label class="form-label small" for="addneutered">Neutered</label>
-                        <select type="text" id="addneutered" class="form-select">
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            
-            
-            <div class="row">
-                <div class="col-7">
-                    <div class="form-outline mb-2">
-                        <label class="form-label small" for="addchip">Microchip</label>
-                        <input type="text" id="addchip" class="form-control"/>                      
-                    </div>
-                </div>
-                <div class="col-5">
-                    <div class="form-outline mb-2">
-                        <label class="form-label small" for="adddob">DOB</label>
-                        <input type="date" id="adddob" class="form-control"/>                      
-                    </div>
-                </div>
-            </div>
 
-            <div id="AlertPlaceholder">
-            </div>
 
-            <div class="d-grid gap-2 mt-2">
-                <button type="button" class="btn login_button" type="button" onclick="addpet();"><i class="fas fa-plus me-2"></i>Add New Pet</button>
-            </div>
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="form-outline mb-2">
+                                <label class="form-label small" for="addchip">Microchip</label>
+                                <input type="text" id="addchip" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-outline mb-2">
+                                <label class="form-label small" for="adddob">DOB</label>
+                                <input type="date" id="adddob" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
 
-            </form>  
+                    <div id="AlertPlaceholder">
+                    </div>
+
+                    <div class="d-grid gap-2 mt-2">
+                        <button type="button" class="btn login_button" type="button" onclick="addpet();"><i
+                                class="fas fa-plus me-2"></i>Add New Pet</button>
+                    </div>
+
+                </form>
+            </div>
         </div>
-      </div>
     </div>
 </div>
 
 <script>
 
-    var menuIcon = function(cell, formatterParams, onRendered){ //plain text value
+    var menuIcon = function (cell, formatterParams, onRendered) { //plain text value
         return "<i class='fa fa-edit'></i>";
     };
     var table = new Tabulator("#example-table", {
-        layout:"fitColumns",
-        columns:[
-        {title:"id", field:"id", field:"secret", download:false, visible:false},
-        {title:"firstname", field:"firstname", field:"secret", download:false, visible:false},
-        {title:"surname", field:"surname", field:"secret", download:false, visible:false},
-        {
-            title:"Owner", 
-            field:"Owner", 
-            sorter:"string", 
-            resizable:true, 
-            headerFilter:"input", 
-            widthGrow: 1,
-            mutator: function(value, data, type, params, component) {
-                // Combine firstname and surname
-                return data.firstname + " " + data.surname;
-            }
-        },
-        {title:"Name", field:"name", headerFilter:"input", sorter:"String", resizable:true, widthGrow: 1},
-        {title:"Breed", field:"breed", headerFilter:"input", sorter:"String", resizable:true, widthGrow: 1},
-        {formatter:menuIcon, width:40, hozAlign:"center", cellClick:function(e, cell){showeditmd(cell.getRow().getData().id)}, headerSort:false},
+        layout: "fitColumns",
+        columns: [
+            { title: "id", field: "id", field: "secret", download: false, visible: false },
+            { title: "firstname", field: "firstname", field: "secret", download: false, visible: false },
+            { title: "surname", field: "surname", field: "secret", download: false, visible: false },
+            {
+                title: "Owner",
+                field: "Owner",
+                sorter: "string",
+                resizable: true,
+                headerFilter: "input",
+                widthGrow: 1,
+                mutator: function (value, data, type, params, component) {
+                    // Combine firstname and surname
+                    return data.firstname + " " + data.surname;
+                }
+            },
+            { title: "Name", field: "name", headerFilter: "input", sorter: "String", resizable: true, widthGrow: 1 },
+            { title: "Breed", field: "breed", headerFilter: "input", sorter: "String", resizable: true, widthGrow: 1 },
+            { formatter: menuIcon, width: 40, hozAlign: "center", cellClick: function (e, cell) { showeditmd(cell.getRow().getData().id) }, headerSort: false },
         ],
     });
 
     table.on("dataFiltered", function (filters, rows) {
-      document.getElementById("usercount").innerHTML = rows.length;
+        document.getElementById("usercount").innerHTML = rows.length;
     });
 
     $(document).ready(function () {
         var ajaxConfig = {
-            method:"POST", //set request type to Position
+            method: "POST", //set request type to Position
             headers: {
                 "Content-type": 'application/json; charset=utf-8', //set specific content type
             },
@@ -204,24 +211,26 @@
         table.setData("/pets_json");
     });
 
-    function addpet(){
+    function addpet() {
         showLoadingOverlay();
-        var data = {client_id: document.getElementById("clientName").value, 
-        name: document.getElementById("addname").value, 
-        breed: document.getElementById("addbreed").value, 
-        dob: document.getElementById("adddob").value, 
-        microchip: document.getElementById("addchip").value, 
-        gender: document.getElementById("addgender").value, 
-        neutered: document.getElementById("addneutered").value};
+        var data = {
+            client_id: document.getElementById("clientName").value,
+            name: document.getElementById("addname").value,
+            breed: document.getElementById("addbreed").value,
+            dob: document.getElementById("adddob").value,
+            microchip: document.getElementById("addchip").value,
+            gender: document.getElementById("addgender").value,
+            neutered: document.getElementById("addneutered").value
+        };
         sendDataUrl('/pets_add', JSON.stringify(data), function (response) {
             location.reload();
         });
     }
 
-    function showeditmd(petRef){
+    function showeditmd(petRef) {
         showLoadingOverlay();
         document.getElementById("hfpetRef").value = petRef;
-        var data = {petRef: petRef};
+        var data = { petRef: petRef };
         sendDataUrl('/loadpetdetails', JSON.stringify(data), function (response) {
             document.getElementById("editname").value = response[0]['name'];
             document.getElementById("editbreed").value = response[0]['breed'];
@@ -231,10 +240,10 @@
             document.getElementById("editneutered").value = response[0]['neutered'] ? 1 : 0;
             $('#mdeditpet').modal('show');
             hideLoadingOverlay();
-        });        
+        });
     }
 
-    function signup(){
+    function signup() {
         // Get the values from the input fields
         showLoadingOverlay();
         document.getElementById('signupAlertPlaceholder').innerHTML = '';
@@ -247,29 +256,29 @@
         // Regular expression for validating an email address
         var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         // console.log(registerCheck);
-        if (emailPattern.test(registerEmail) && registerName !='' && registerPhone !='' & registerCheck == true) {
+        if (emailPattern.test(registerEmail) && registerName != '' && registerPhone != '' & registerCheck == true) {
             var data = {
-            registerEmail: registerEmail.toLowerCase(),
-            registerName: registerName,
-            registersurName: registersurName,
-            registerPhone: registerPhone,
+                registerEmail: registerEmail.toLowerCase(),
+                registerName: registerName,
+                registersurName: registersurName,
+                registerPhone: registerPhone,
             };
             sendDataUrl('/signup', JSON.stringify(data), function (response) {
-            if (response['error'] == 500) {
-                var alertDiv = document.createElement('div');
-                alertDiv.className = 'alert alert-warning alert-dismissible fade show';
-                alertDiv.role = 'alert';
-                alertDiv.textContent = 'user already added to system';
-                var closeButton = document.createElement('button');
-                closeButton.type = 'button';
-                closeButton.className = 'btn-close';
-                closeButton.setAttribute('data-bs-dismiss', 'alert');
-                closeButton.setAttribute('aria-label', 'Close');
-                alertDiv.appendChild(closeButton);
-                document.getElementById('signupAlertPlaceholder').appendChild(alertDiv);
-            } else {
-                location.reload();
-            }
+                if (response['error'] == 500) {
+                    var alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-warning alert-dismissible fade show';
+                    alertDiv.role = 'alert';
+                    alertDiv.textContent = 'user already added to system';
+                    var closeButton = document.createElement('button');
+                    closeButton.type = 'button';
+                    closeButton.className = 'btn-close';
+                    closeButton.setAttribute('data-bs-dismiss', 'alert');
+                    closeButton.setAttribute('aria-label', 'Close');
+                    alertDiv.appendChild(closeButton);
+                    document.getElementById('signupAlertPlaceholder').appendChild(alertDiv);
+                } else {
+                    location.reload();
+                }
             });
         } else {
             var alertDiv = document.createElement('div');
@@ -287,24 +296,26 @@
         }
     }
 
-    function updatepet(){
+    function updatepet() {
         showLoadingOverlay();
-        var data = {petRef: document.getElementById("hfpetRef").value, 
-        name: document.getElementById("editname").value, 
-        breed: document.getElementById("editbreed").value, 
-        dob: document.getElementById("editdob").value, 
-        microchip: document.getElementById("editchip").value, 
-        gender: document.getElementById("editgender").value, 
-        neutered: document.getElementById("editneutered").value};
+        var data = {
+            petRef: document.getElementById("hfpetRef").value,
+            name: document.getElementById("editname").value,
+            breed: document.getElementById("editbreed").value,
+            dob: document.getElementById("editdob").value,
+            microchip: document.getElementById("editchip").value,
+            gender: document.getElementById("editgender").value,
+            neutered: document.getElementById("editneutered").value
+        };
 
         sendDataUrl('/pet_update', JSON.stringify(data), function (response) {
             location.reload();
         });
     }
-    function deletepet(){
+    function deletepet() {
         if (confirm("Do you want to delete this pet") == true) {
             showLoadingOverlay();
-            var data = {petRef: document.getElementById("hfpetRef").value}
+            var data = { petRef: document.getElementById("hfpetRef").value }
             sendDataUrl('/pet_delete', JSON.stringify(data), function (response) {
                 location.reload();
             });

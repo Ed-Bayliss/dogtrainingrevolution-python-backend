@@ -115,6 +115,7 @@ def signup():
             created_on=datetime.datetime.now(),
             last_login=datetime.datetime.now(),
             phone=data['registerPhone'],
+            stripe_api_key="",
         )
         user.set_password(new_password)
         # print(user.password)
