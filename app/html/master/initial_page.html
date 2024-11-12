@@ -112,18 +112,19 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-6 d-flex justify-content-start">
-                            <!-- Simple link -->
-                            <button type="button" onclick="forgotPassword();" class="btn btn-link login_a" style="margin-top: -7px;">Forgot password?</button>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-end">
-                        <!-- Register buttons (Switch to Register tab) -->
-                        <div class="text-center">
-                            <a id="tab-register-link" role="button" style="color: white;">Not a member? <span class="login_a">Register</span></a>
-                        </div>
+                      <div class="col-md-6 d-flex justify-content-start">
+                          <!-- Simple link -->
+                          <button type="button" onclick="forgotPassword();" class="btn btn-link login_a" style="margin-top: -7px;">Forgot password?</button>
+                      </div>
+                      <div class="col-md-6 d-flex justify-content-end">
+                      <!-- Register buttons (Switch to Register tab) -->
+                      <div class="text-center">
+                          <a id="tab-register-link" role="button" style="color: white;">Not a member? <span class="login_a">Register</span></a>
                       </div>
                     </div>
+                  </div>
                 </div>
+                
       
                 <!-- Register Tab -->
                 <div class="tab-pane fade text-white" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
@@ -136,53 +137,40 @@
                     <div class="form-outline mb-3">
                       <label for="registersurName">Surname</label>
                       <input type="text" id="registersurName" class="form-control" required/>                      
-                  </div>
-      
+                    </div>
                     <!-- Email input -->
                     <div class="form-outline mb-3">
                         <label for="registerEmail">Email</label>
                         <input type="email" id="registerEmail" class="form-control" required/>
                     </div>
-                  </div>
-                </div>
-              </form>
-            </div>
                     <!-- Phone input -->
                     <div class="form-outline mb-3">
-                        <label for="registerPhone">Phone Number</label>
-                        <input type="phone" id="registerPhone" class="form-control" required/>
-                    </div>            
-                <!-- Email input -->
-                <div class="form-outline mb-3">
-                  <label class="form-label" for="registerEmail">Email</label>
-                  <input type="email" id="registerEmail" class="form-control" required />
+                      <label for="registerPhone">Phone Number</label>
+                      <input type="phone" id="registerPhone" class="form-control" required/>
+                  </div>
+                  <div id="signupAlertPlaceholder">
+                  </div>
+                  <div class="row mt-5">
+                      <div class="col-9 d-flex justify-content-start">
+                          <!-- Checkbox -->
+                          <div class="form-check d-flex justify-content-center mb-4">
+                              <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" />
+                              <label class="form-check-label" for="registerCheck">
+                              I have read and agree to the terms
+                              </label>
+                          </div>
+                      </div>
+                      <div class="col-3 d-flex justify-content-end">
+                          <!-- Submit button -->
+                          <button type="button" class="btn btn-primary btn-block mb-3 login_button" onclick="signup();">Sign up</button>
+                      </div>
+                  </div>                    
+              </div>
+
+                  </div>
                 </div>
 
-                <!-- Phone input -->
-                <div class="form-outline mb-3">
-                  <label class="form-label" for="registerPhone">Phone Number</label>
-                  <input type="phone" id="registerPhone" class="form-control" required />
-                </div>
-
-                <div id="signupAlertPlaceholder">
-                </div>
-                    <div class="row mt-5">
-                        <div class="col-9 d-flex justify-content-start">
-                            <!-- Checkbox -->
-                            <div class="form-check d-flex justify-content-center mb-4">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" />
-                                <label class="form-check-label" for="registerCheck">
-                                I have read and agree to the terms
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-3 d-flex justify-content-end">
-                            <!-- Submit button -->
-                            <button type="button" class="btn btn-primary btn-block mb-3 login_button" onclick="signup();">Sign up</button>
-                        </div>
-                    </div>                    
-                </div>
-              </form>
+            </div>
             </div>
 
           </div>

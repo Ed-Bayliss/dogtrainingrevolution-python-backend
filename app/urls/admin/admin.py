@@ -198,13 +198,27 @@ def add_product():
     existing_user = User.query.filter_by(id=session["_user_id"]).first()
 
     # Parse datetime fields
-    start_str = request.form['productStart']
-    # start_datetime = datetime.strptime(start_str, '%Y-%m-%dT%H:%M:%S')
-    # formatted_start = start_datetime.strftime('%Y-%m-%d %H:%M:%S')
+    start_str = request.form['productStart'].strip()
+    try:
+        # Parse the string into a datetime object
+        start_datetime = datetime.datetime.strptime(start_str, '%Y-%m-%dT%H:%M')
+        # Format the datetime object to the new format
+        formatted_start = start_datetime.strftime('%Y-%m-%d %H:%M:%S')
+        print("Parsed and formatted date:", formatted_start)
+    except ValueError as e:
+        print("Error parsing date:", e)
+        print("Date string received:", start_str)
 
-    end_str = request.form['productEnd']
-    # end_datetime = datetime.strptime(end_str, '%Y-%m-%dT%H:%M:%S')
-    # formatted_end = end_datetime.strftime('%Y-%m-%d %H:%M:%S')
+    end_str = request.form['productEnd'].strip()
+    try:
+        # Parse the string into a datetime object
+        end_datetime = datetime.datetime.strptime(end_str, '%Y-%m-%dT%H:%M')
+        # Format the datetime object to the new format
+        formatted_end = end_datetime.strftime('%Y-%m-%d %H:%M:%S')
+        print("Parsed and formatted date:", formatted_end)
+    except ValueError as e:
+        print("Error parsing date:", e)
+        print("Date string received:", end_str)
 
     # Handle recurrence days as a list
     recurrence_days = request.form.get('productrecurrence_days', '[]')
@@ -227,8 +241,8 @@ def add_product():
     product = Product(
         id=str(uuid.uuid4()),
         title=request.form['productTitle'],
-        start=start_str,
-        end=end_str,
+        start=formatted_start,
+        end=formatted_end,
         spaces=request.form['productSpaces'],
         colour=request.form['productColour'],
         is_recurring=request.form['productRecur'] == 'true',  # Boolean check
@@ -239,6 +253,10 @@ def add_product():
         recurrence_end=request.form['productRecurEnd'],
         price=request.form['productPrice'],  # Add price
         user_id=request.form['productInstructor'],  # Add instructor
+        # Get the short description from the form and trim it to 512 characters
+        short_desc = request.form['short_desc'][:512],
+        full_desc = request.form['full_desc'],
+
         image_base64=image_base64
     )
 
@@ -271,27 +289,50 @@ def updatedproductdetails():
         return jsonify({"error": "Product not found"}), 404
 
     # Parse datetime fields
-    start_str = request.form['productStart']
-    end_str = request.form['productEnd']
+    # start_str = request.form['productStart']
+    # end_str = request.form['productEnd']
+    start_str = request.form['productStart'].strip()
+    try:
+        # Parse the string into a datetime object
+        start_datetime = datetime.datetime.strptime(start_str, '%Y-%m-%dT%H:%M')
+        # Format the datetime object to the new format
+        formatted_start = start_datetime.strftime('%Y-%m-%d %H:%M:%S')
+        print("Parsed and formatted date:", formatted_start)
+    except ValueError as e:
+        print("Error parsing date:", e)
+        print("Date string received:", start_str)
+
+    end_str = request.form['productEnd'].strip()
+    try:
+        # Parse the string into a datetime object
+        end_datetime = datetime.datetime.strptime(end_str, '%Y-%m-%dT%H:%M')
+        # Format the datetime object to the new format
+        formatted_end = end_datetime.strftime('%Y-%m-%d %H:%M:%S')
+        print("Parsed and formatted date:", formatted_end)
+    except ValueError as e:
+        print("Error parsing date:", e)
+        print("Date string received:", end_str)
 
     # Handle recurrence days as a list
     recurrence_days = request.form.get('productrecurrence_days', '[]')
     recurrence_days = eval(recurrence_days) if isinstance(recurrence_days, str) else recurrence_days
 
     # Handle the file upload if an image is provided
-    if 'productImage' in request.files:
-        image_file = request.files['productImage']
-        if image_file.filename != '':
-            # Read the image file and encode it to base64
-            image_data = image_file.read()
-            image_base64 = base64.b64encode(image_data).decode('utf-8')
-            product_details.image_base64 = image_base64
+    # if 'productImage' in request.files:
+    #     image_file = request.files['productImage']
+    #     if image_file.filename != '':
+    #         # Read the image file and encode it to base64
+    #         image_data = image_file.read()
+    #         image_base64 = base64.b64encode(image_data).decode('utf-8')
+    #         product_details.image_base64 = image_base64
     # If no new image is uploaded, keep the existing image
+
+    product_details.image_base64 = request.form['productImage']
 
     # Update product details
     product_details.title = request.form['productTitle']
-    product_details.start = start_str
-    product_details.end = end_str
+    product_details.start = formatted_start
+    product_details.end = formatted_end
     product_details.spaces = request.form['productSpaces']
     product_details.colour = request.form['productColour']
     product_details.is_recurring = request.form['productRecur'] == 'true'  # Boolean check
@@ -302,7 +343,8 @@ def updatedproductdetails():
     product_details.recurrence_end = request.form['productRecurEnd']
     product_details.price = request.form['productPrice']
     product_details.user_id = request.form['productInstructor']
-    product_details.short_desc = request.form['short_desc']
+    # Get the short description from the form and trim it to 512 characters
+    product_details.short_desc = request.form['short_desc'][:512]
     product_details.full_desc = request.form['full_desc']
 
     # Save changes to the database

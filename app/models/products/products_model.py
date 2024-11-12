@@ -96,7 +96,9 @@ class Product(BaseModel):
             "block_booking": self.block_booking,
             "short_desc": self.short_desc,
             "full_desc": self.full_desc,
-            "image_base64": self.image_base64
+            "image_base64": self.image_base64,
+            "user_id": self.user_id,
+            "price": self.price
         }
 
 
