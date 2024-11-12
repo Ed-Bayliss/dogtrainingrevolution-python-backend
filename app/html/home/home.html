@@ -155,7 +155,7 @@
               <h5 class="card-title">{{product.title}}</h5>
               <image src="/static/images/apple-touch-icon.png" class="img-fluid float-end" style="width:100px;" title="{{product.title}}"></image>
               <p class="card-text text-white text-start">{{product.short_desc}}</p>
-              <a href="/external/bookings" class="btn login_button btn-lg px-4 rounded-pill mt-2 text-center"><i class="fas fa-sterling-sign me-1"></i>{{product.price}} Book</a>
+              <a href="/external/bookings" class="btn login_button btn-lg px-4 rounded-pill mt-2 text-center"><i class="fas fa-sterling-sign me-1"></i>{{ "%.2f" | format(product.price) }} Book</a>
             </div>
           </div>
           
