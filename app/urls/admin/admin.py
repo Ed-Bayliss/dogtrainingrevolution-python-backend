@@ -1,3 +1,4 @@
+import base64
 import datetime
 import uuid
 from flask import (
@@ -151,10 +152,12 @@ def classes_root():
         products = Product.query.filter_by().all()
     else:
         products = []
+    instructors = User.query.filter_by(account_type='admin').all()
     return render_template('admin/classes.html',
                           users=[],
                           existing_user=existing_user,
-                          products=products)
+                          products=products,
+                          instructors=instructors)
 
 @admin_url.route("/classes_json", methods=["GET", "POST"])
 @login_required
@@ -188,40 +191,61 @@ def classes_json():
 
 @login_required
 @admin_url.route("/product_add", methods=["GET", "POST"])
-def product_add():
-    if "_user_id" in session:
-        existing_user = User.query.filter_by(
-            id=session["_user_id"]
-        ).first()
-    else:
+def add_product():
+    if "_user_id" not in session:
         return redirect("/logout")
     
-    start_str = request.json['productStart']
-    start_datetime = datetime.strptime(start_str, '%Y-%m-%dT%H:%M:%S')
-    formatted_start = start_datetime.strftime('%Y-%m-%d %H:%M:%S')
-    end_str = request.json['productEnd']
-    end_datetime = datetime.strptime(end_str, '%Y-%m-%dT%H:%M:%S')
-    formatted_end = end_datetime.strftime('%Y-%m-%d %H:%M:%S')
+    existing_user = User.query.filter_by(id=session["_user_id"]).first()
 
+    # Parse datetime fields
+    start_str = request.form['productStart']
+    # start_datetime = datetime.strptime(start_str, '%Y-%m-%dT%H:%M:%S')
+    # formatted_start = start_datetime.strftime('%Y-%m-%d %H:%M:%S')
+
+    end_str = request.form['productEnd']
+    # end_datetime = datetime.strptime(end_str, '%Y-%m-%dT%H:%M:%S')
+    # formatted_end = end_datetime.strftime('%Y-%m-%d %H:%M:%S')
+
+    # Handle recurrence days as a list
+    recurrence_days = request.form.get('productrecurrence_days', '[]')
+    recurrence_days = eval(recurrence_days) if isinstance(recurrence_days, str) else recurrence_days
+
+    # Handle the file upload if an image is provided
+    image_url = None
+    if 'productImage' in request.files:
+        image_file = request.files['productImage']
+        if image_file.filename != '':
+            # Read the image file and encode it to base64
+            image_data = image_file.read()
+            image_base64 = base64.b64encode(image_data).decode('utf-8')
+        else:
+            image_base64 = None
+    else:
+        image_base64 = None
+
+    # Create product
     product = Product(
         id=str(uuid.uuid4()),
-        user_id=str(session["_user_id"]),
-        title=request.json['productTitle'],
-        start=formatted_start,
-        end=formatted_end,
-        spaces=request.json['productSpaces'],
-        colour=request.json['productColour'],
-        is_recurring=request.json['productRecur'] == '1',
-        recurrence_pattern=request.json['productRecurrence'],
-        location='Leek',
-        recurrence_days=request.json['productrecurrence_days'],
-        recurrence_interval=request.json['productinterval'],
-        recurrence_end=request.json['productRecurEnd'],
-        
+        title=request.form['productTitle'],
+        start=start_str,
+        end=end_str,
+        spaces=request.form['productSpaces'],
+        colour=request.form['productColour'],
+        is_recurring=request.form['productRecur'] == 'true',  # Boolean check
+        recurrence_pattern=request.form['productRecurrence'],
+        location=request.form['productLocation'],
+        recurrence_days=recurrence_days,
+        recurrence_interval=request.form['productinterval'],
+        recurrence_end=request.form['productRecurEnd'],
+        price=request.form['productPrice'],  # Add price
+        user_id=request.form['productInstructor'],  # Add instructor
+        image_base64=image_base64
     )
 
+    # Save to database
     db.session.add(product)
     db.session.commit()
+    
     return jsonify({"msg": "complete"})
 
 @login_required
@@ -238,29 +262,51 @@ def loadproductdetails():
 @admin_url.route("/updatedproductdetails", methods=["POST"])
 @login_required
 def updatedproductdetails():
-    product_details = Product.query.filter_by(id=str(request.json["productRef"])).first()
-    
-    product_start = datetime.datetime.fromisoformat(request.json["productStart"])
-    formatted_startdate = product_start.strftime('%Y-%m-%d %H:%M:00')
+    if "_user_id" not in session:
+        return redirect("/logout")
 
-    product_end = datetime.datetime.fromisoformat(request.json["productEnd"])
-    formatted_enddate = product_end.strftime('%Y-%m-%d %H:%M:00')
+    product_details = Product.query.filter_by(id=str(request.form["productRef"])).first()
 
-    if product_details is not None:
-        product_details.title = request.json["productTitle"]
-        product_details.start = formatted_startdate
-        product_details.end = formatted_enddate
-        product_details.spaces = request.json["productSpaces"]
-        product_details.colour = request.json['productColour']
-        product_details.is_recurring = request.json['productRecur'] == '1'
-        product_details.recurrence_pattern = request.json['productRecurrence']
-        product_details.recurrence_days = request.json['productrecurrence_days']
-        product_details.recurrence_interval = request.json['productinterval']
-        product_details.recurrence_end = request.json['productRecurEnd']
-        product_details.short_desc = request.json['short_desc']
-        product_details.full_desc = request.json['full_desc']
+    if product_details is None:
+        return jsonify({"error": "Product not found"}), 404
 
-        db.session.commit()
+    # Parse datetime fields
+    start_str = request.form['productStart']
+    end_str = request.form['productEnd']
+
+    # Handle recurrence days as a list
+    recurrence_days = request.form.get('productrecurrence_days', '[]')
+    recurrence_days = eval(recurrence_days) if isinstance(recurrence_days, str) else recurrence_days
+
+    # Handle the file upload if an image is provided
+    if 'productImage' in request.files:
+        image_file = request.files['productImage']
+        if image_file.filename != '':
+            # Read the image file and encode it to base64
+            image_data = image_file.read()
+            image_base64 = base64.b64encode(image_data).decode('utf-8')
+            product_details.image_base64 = image_base64
+    # If no new image is uploaded, keep the existing image
+
+    # Update product details
+    product_details.title = request.form['productTitle']
+    product_details.start = start_str
+    product_details.end = end_str
+    product_details.spaces = request.form['productSpaces']
+    product_details.colour = request.form['productColour']
+    product_details.is_recurring = request.form['productRecur'] == 'true'  # Boolean check
+    product_details.recurrence_pattern = request.form['productRecurrence']
+    product_details.location = request.form['productLocation']
+    product_details.recurrence_days = recurrence_days
+    product_details.recurrence_interval = request.form['productinterval']
+    product_details.recurrence_end = request.form['productRecurEnd']
+    product_details.price = request.form['productPrice']
+    product_details.user_id = request.form['productInstructor']
+    product_details.short_desc = request.form['short_desc']
+    product_details.full_desc = request.form['full_desc']
+
+    # Save changes to the database
+    db.session.commit()
 
     return jsonify({"msg": "complete"})
 
