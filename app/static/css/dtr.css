@@ -70,11 +70,11 @@ h3{
 }
 h4{
     font-weight: bold;
-    color: #d8b077
+    color: #d8b077!important;
 }
 h5{
     font-weight: bold;
-    color: #d8b077
+    color: #d8b077!important;
 }
 .social_links{
     color: white!important;
@@ -88,7 +88,8 @@ h5{
 }
 
 .dtr_light_bg{
-    background-color: rgb(120,120,120) !important;
+    background-color: rgb(49,49,49) !important;
+    border:#d8b077 1px solid;
 }
 
 .login_button{
