@@ -158,7 +158,7 @@ def bookings_json():
                 "INNER JOIN public.accounts ON public.bookings.client_id = public.accounts.id "
                 "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
                 "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
-                "ORDER BY booking_date DESC"
+                "ORDER BY booking_date ASC"
             )
         ).fetchall()
     else:
@@ -170,7 +170,7 @@ def bookings_json():
                 "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
                 "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
                 "WHERE public.bookings.client_id = :client_id "
-                "ORDER BY booking_date DESC"
+                "ORDER BY booking_date ASC"
             ),
             {"client_id": existing_user.id}  # Binding the parameter safely
         ).fetchall()
@@ -178,6 +178,90 @@ def bookings_json():
     list_bookings = [booking_rows(r) for r in bookings]
     return jsonify(list_bookings)
 
+@bookings_url.route("/admin_delete_booking", methods=["POST"])
+def admin_delete_booking():
+    booking = Booking.query.filter_by(id=str(request.json['booking_id'])).first()
+    db.session.delete(booking)
+    db.session.commit()
+    return jsonify({})
+
+@bookings_url.route("/save_edit_booking", methods=["POST"])
+def save_edit_booking():
+    booking = Booking.query.filter_by(id=str(request.json['booking_id'])).first()
+    booking.booking_date = request.json['booking_date']
+    db.session.commit()
+    return jsonify({})
+
+@bookings_url.route("/get_all_products", methods=["POST"])
+def get_all_products():
+    products = Product.query.all()
+    all_products = {}
+    for product in products:
+        all_products[str(product.id)] = product.title
+    return jsonify(all_products)
+
+@bookings_url.route("/get_all_clients", methods=["POST"])
+def get_all_clients():
+    clients = User.query.filter_by(account_type="client").all()
+    all_clients = {}
+    for client in clients:
+        all_clients[str(client.id)] = client.firstname + ' ' + client.surname
+    return jsonify(all_clients)
+
+
+@bookings_url.route("/get_filtered_pets", methods=["POST"])
+def get_filtered_pets():
+    pets = Pet.query.filter_by(client_id=str(request.json['client_id'])).all()
+    all_pets = {}
+    for pet in pets:
+        all_pets[str(pet.id)] = pet.name
+    return jsonify(all_pets)
+
+@bookings_url.route("/admin_create_booking", methods=["POST"])
+def admin_create_booking():
+    print(request.json)
+    booking = Booking(
+        id=str(uuid.uuid4()),
+        product_id=str(request.json['bookingId']),
+        pet_id=str(request.json['petId']),
+        client_id=str(request.json['clientId']),
+        booking_date=request.json['bookingDate'],
+        status=1,
+        linked_booking_id=None,
+    )
+    db.session.add(booking)
+    db.session.commit()
+    return jsonify({})
+       
+
+
+@bookings_url.route("/admin_get_booking", methods=["POST"])
+def admin_get_booking():
+    booking = db.session.execute(
+        text(
+            "SELECT public.bookings.id, public.bookings.booking_date, public.bookings.status, public.accounts.firstname, public.accounts.surname, public.pets.name AS pet_name, public.products.title "
+            "FROM public.bookings "
+            "INNER JOIN public.accounts ON public.bookings.client_id = public.accounts.id "
+            "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
+            "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
+            "WHERE public.bookings.id = :booking_id "
+            "ORDER BY booking_date ASC"
+        ),
+        {"booking_id": str(request.json['booking_id'])}  # Binding the parameter safely
+    ).fetchone()
+    return jsonify(booking_row(booking))
+
+
+def booking_row(booking):
+    return dict(
+        id=str(booking.id),
+        booking_date=booking.booking_date,
+        status=booking.status,
+        firstname=booking.firstname,
+        surname=booking.surname,
+        pet_name=booking.pet_name,  # Updated key to pet_name
+        title=booking.title,
+    )
 
 def booking_rows(row):
     return dict(

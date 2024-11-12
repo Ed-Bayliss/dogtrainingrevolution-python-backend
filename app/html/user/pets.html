@@ -99,7 +99,9 @@
                         <label class="form-label small" for="clientName">Client</label>
                         <select type="text" id="clientName" class="form-select">
                             {% for user in users %}
+                            {%if user.account_type == 'client'%}
                             <option value="{{user.id}}">{{user.firstname}} {{user.surname}}</option>
+                            {%endif%}
                             {% endfor %}
                         </select>
                     </div>
