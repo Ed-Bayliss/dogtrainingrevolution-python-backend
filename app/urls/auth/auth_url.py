@@ -62,6 +62,25 @@ def logout():
     logout_user()
     return redirect("/")
 
+@auth_url.route("/send_email", methods=["POST"])
+def send_email():
+    """
+    User sign-up page.
+
+    GET requests serve sign-up page.
+    POST requests validate form & user creation.
+    """
+    data = request.json
+    with open("app/static/emails/dtr_contact.html", "r") as body:
+            body = body.read()
+            body = body.replace("#NAME#", data['name'])
+            body = body.replace("#EMAIL#", data['email'])
+            body = body.replace("#SUBJECT#", data['subject'])
+            body = body.replace("#MESSAGE#", data['message'])
+    # send email with username password
+    send_email(data['email'], "david.greaves@pawtul.com", "Dog Training Revolution - Contact", body)
+
+    return jsonify({'successful': 200})
 
 
 @auth_url.route("/signup", methods=["POST"])

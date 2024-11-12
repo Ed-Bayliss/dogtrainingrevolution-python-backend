@@ -21,6 +21,11 @@
     <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='/images/favicon.ico')}}"/>
     <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png"/>
     {%include 'master/loading_spinner.html' %}
+    <style>
+      .modal-backdrop.show {
+          opacity: 0.9 !important;
+      }
+    </style>
   </head>
   
   <body class="index-page" data-aos-easing="ease-in-out" data-aos-duration="600" data-aos-delay="0" data-new-gr-c-s-check-loaded="14.1198.0" data-gr-ext-installed="">
@@ -80,9 +85,7 @@
               <div class="tab-content">
                 
                 <!-- Login Tab -->
-                <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-                  <form>
-                    
+                <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">                    
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                         <label class="form-label text-white" for="loginName">Email or username</label>
@@ -102,6 +105,8 @@
                             <!-- Submit button -->
                             <button type="button" class="btn btn-primary btn-block mb-4 login_button" onclick="submit_login();">Sign in</button>
                         </div>
+                    </div>
+                    <div class="row mt-3">
                         <div class="col-md-6 d-flex justify-content-start">
                             <!-- Simple link -->
                             <button type="button" onclick="forgotPassword();" class="btn btn-link login_a" style="margin-top: -7px;">Forgot password?</button>
@@ -113,39 +118,37 @@
                         </div>
                       </div>
                     </div>
-                  </form>
                 </div>
       
                 <!-- Register Tab -->
-                <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-                  <form>
+                <div class="tab-pane fade text-white" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
                     <!-- Name input -->
                     <div class="form-outline mb-3">
-                        <label class="form-label" for="registerName">First Name</label>
+                        <label for="registerName">First Name</label>
                         <input type="text" id="registerName" class="form-control" required/>                      
                     </div>
                     <!-- Name input -->
                     <div class="form-outline mb-3">
-                      <label class="form-label" for="registersurName">Surname</label>
+                      <label for="registersurName">Surname</label>
                       <input type="text" id="registersurName" class="form-control" required/>                      
                   </div>
       
                     <!-- Email input -->
                     <div class="form-outline mb-3">
-                        <label class="form-label" for="registerEmail">Email</label>
+                        <label for="registerEmail">Email</label>
                         <input type="email" id="registerEmail" class="form-control" required/>
                     </div>
 
                     <!-- Phone input -->
                     <div class="form-outline mb-3">
-                        <label class="form-label" for="registerPhone">Phone Number</label>
+                        <label for="registerPhone">Phone Number</label>
                         <input type="phone" id="registerPhone" class="form-control" required/>
                     </div>            
 
                     <div id="signupAlertPlaceholder">
                     </div>
 
-                    <div class="row mt-2">
+                    <div class="row mt-5">
                         <div class="col-9 d-flex justify-content-start">
                             <!-- Checkbox -->
                             <div class="form-check d-flex justify-content-center mb-4">
@@ -160,7 +163,6 @@
                             <button type="button" class="btn btn-primary btn-block mb-3 login_button" onclick="signup();">Sign up</button>
                         </div>
                     </div>                    
-                  </form>
                 </div>
       
               </div>
