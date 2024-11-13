@@ -8,6 +8,7 @@ from flask_mail import Mail
 from flask_session.__init__ import Session
 from flask_mobility import Mobility
 import datetime
+import sys
 
 app = create_app()
 app.config['MAIL_SERVER'] = 'smtp.exchange2019.ionos.co.uk'
@@ -26,4 +27,5 @@ app = app
 
 
 if __name__ == "__main__":
+    sys.setrecursionlimit(2097152)    # adjust numbers
     app.run()

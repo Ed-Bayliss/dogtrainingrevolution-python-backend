@@ -31,6 +31,7 @@ class Product(BaseModel):
     recurrence_end = db.Column(db.String(64), nullable=True)  # End date for recurrence
     recurrence_days = db.Column(db.ARRAY(db.String(10)), nullable=True)  # Days of week (e.g., ['Monday', 'Wednesday'])
     block_booking = db.Column(db.Integer, nullable=True)
+    session_type=db.Column(db.String(16),nullable=True)
 
     short_desc = db.Column(db.String(512), nullable=True)
     full_desc = db.Column(db.String(50000), nullable=True)
@@ -52,6 +53,7 @@ class Product(BaseModel):
         is_recurring=False,
         recurrence_pattern=None,
         recurrence_interval=None,
+        session_type=None,
         recurrence_end=None,
         recurrence_days=None,
         block_booking=None,
@@ -71,6 +73,8 @@ class Product(BaseModel):
         self.colour = colour
         self.is_recurring = is_recurring
         self.recurrence_pattern = recurrence_pattern
+        self.session_type = session_type
+
         self.recurrence_interval = recurrence_interval
         self.recurrence_end = recurrence_end
         self.recurrence_days = recurrence_days

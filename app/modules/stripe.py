@@ -22,6 +22,7 @@ class Payments:
         for booking in bookings:
             product = Product.query.filter_by(id=booking.product_id).first()
             instructor = User.query.filter_by(id=str(product.user_id)).first()
+            customer = User.query.filter_by(id=booking.client_id).first()
             stripe.api_key = instructor.stripe_api_key
             start = booking.booking_date.strftime("%d/%m/%Y")
             dates.append(start)
@@ -51,6 +52,7 @@ class Payments:
             mode="payment",
             allow_promotion_codes=False,
             stripe_account=None,
+            customer_email=customer.email,
             client_reference_id=str(linked_booking_id),
             success_url='https://dogtrainingrevolution.pawtul.com/booking/confirmation/' + str(linked_booking_id),
             cancel_url='https://dogtrainingrevolution.pawtul.com/cancel_bookings/' + str(linked_booking_id),

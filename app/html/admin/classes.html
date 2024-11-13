@@ -87,7 +87,8 @@
                     </div>
                     <div class="col-12">
                         <div class="mb-3">
-                            <label for="edittxtshortdesc" class="form-label">Short Description <small>512 characters</small></label>
+                            <label for="edittxtshortdesc" class="form-label">Short Description <small>512
+                                    characters</small></label>
                             <textarea class="form-control" id="edittxtshortdesc" rows="3" maxlength="512"></textarea>
                         </div>
                     </div>
@@ -278,7 +279,8 @@
                         </div>
                         <div class="col-12">
                             <div class="mb-3">
-                                <label for="addtxtshortdesc" class="form-label">Short Description <small>512 characters</small></label>
+                                <label for="addtxtshortdesc" class="form-label">Short Description <small>512
+                                        characters</small></label>
                                 <textarea class="form-control" id="addtxtshortdesc" rows="3" maxlength="512"></textarea>
                             </div>
                         </div>
@@ -315,11 +317,19 @@
                         </div>
                         <div class="col-4">
                             <div class="form-outline mb-2">
-                                <label class="form-label" for="productInterval">Number of Weeks</label>
+                                <label class="form-label" for="productInterval">Number of Sessions</label>
                                 <p style="font-size: xx-small;">If this package includes 6 weeks of classes, you would
                                     put 6 here.</p>
                                 <input type="number" id="productInterval" class="form-control form-control-sm"
                                     value="1" />
+                                <input class="form-check-input" type="checkbox" value="" id="chkweeks" checked>
+                                <label class="form-check-label text-black" for="chkweeks">
+                                    Weeks
+                                </label>
+                                <input class="form-check-input" type="checkbox" value="" id="chkdays">
+                                <label class="form-check-label text-black" for="chkdays">
+                                    Days
+                                </label>
                             </div>
                         </div>
                         <div class="col-8">
@@ -448,7 +458,7 @@
             document.getElementById("editproductlocation").value = product['location'];
             document.getElementById("editproductPrice").value = product['price'];
             document.getElementById("editproductImage").value = product['image_base64'];
-            
+
             // Set the instructor select field
             document.getElementById("editproductinstructor").value = product['user_id'];
 
@@ -639,6 +649,8 @@
         formData.append("productSpaces", document.getElementById("productSpaces").value);
         formData.append("productColour", document.getElementById("productcolour").value);
         formData.append("productRecur", document.getElementById("chkrecurr").checked);
+        formData.append("chkWeeks", document.getElementById("chkweeks").checked);
+        formData.append("chkDays", document.getElementById("chkdays").checked);
         formData.append("productRecurrence", document.getElementById("productRecurrence").value);
         formData.append("productrecurrence_days", JSON.stringify(rec_int));
         formData.append("productinterval", document.getElementById("productInterval").value);

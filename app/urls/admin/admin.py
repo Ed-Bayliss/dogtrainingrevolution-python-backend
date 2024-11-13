@@ -237,6 +237,13 @@ def add_product():
     else:
         image_base64 = None
 
+    session_days=request.form['chkDays'] == 'true',  # Boolean check
+    session_weeks=request.form['chkWeeks'] == 'true',
+
+    session_type = 'weeks'
+    if session_days == True:
+        session_type = 'days'
+
     # Create product
     product = Product(
         id=str(uuid.uuid4()),
@@ -246,10 +253,11 @@ def add_product():
         spaces=request.form['productSpaces'],
         colour=request.form['productColour'],
         is_recurring=request.form['productRecur'] == 'true',  # Boolean check
+        session_type=session_type,
+        block_booking=request.form['productinterval'],
         recurrence_pattern=request.form['productRecurrence'],
         location=request.form['productLocation'],
         recurrence_days=recurrence_days,
-        recurrence_interval=request.form['productinterval'],
         recurrence_end=request.form['productRecurEnd'],
         price=request.form['productPrice'],  # Add price
         user_id=request.form['productInstructor'],  # Add instructor
@@ -339,7 +347,7 @@ def updatedproductdetails():
     product_details.recurrence_pattern = request.form['productRecurrence']
     product_details.location = request.form['productLocation']
     product_details.recurrence_days = recurrence_days
-    product_details.recurrence_interval = request.form['productinterval']
+    product_details.block_booking = request.form['productinterval']
     product_details.recurrence_end = request.form['productRecurEnd']
     product_details.price = request.form['productPrice']
     product_details.user_id = request.form['productInstructor']

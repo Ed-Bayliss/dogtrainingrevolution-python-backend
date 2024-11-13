@@ -422,7 +422,11 @@ def external_booking_payment():
     block_booking = product.block_booking  # Number of weeks to calculate
 
     # Generate list of dates, each one week apart
-    dates_list = [event_datetime + timedelta(weeks=i) for i in range(block_booking)]
+    print(product.session_type)
+    if product.session_type == 'days':
+        dates_list = [event_datetime + timedelta(days=i) for i in range(block_booking)]
+    else:
+        dates_list = [event_datetime + timedelta(weeks=i) for i in range(block_booking)]
     linked_uuid = str(uuid.uuid4())
     for date in dates_list:
         uid = str(uuid.uuid4())
