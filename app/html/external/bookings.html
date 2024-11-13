@@ -1129,27 +1129,30 @@
         var eventTitle = document.getElementById("eventTitle");
         var eventDetails = document.getElementById("eventDetails");
         var eventIdElement = document.getElementById("eventId"); // Ensure this variable is defined
+        if (event.eventName.includes('0 Spaces')){
+            alert('Fully Booked');
+        } else {
+            // Check if elements exist before setting their properties
+            if (eventTitle) {
+                eventTitle.innerText = event.eventName || "Event Title"; // Fallback in case eventName is undefined
+            }
+            if (eventIdElement) {
+                eventIdElement.innerText = event.productId || "Unknown ID"; // Fallback in case productId is undefined
+            }
+            if (eventDetails) {
+                // Ensure date is correctly formatted if moment.js is available or use a default
+                eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
 
-        // Check if elements exist before setting their properties
-        if (eventTitle) {
-            eventTitle.innerText = event.eventName || "Event Title"; // Fallback in case eventName is undefined
-        }
-        if (eventIdElement) {
-            eventIdElement.innerText = event.productId || "Unknown ID"; // Fallback in case productId is undefined
-        }
-        if (eventDetails) {
-            // Ensure date is correctly formatted if moment.js is available or use a default
-            eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
+            }
+            // console.log(eventTitle, eventDetails, eventIdElement)
 
+            // Initialize and show the modal using Bootstrap 5
+            var modal = new bootstrap.Modal(modalElement, {
+                backdrop: false, // Prevent closing the modal when clicking outside
+                keyboard: false  // Prevent closing the modal with the Esc key
+            });
+            modal.show();
         }
-        console.log(eventTitle, eventDetails, eventIdElement)
-
-        // Initialize and show the modal using Bootstrap 5
-        var modal = new bootstrap.Modal(modalElement, {
-            backdrop: false, // Prevent closing the modal when clicking outside
-            keyboard: false  // Prevent closing the modal with the Esc key
-        });
-        modal.show();
     }
 
 

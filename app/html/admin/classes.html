@@ -561,12 +561,16 @@
         formData.append("full_desc", document.getElementById("edittxtfulldesc").value);
 
         // Check if productPrice is a number
-        if (!isNaN(document.getElementById("editproductPrice").value.trim) && document.getElementById("editproductPrice").value.trim() !== "") {
+        // if (!isNaN(document.getElementById("editproductPrice").value.trim) && document.getElementById("editproductPrice").value.trim() !== "") {
+        if (!isNaN(document.getElementById("editproductPrice").value.trim()) && document.getElementById("editproductPrice").value.trim() !== "") {
+
             // If it's a number, append it to formData
-            formData.append("productPrice", document.getElementById("editproductPrice").value.trim);
+            formData.append("productPrice", document.getElementById("editproductPrice").value.trim());
+            console.log('number');
         } else {
             // Handle the case where productPrice is not a number
             formData.append("productPrice", 100);
+            console.log('not number');
         }
 
         formData.append("productInstructor", document.getElementById("editproductinstructor").value);

@@ -102,7 +102,8 @@ class Product(BaseModel):
             "full_desc": self.full_desc,
             "image_base64": self.image_base64,
             "user_id": self.user_id,
-            "price": self.price
+            "price": self.price,
+            "location": self.location
         }
 
 

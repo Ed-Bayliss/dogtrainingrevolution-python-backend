@@ -450,9 +450,40 @@ def external_booking_payment():
 @bookings_url.route('/booking/confirmation/<uuid:linked_booking_id>', methods=["GET"])
 def booking_confirmation(linked_booking_id):
     bookings = Booking.query.filter_by(linked_booking_id=str(linked_booking_id)).all()
+    # Query to get product location using parameterized query
+    product_id = bookings[0].product_id
+    products = db.session.execute(
+        text("SELECT location FROM public.products WHERE id=:product_id"),
+        {'product_id': product_id}
+    ).first()
+
+    client_id = bookings[0].client_id
+    clients = db.session.execute(
+        text("select accounts.email from public.accounts where id=:client_id"),
+        {'client_id': client_id}
+    ).first()
+
+    # Accumulate booking info
+    booking_info = ""
     for booking in bookings:
         booking.status = 1
-        db.session.commit()
+        formatted_date = booking.booking_date.strftime("%d/%m/%Y %H:%M")
+        booking_info += f"{formatted_date}<br>"
+
+    # Commit all changes after the loop
+    db.session.commit()
+
+    # Prepare email content with data from request and booking info
+    data = request.json
+    with open("app/static/emails/dtr_contact.html", "r") as file:
+        body = file.read()
+        body = body.replace("#classname#", data['classname'])
+        body = body.replace("#location#", products[0])  # Access products as a tuple
+        body = body.replace("#booking_info#", booking_info)  # Use accumulated booking_info
+
+    # send email with username password
+    send_email(clients[0], "david.greaves@pawtul.com", "Dog Training Revolution - Confirmation", body)
+
     print('all booked')
     return redirect('/manage_bookings')
 

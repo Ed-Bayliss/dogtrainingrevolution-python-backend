@@ -1050,21 +1050,26 @@
     // });
 
     function openModal(event) {
-        var modalElement = document.getElementById("eventModal");
-        var eventTitle = document.getElementById("eventTitle");
-        var eventDetails = document.getElementById("eventDetails");
+        if (event.eventName.includes('0 Spaces')){
+            alert('Fully Booked');
+        } else {
+            var modalElement = document.getElementById("eventModal");
+            var eventTitle = document.getElementById("eventTitle");
+            var eventDetails = document.getElementById("eventDetails");
 
-        // Set event details in the modal
-        eventTitle.innerText = event.eventName;
-        eventId.innerText = event.productId;
-        eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
+            // Set event details in the modal
+            eventTitle.innerText = event.eventName;
+            eventId.innerText = event.productId;
+            eventDetails.innerText = "Date: " + event.date.format("DD-MM-YYYY HH:mm:ss");
 
-        // Initialize and show the modal using Bootstrap 5
-        var modal = new bootstrap.Modal(modalElement, {
-            backdrop: false, // This prevents closing the modal when clicking outside
-            keyboard: false     // Prevent closing the modal with the Esc key
-        });
-        modal.show();
+            // Initialize and show the modal using Bootstrap 5
+            var modal = new bootstrap.Modal(modalElement, {
+                backdrop: false, // This prevents closing the modal when clicking outside
+                keyboard: false     // Prevent closing the modal with the Esc key
+            });
+            modal.show();
+        }
+        
     }
 
     function downloadUrl(url, callback) {

@@ -336,7 +336,6 @@ def updatedproductdetails():
     # If no new image is uploaded, keep the existing image
 
     product_details.image_base64 = request.form['productImage']
-
     # Update product details
     product_details.title = request.form['productTitle']
     product_details.start = formatted_start
