@@ -237,12 +237,18 @@ def add_product():
     else:
         image_base64 = None
 
-    session_days=request.form['chkDays'] == 'true',  # Boolean check
-    session_weeks=request.form['chkWeeks'] == 'true',
+    session_days = request.form['chkDays'] == 'true'  # Boolean check
+    session_weeks = request.form['chkWeeks'] == 'true'
+    print(session_days)
+    print(session_weeks)
 
-    session_type = 'weeks'
+    session_type = None
     if session_days == True:
         session_type = 'days'
+    elif session_weeks == True:
+        session_type = 'weeks'
+
+
 
     # Create product
     product = Product(

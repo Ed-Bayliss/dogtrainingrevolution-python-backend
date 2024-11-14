@@ -4,10 +4,11 @@
     <!-- Tabs for switching between Table and Calendar -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" id="table-tab" data-bs-toggle="tab" href="#tableView" role="tab">Table View</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="calendar-tab" data-bs-toggle="tab" href="#calendarView" role="tab">Calendar View</a>
+            {%if current_user.account_type == 'admin'%}
+            <a class="nav-link active" id="table-tab" data-bs-toggle="tab" href="#tableView" role="tab">All Bookings</a>
+            {%else%}
+            <a class="nav-link active" id="table-tab" data-bs-toggle="tab" href="#tableView" role="tab">Your Bookings</a>
+            {%endif%}
         </li>
     </ul>
 
@@ -35,17 +36,7 @@
             </div>
         </div>
 
-        <!-- Calendar View Content -->
-        <div class="tab-pane fade" id="calendarView" role="tabpanel">
-            {% if existing_user.account_type == "admin" %}
-            <iframe
-                src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Europe%2FLondon&mode=WEEK&hl=en_GB&showTz=0&showTitle=0&showPrint=0&src=MzZqdHJ0MDFlcmYzcGFqdGo5YjA5bmplMmNjYWhqYW9AaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23B39DDB"
-                style="border:solid 1px #777" width="1024" height="800" frameborder="0" scrolling="no"></iframe>
-
-            {%else%}
-            <p>The calendar view is for admin use only. You are a customer of Dog Training Revolution Ltd</p>
-            {%endif%}
-        </div>
+    
     </div>
 </div>
 

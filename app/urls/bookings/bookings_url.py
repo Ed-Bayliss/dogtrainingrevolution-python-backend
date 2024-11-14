@@ -86,27 +86,29 @@ def generate_calendar_ics():
     calendar = Calendar()
     bookings = db.session.execute(
         text(
-            """SELECT 
-                public.bookings.id, 
-                public.bookings.booking_date, 
-                public.bookings.status, 
-                public.accounts.firstname, 
-                public.accounts.surname, 
-                public.pets.name, 
-                public.products.title,
-                public.products.start,
-                public.products.end
-            FROM 
-                public.bookings
-            INNER JOIN 
-                public.accounts ON public.bookings.client_id = public.accounts.id
-            INNER JOIN 
-                public.pets ON public.bookings.pet_id = public.pets.id
-            INNER JOIN 
-                public.products ON public.bookings.product_id = public.products.id
-            ORDER BY 
-                booking_date DESC;"""
-        )
+        """SELECT 
+            public.bookings.id, 
+            public.bookings.booking_date, 
+            public.bookings.status, 
+            public.accounts.firstname, 
+            public.accounts.surname, 
+            public.pets.name, 
+            public.products.title,
+            public.products.start,
+            public.products.end
+        FROM 
+            public.bookings
+        INNER JOIN 
+            public.accounts ON public.bookings.client_id = public.accounts.id
+        INNER JOIN 
+            public.pets ON public.bookings.pet_id = public.pets.id
+        INNER JOIN 
+            public.products ON public.bookings.product_id = public.products.id
+        WHERE 
+            public.bookings.status = 1
+        ORDER BY 
+            booking_date DESC;"""
+    )
     ).fetchall()
 
     # Iterate over the SQL booking results and add each as an event
@@ -122,11 +124,10 @@ def generate_calendar_ics():
 
         # Create a new event for each booking
         event = Event()
-        event.name = f"{booking.title} with {booking.name}"
+        event.name = f"{booking.title} with {booking.firstname} {booking.surname}" if booking.name == "No Pet Required" else f"{booking.title} with {booking.name}"        
         event.begin = datetime.strptime(event_start, "%Y-%m-%d %H:%M:%S")
         event.end = datetime.strptime(event_end, "%Y-%m-%d %H:%M:%S")
         event.description = (
-            f"Status: {booking.status}\n"
             f"Client: {booking.firstname} {booking.surname}\n"
             f"Pet: {booking.name}\n"
             f"Product: {booking.title}"
@@ -158,6 +159,7 @@ def bookings_json():
                 "INNER JOIN public.accounts ON public.bookings.client_id = public.accounts.id "
                 "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
                 "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
+                "WHERE public.bookings.status = 1 "
                 "ORDER BY booking_date ASC"
             )
         ).fetchall()
@@ -169,7 +171,7 @@ def bookings_json():
                 "INNER JOIN public.accounts ON public.bookings.client_id = public.accounts.id "
                 "INNER JOIN public.pets ON public.bookings.pet_id = public.pets.id "
                 "INNER JOIN public.products ON public.bookings.product_id = public.products.id "
-                "WHERE public.bookings.client_id = :client_id "
+                "WHERE public.bookings.client_id = :client_id AND public.bookings.status = 1 "
                 "ORDER BY booking_date ASC"
             ),
             {"client_id": existing_user.id}  # Binding the parameter safely
@@ -326,8 +328,10 @@ def booking_payment():
     event_datetime = datetime.strptime(request.json['eventDetails'].replace('Date: ', ''), '%d-%m-%Y %H:%M:%S')
     block_booking = product.block_booking  # Number of weeks to calculate
 
-    # Generate list of dates, each one week apart
-    dates_list = [event_datetime + timedelta(weeks=i) for i in range(block_booking)]
+    if product.session_type == 'days':
+        dates_list = [event_datetime + timedelta(days=i) for i in range(block_booking)]
+    else:
+        dates_list = [event_datetime + timedelta(weeks=i) for i in range(block_booking)]
     linked_uuid = str(uuid.uuid4())
     for date in dates_list:
         uid = str(uuid.uuid4())
@@ -422,7 +426,6 @@ def external_booking_payment():
     block_booking = product.block_booking  # Number of weeks to calculate
 
     # Generate list of dates, each one week apart
-    print(product.session_type)
     if product.session_type == 'days':
         dates_list = [event_datetime + timedelta(days=i) for i in range(block_booking)]
     else:

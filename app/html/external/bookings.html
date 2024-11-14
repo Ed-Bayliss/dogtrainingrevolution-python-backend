@@ -111,11 +111,11 @@
                     <div class="modal-footer" style="justify-content: space-between;">
 
                         <button type="button" class="btn btn-primary login_button" onclick="createBooking();"><i
-                                class="fas fa-save me-2"></i>Save Profile</button>
+                                class="fas fa-save me-2"></i>Proceed to Payment</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>    
 
     </div>
 </div>
@@ -1129,8 +1129,11 @@
         var eventTitle = document.getElementById("eventTitle");
         var eventDetails = document.getElementById("eventDetails");
         var eventIdElement = document.getElementById("eventId"); // Ensure this variable is defined
-        if (event.eventName.includes('0 Spaces')){
-            alert('Fully Booked');
+        if (event.eventName.includes('0 Spaces')) {
+            if (confirm('Fully Booked. Would you like to join the waiting list?')) {
+                joinWaitingList(); // Call the function to add the user to the waiting list
+            }
+
         } else {
             // Check if elements exist before setting their properties
             if (eventTitle) {
@@ -1206,6 +1209,7 @@
     }
 
     function createBooking() {
+        showLoadingOverlay();
         // Event details
         var eventTitle = document.getElementById("eventTitle").innerText;
         var eventDetails = document.getElementById("eventDetails").innerText;
@@ -1257,6 +1261,7 @@
         sendDataUrl('/external/bookings/payment', JSON.stringify(data), function (response) {
             if (response && response.stripe_url && response.stripe_url.url) {
                 window.location.href = response.stripe_url.url;
+                hideLoadingOverlay();
             } else {
                 console.error("Stripe URL not found in response.");
                 alert("Error processing payment. Please try again.");

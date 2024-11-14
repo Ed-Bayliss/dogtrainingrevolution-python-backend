@@ -28,6 +28,8 @@
                                 <label for="petNameDropdown" class="form-label">Select Pet:</label>
                                 <select class="form-select" id="petNameDropdown" name="petName" required>
                                     <option selected disabled value="">Choose a pet...</option>
+                                    <option value="00000000-0000-0000-0000-000000000000">No Pet Required</option>
+
                                     {% for pet in pets%}
                                     <option value="{{pet.id}}">{{pet.name}}</option>
                                     {%endfor%}
@@ -1050,8 +1052,10 @@
     // });
 
     function openModal(event) {
-        if (event.eventName.includes('0 Spaces')){
-            alert('Fully Booked');
+        if (event.eventName.includes('0 Spaces')) {
+            if (confirm('Fully Booked. Would you like to join the waiting list?')) {
+                joinWaitingList(); // Call the function to add the user to the waiting list
+            }
         } else {
             var modalElement = document.getElementById("eventModal");
             var eventTitle = document.getElementById("eventTitle");

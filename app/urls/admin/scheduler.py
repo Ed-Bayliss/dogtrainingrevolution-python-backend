@@ -32,7 +32,6 @@ BOOKING_COUNT = defaultdict(int)
 @scheduler.task("interval", id="calendar_refresh", minutes=1)
 def calendar():
     with scheduler.app.app_context():
-        print('refreshed cal')
         generate_calendar_ics()
 
 @scheduler.task("interval", id="check_paid_bookings", minutes=1)
@@ -52,7 +51,7 @@ def check_paid_bookings():
             print(booking.id, BOOKING_COUNT[booking.id])
             
             # Check if the booking has been seen 10 times
-            if BOOKING_COUNT[booking.id] >= 10:
+            if BOOKING_COUNT[booking.id] >= 4:
                 # Delete the booking from the database
                 db.session.delete(booking)
                 db.session.commit()
