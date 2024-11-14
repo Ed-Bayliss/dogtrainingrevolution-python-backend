@@ -450,6 +450,8 @@ def pets_json():
     return jsonify(list_pets)
 
 def pet_rows(row):
+    if row.name == "No Pet Required":
+        return None
     return dict(
         id=str(row.id),
         firstname=row.firstname,

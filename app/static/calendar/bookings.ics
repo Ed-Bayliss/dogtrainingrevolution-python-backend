@@ -2,52 +2,52 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: No Pet Required\nProduct: Canine First Aid Training
-DTEND:20241125T150000Z
-DTSTART:20241125T090000Z
-SUMMARY:Canine First Aid Training with No Pet Required
-UID:a289a8d8-429f-4565-881a-a82f45e0659f@a289.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
-DTEND:20241120T150000Z
-DTSTART:20241120T090000Z
-SUMMARY:Training Camp (5 Day) with Norman
-UID:558fbbb6-09b9-48bc-becc-c06136478a98@558f.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
-DTEND:20241119T150000Z
-DTSTART:20241119T090000Z
-SUMMARY:Training Camp (5 Day) with Norman
-UID:b6219a41-9642-47d7-9d50-f5323f1a39f2@b621.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
-DTEND:20241118T150000Z
-DTSTART:20241118T090000Z
-SUMMARY:Training Camp (5 Day) with Norman
-UID:f8a9296a-3d3f-415d-88b3-08bd52d31aba@f8a9.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Norman\nProduct: Behaviour Initial Assessment
-DTEND:20241116T192400Z
-DTSTART:20241116T180000Z
-SUMMARY:Behaviour Initial Assessment with Norman
-UID:3ef2b9e9-7024-4e68-8d87-60133ecf2e77@3ef2.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
-DTEND:20241122T150000Z
-DTSTART:20241122T090000Z
-SUMMARY:Training Camp (5 Day) with Norman
-UID:809734e3-8918-407d-a28a-2dafb39afe6f@8097.org
-END:VEVENT
-BEGIN:VEVENT
-DESCRIPTION:Status: 1\nClient: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
+DESCRIPTION:Client: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
 DTEND:20241121T150000Z
 DTSTART:20241121T090000Z
 SUMMARY:Training Camp (5 Day) with Norman
-UID:1b5f22e9-44e4-46f7-888a-58e0a81efa90@1b5f.org
+UID:6dc29598-7bf9-4f7d-8f94-6ffb99c7508c@6dc2.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Client: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
+DTEND:20241119T150000Z
+DTSTART:20241119T090000Z
+SUMMARY:Training Camp (5 Day) with Norman
+UID:705b920f-27fb-4a04-8ce2-ec5dbed6d737@705b.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Client: Ed Bayliss\nPet: No Pet Required\nProduct: Canine First Aid Training
+DTEND:20241125T150000Z
+DTSTART:20241125T090000Z
+SUMMARY:Canine First Aid Training with Ed Bayliss
+UID:0e2e150f-837c-460a-ab81-5df6e10cb2d2@0e2e.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Client: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
+DTEND:20241120T150000Z
+DTSTART:20241120T090000Z
+SUMMARY:Training Camp (5 Day) with Norman
+UID:50f66937-dc13-477a-8470-cb5ae40dc050@50f6.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Client: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
+DTEND:20241118T150000Z
+DTSTART:20241118T090000Z
+SUMMARY:Training Camp (5 Day) with Norman
+UID:345b7bba-e876-4d78-b449-3365823608ca@345b.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Client: Ed Bayliss\nPet: Norman\nProduct: Training Camp (5 Day)
+DTEND:20241122T150000Z
+DTSTART:20241122T090000Z
+SUMMARY:Training Camp (5 Day) with Norman
+UID:54f577c6-b3ee-404f-be4b-a0d6fbf27860@54f5.org
+END:VEVENT
+BEGIN:VEVENT
+DESCRIPTION:Client: Ed Bayliss\nPet: Norman\nProduct: Behaviour Initial Assessment
+DTEND:20241116T192400Z
+DTSTART:20241116T180000Z
+SUMMARY:Behaviour Initial Assessment with Norman
+UID:27494d64-3c5c-46a6-904e-0f8bd3e1c465@2749.org
 END:VEVENT
 END:VCALENDAR
