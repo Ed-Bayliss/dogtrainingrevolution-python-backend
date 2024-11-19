@@ -221,7 +221,17 @@ def get_filtered_pets():
 
 @bookings_url.route("/admin_create_booking", methods=["POST"])
 def admin_create_booking():
-    print(request.json)
+    # print(request.json)
+    if "_user_id" in session:
+        existing_user = User.query.filter_by(
+            id=session["_user_id"]
+        ).first()
+    else:
+        return redirect("/logout")
+    
+    product = Product.query.filter_by(id=str(request.json['bookingId'])).first()
+    pet = Pet.query.filter_by(id=str(request.json['petId'])).first()
+
     booking = Booking(
         id=str(uuid.uuid4()),
         product_id=str(request.json['bookingId']),
@@ -233,7 +243,27 @@ def admin_create_booking():
     )
     db.session.add(booking)
     db.session.commit()
-    return jsonify({})
+
+    booking_date_str = request.json['bookingDate']
+
+    try:
+        booking_date = datetime.fromisoformat(booking_date_str)
+    except ValueError:
+        booking_date = datetime.strptime(booking_date_str, '%Y-%m-%dT%H:%M:%S')
+
+    formatted_date = booking_date.strftime('%d/%m/%Y %H:%M')
+    booking_info = pet.name + " " + formatted_date
+
+    with open("app/static/emails/confirmation.html", "r") as body:
+            body = body.read()
+            body = body.replace("#classname#", product.title)
+            body = body.replace("#location#", product.location)
+            body = body.replace("#booking_info#", booking_info)
+    
+    send_email(existing_user.email, "david.greaves@pawtul.com", "Dog Training Revolution - New Booking", body)
+
+    # return jsonify({})
+    return jsonify({'successful': 200})
        
 
 

@@ -53,7 +53,7 @@ def login():
         else:
             return jsonify({"message": "incorrect"})
         
-   return render_template('login/login.html')
+   return render_template('home/home.html')
 
 @auth_url.route("/logout")
 @login_required
@@ -194,7 +194,7 @@ def load_user(user_id):
 def unauthorized():
     """Redirect unauthorized users to Login page."""
     flash("You must be logged in to view that page.")
-    return redirect(url_for("login_blueprints.login"))
+    return redirect(url_for("auth_url.login"))
 
 def send_email(receiver, cc_email, subject, body):
     try:

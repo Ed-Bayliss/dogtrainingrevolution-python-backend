@@ -68,6 +68,10 @@
                             <input type="date" id="editdob" class="form-control" />
                         </div>
                     </div>
+                    <div class="col-12">
+                        <label for="txtAdditional" class="form-label">Additional Information</label>
+                        <textarea class="form-control" id="txtAdditional" rows="5"></textarea>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: space-between;">
@@ -82,7 +86,7 @@
 
 <div class="modal fade" id="mdaddpet" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="mdaddpet" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog modal-lg-centered">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <!-- Modal header -->
@@ -146,11 +150,15 @@
                                 <input type="text" id="addchip" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-5">
+                        <div class="col-5" lang="en-GB">
                             <div class="form-outline mb-2">
                                 <label class="form-label small" for="adddob">DOB</label>
                                 <input type="date" id="adddob" class="form-control" />
                             </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="addAdditional" class="form-label">Additional Information</label>
+                            <textarea class="form-control" id="addAdditional" rows="5"></textarea>
                         </div>
                     </div>
 
@@ -220,7 +228,8 @@
             dob: document.getElementById("adddob").value,
             microchip: document.getElementById("addchip").value,
             gender: document.getElementById("addgender").value,
-            neutered: document.getElementById("addneutered").value
+            neutered: document.getElementById("addneutered").value,
+            additonal: document.getElementById("addAdditional").value,
         };
         sendDataUrl('/pets_add', JSON.stringify(data), function (response) {
             location.reload();
@@ -236,6 +245,7 @@
             document.getElementById("editbreed").value = response[0]['breed'];
             document.getElementById("editdob").value = response[0]['dob'];
             document.getElementById("editchip").value = response[0]['microchip'];
+            document.getElementById("txtAdditional").value = response[0]['additonal'];
             document.getElementById("editgender").value = response[0]['gender'] ? 1 : 0;
             document.getElementById("editneutered").value = response[0]['neutered'] ? 1 : 0;
             $('#mdeditpet').modal('show');
@@ -305,7 +315,8 @@
             dob: document.getElementById("editdob").value,
             microchip: document.getElementById("editchip").value,
             gender: document.getElementById("editgender").value,
-            neutered: document.getElementById("editneutered").value
+            neutered: document.getElementById("editneutered").value,
+            additional: document.getElementById("txtAdditional").value,          
         };
 
         sendDataUrl('/pet_update', JSON.stringify(data), function (response) {

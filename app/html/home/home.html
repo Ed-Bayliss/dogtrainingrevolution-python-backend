@@ -54,7 +54,7 @@
 
 .background-div::before {
     content: "";
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     left: 0;
     width: 100%;
@@ -156,10 +156,28 @@
               <h5 class="card-title">{{product.title}}</h5>
               <image src="/static/images/apple-touch-icon.png" class="img-fluid float-end" style="width:100px;" title="{{product.title}}"></image>
               <p class="card-text text-white text-start">{{product.short_desc}}</p>
-              <a href="/external/bookings" class="btn login_button btn-lg px-4 rounded-pill mt-2 text-center"><i class="fas fa-sterling-sign me-1"></i>{{ "%.2f" | format(product.price) }} Book</a>
+              <a href="/external/bookings" class="btn login_button btn-lg px-4 rounded-pill mt-2 text-center me-2"><i class="fas fa-sterling-sign me-1"></i>{{ "%.2f" | format(product.price) }} Book</a>
+              <!-- <a href="/external/bookings" class="btn login_button btn-lg px-4 rounded-pill mt-2 text-center pt-3 pb-3"><i class="fas fa-info me-1"></i></a> -->
+              <button type="button" class="btn login_button btn-lg px-4 rounded-pill mt-auto text-center " data-bs-toggle="modal" data-bs-target="#{{product.id}}"><i class="fas fa-info"></i></button>
             </div>
           </div>
           
+          <div class="modal fade" id="{{product.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div
+              class="modal-dialog modal-lg modal-dialog modal-lg-centered modal-dialog modal-lg-scrollable modal-lg modal-fullscreen-lg-down">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">{{product.title}}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-black" style="white-space: pre-line;">
+                  {{product.full_desc}}
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       {%endfor%}
@@ -346,6 +364,10 @@ Poor recall on and off lead Pulling on the lead in excitement (not reacting towa
         </div>
       </div>
       <div class="col-md-6">
+        <div id="divEmailSuccess" class="row gy-4 rounded-3 text-center" style="padding-bottom: 20px; background-color: rgba(0,0,0,0.8); border: #d4a373 1px solid; display: none;" class="php-email-form aos-init" data-aos="fade-up" data-aos-delay="200">
+          <h5>Thanks for your message</h5>
+          <p>We will respond as soon as possible</p>
+        </div>
         <div id="divEmail" class="row gy-4 rounded-3" style="padding-bottom: 20px; background-color: rgba(0,0,0,0.8); border: #d4a373 1px solid;"
           class="php-email-form aos-init" data-aos="fade-up" data-aos-delay="200">
 
@@ -439,7 +461,8 @@ Poor recall on and off lead Pulling on the lead in excitement (not reacting towa
       };
       sendDataUrl('/send_email', JSON.stringify(data), function (response) {
         if (response['message'] == "success"){
-          document.getElementById("divEmail").style.display="none";            
+          document.getElementById("divEmail").style.display="none";      
+          document.getElementById("divEmailSuccess").style.display="";
         }
         hideLoadingOverlay();
       });
@@ -503,8 +526,7 @@ Poor recall on and off lead Pulling on the lead in excitement (not reacting towa
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">{{product.title}}</h5>
             <p class="card-text">{{product.short_desc}}</p>
-            <button type="button" class="btn btn-link login_a mt-auto mb-2" data-bs-toggle="modal"
-              data-bs-target="#{{product.id}}">More Information</button>
+            <button type="button" class="btn btn-link login_a mt-auto mb-2" data-bs-toggle="modal" data-bs-target="#{{product.id}}">More Information</button>
             <a href="/external/bookings" class="btn btn-success mt-auto"><i
                 class="fas fa-sterling-sign me-1"></i>£{{product.price}}</a>
           </div>

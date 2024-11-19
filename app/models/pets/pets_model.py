@@ -23,6 +23,7 @@ class Pet(BaseModel):
     microchip = db.Column(db.String(100), nullable=True, unique=False)
     gender = db.Column(db.Boolean, nullable=True, unique=False)
     neutered = db.Column(db.Boolean, nullable=True, unique=False)
+    additonal = db.Column(db.String(6000), nullable=True, unique=False)
     
     def __init__(
         self,
@@ -34,6 +35,7 @@ class Pet(BaseModel):
         microchip,
         gender,
         neutered,
+        additonal,
     ):
         self.id = id
         self.client_id = client_id
@@ -43,6 +45,7 @@ class Pet(BaseModel):
         self.microchip = microchip
         self.gender = gender
         self.neutered = neutered
+        self.additonal = additonal
         
     def to_dict(self):
         """Convert User object to dictionary for JSON serialization."""
@@ -55,5 +58,6 @@ class Pet(BaseModel):
             "microchip": self.microchip,
             "gender": self.gender,
             "neutered": self.neutered,
+            "additonal": self.additonal,
             # Password field is excluded for security reasons
         }

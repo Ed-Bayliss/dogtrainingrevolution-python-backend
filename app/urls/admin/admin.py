@@ -473,6 +473,7 @@ def pets_add():
         microchip=request.json['microchip'],
         gender=request.json['gender'] == '1',
         neutered=request.json['neutered'] == '1',
+        additonal=request.json['additonal'],
     )
 
     db.session.add(pet)
@@ -502,6 +503,7 @@ def pet_update():
         pet_details.microchip = request.json["microchip"]
         pet_details.gender = request.json['gender'] == '1'
         pet_details.neutered = request.json['neutered'] == '1'
+        pet_details.additonal = request.json['additional']
         db.session.commit()
     
     return jsonify({"msg": "complete"})
