@@ -230,5 +230,29 @@ def send_email(receiver, cc_email, subject, body):
     if "_id" in session:
         session.pop("_id")
 
+    session.pop()
     # current_app.login_manager._update_request_context_with_user()
     return True
+
+def send_email_bulk(receiver, cc_email, subject, body):
+    try:
+        # Create a multipart message
+        message = MIMEMultipart()
+        message["From"] = "no-reply@pawtul.com"
+        message["To"] = receiver
+        message["Cc"] = cc_email
+        message["Subject"] = subject
+
+        message.attach(MIMEText(body, "html"))
+
+        # Connect to the SMTP server and send the email
+        with smtplib.SMTP("smtp.exchange2019.ionos.co.uk", 587) as server:
+            server.starttls()
+            server.login("no-reply@pawtul.com", "Ej-?bq5[X;?zfbzhX]Yf")
+            server.send_message(message)
+
+    except:
+        flash("Email Error: Please check clients email address")
+
+    return True
+

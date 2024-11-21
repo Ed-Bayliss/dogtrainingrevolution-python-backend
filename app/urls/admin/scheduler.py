@@ -14,7 +14,10 @@ from flask import (
 )
 from flask_login import current_user, login_required
 from app import scheduler
-from app.models.products.products_model import Booking
+from app.models.accounts.accounts_model import User
+from app.models.pets.pets_model import Pet
+from app.models.products.products_model import Booking, Product
+from app.urls.auth.auth_url import send_email, send_email_bulk
 from app.urls.bookings.bookings_url import generate_calendar_ics
 from app import db
 
@@ -70,7 +73,7 @@ def check_paid_bookings():
         print("Current booking counts:", dict(BOOKING_COUNT))
 
 @scheduler.task("cron", id="send_reminders", hour=2)
-# @scheduler.task("interval", id="send_reminders", seconds=10)
+# @scheduler.task("interval", id="send_reminders", minutes=1)
 def send_reminders():
     with scheduler.app.app_context():
         # Get today's date
@@ -84,4 +87,22 @@ def send_reminders():
             # Check if the booking_date matches today
             if booking.booking_date.date() == today:
                 print(f"Booking ID {booking.id} is today.")
-                #send email reminder
+                
+                product = Product.query.filter_by(id=str(booking.product_id)).first()
+                pet = Pet.query.filter_by(id=str(booking.pet_id)).first()
+                client = User.query.filter_by(id=str(booking.client_id)).first()
+
+                formatted_date = booking.booking_date.strftime('%d/%m/%Y %H:%M')
+                booking_info = pet.name + " " + formatted_date
+
+                with open("app/static/emails/reminder.html", "r") as body:
+                        body = body.read()
+                        body = body.replace("#classname#", product.title)
+                        body = body.replace("#location#", product.location)
+                        body = body.replace("#booking_info#", booking_info)
+
+                # send email with username password
+                send_email_bulk(client.email, "david.greaves@pawtul.com", "Dog Training Revolution - Reminder", body)
+                print(f"Booking ID {booking.id} email sent.")
+        
+        print(f"Complete")

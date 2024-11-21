@@ -307,7 +307,7 @@ def booking_rows(row):
     )
 
 
-@bookings_url.route("/bookings", methods=["GET"])
+@bookings_url.route("/bookings/", methods=["GET"])
 def root():
     if "_user_id" in session:
         existing_user = User.query.filter_by(
