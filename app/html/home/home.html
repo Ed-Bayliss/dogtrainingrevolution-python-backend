@@ -1,98 +1,35 @@
 {% extends "/master/initial_page.html" %}
 {% block content %}
-<style>
-  #myVideo {
-    filter: blur(7px);
-    min-width: 100%;
-    height: 500px;
-    object-fit: cover;
-  }
-  .bio-section {
-    /* background-color: #f8f9fa; */
-    background-color: black;
-    /* background-color: #f8f9fa14; */
-    background:black;
-    border: #d4a373 1px solid;
-    padding: 40px;
-  }
-  .bio-text {
-      font-size: 1.2rem;
-      color: #fff;
-  }
-  .bio-title {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #3a3a3a;
-      margin-bottom: 20px;
-  }
-  .get-in-touch-btn {
-      background-color: #d4a373;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-weight: bold;
-      margin-top: 20px;
-  }
-  .get-in-touch-btn:hover {
-      background-color: #d4a373;
-  }
-  .bio-image {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: 5px;
-  }
-
-  .background-div {
-    width: 100%;                /* Full width of container */
-    background-image: url('/static/images/dtr.png'); /* Replace with your image path */
-    background-size: 50px 50px;            /* Image scaled to 100px */
-    background-repeat: repeat;               /* Repeats background */
-    background-color: rgba(0, 0, 0, 1); /* High transparency overlay */
-    position: relative;                      /* Ensure position for transparency overlay */
-}
-
-.background-div::before {
-    content: "";
-    /* position: absolute; */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.1;              /* Set transparency level */
-    z-index: 0;                /* Background behind other content */
-}
-
-</style>
 
 <section id="hero" class="d-flex align-items-center">
   <video autoplay muted loop id="myVideo" style="filter: blur(7px);">
     <source src="/static/videos/dtr_cover_video.mp4" type="video/mp4">
   </video>
-  <div class="container position-absolute ms-md-5" data-aos="fade-up" data-aos-delay="500">
+  <div class="col-12 position-absolute text-center" data-aos="fade-up" data-aos-delay="500">
+    <img src="/static/images/apple-touch-icon.png" class="img-fluid" style="width:200px;" title="Welcome to Dog Training Revolution"><br>
     <h1>Welcome to Dog Training Revolution</h1>
-    <h3 class="pb-3">Where Excellence in Puppy Training Begins</h3>
+    <!-- <h3 class="pb-3">Where Excellence in Puppy Training Begins</h3> -->
     <div class="row align-items-center">
-      <div class="col-12" data-aos="fade-right" data-aos-anchor-placement="top-center">
+      <!-- <div class="col-12" data-aos="fade-right" data-aos-anchor-placement="top-center">
         <p>
           At Dog Training Revolution, we offer exclusive, results-driven puppy training based on the acclaimed Life
           Skills for Puppies program developed by Lincoln University. Our approach goes beyond basic obedience, focusing
           on life skills that empower your puppy to grow into a confident, well-mannered dog ready to face any
           situation.
         </p>
-      </div>
-      <div class="col-12" data-aos="fade-right" data-aos-anchor-placement="top-center">
+      </div> -->
+      <!-- <div class="col-12" data-aos="fade-right" data-aos-anchor-placement="top-center">
         <div class="d-inline-flex gap-2 mb-5">
           <a href="#classes"
             class="d-inline-flex align-items-center btn login_button btn-lg px-4 rounded-pill">Classes</a>
           <a href="#contact" class="btn login_button_outer btn-lg px-4 rounded-pill">Contact Us</a>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>
 <section id="about" class="pt-5 background-div">
-  <h1 class="title text-center mt-5">Who we are:</h1>
+  <h1 class="title text-center mt-2">Who we are:</h1>
   <div class="row d-flex align-items-stretch pb-5">
     <div class="col-12 col-lg-6 mb-5">
       <div class="bio-section h-100 m-5 rounded-3">
@@ -149,7 +86,7 @@
       {% for product in products%}
 
       <div class="col-md-6 col-lg-4 mb-4">
-        <div class="m-3 card h-100 shadow rounded-3" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url('{{product.image_base64}}'); background-size: cover; background-position: center; background-repeat: unset;">
+        <div class="m-3 card h-100 shadow rounded-3" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url('{{ product.image_base64 if product.image_base64 else "/static/images/dog_walk_and_train.jpeg" }}'); background-size: cover; background-position: center; background-repeat: unset;">
 
           <div class="row p-3">
             <div class="col-12 text-center">
@@ -157,7 +94,6 @@
               <image src="/static/images/apple-touch-icon.png" class="img-fluid float-end" style="width:100px;" title="{{product.title}}"></image>
               <p class="card-text text-white text-start">{{product.short_desc}}</p>
               <a href="/external/bookings" class="btn login_button btn-lg px-4 rounded-pill mt-2 text-center me-2"><i class="fas fa-sterling-sign me-1"></i>{{ "%.2f" | format(product.price) }} Book</a>
-              <!-- <a href="/external/bookings" class="btn login_button btn-lg px-4 rounded-pill mt-2 text-center pt-3 pb-3"><i class="fas fa-info me-1"></i></a> -->
               <button type="button" class="btn login_button btn-lg px-4 rounded-pill mt-auto text-center " data-bs-toggle="modal" data-bs-target="#{{product.id}}"><i class="fas fa-info"></i></button>
             </div>
           </div>
@@ -183,133 +119,6 @@
       {%endfor%}
     </div>
 </section>
-
-<!-- Puppy Classes
-"Where Excellence in Puppy Training Begins
-At Dog Training Revolution, we offer the most exclusive and effective puppy training
-classes based on the renowned Life Skills for Puppies program developed by Lincoln
-University. Our approach goes beyond obedience, focusing on developing real-life
-skills that ensure your puppy grows into a confident, well-behaved dog, ready to face
-the world.
-Why Choose Our Puppy Training Classes?
-Small Group Sizes for Personalised Attention
-We limit our puppy classes to small, select groups to provide each owner and puppy
-with the intensive, one-to-one tuition they deserve. Our professional trainers give you
-the personal focus that larger classes simply can’t offer, ensuring both you and your
-puppies receive the highest level of support and guidance.
-Real-Life Training for Real-World Results
-Our Life Skills for Puppies curriculum emphasises training in real-life situations. From
-learning how to be calm and confident in public to managing everyday challenges
-like walking on a lead or meeting new people, your puppy will develop essential life
-skills that integrate seamlessly into your day-to-day life"
-
-1-1 services page
--picture of golden retriever sitting
--links to each option page 
-
-Behaviour Initial assessment 
-Some issues require a trained and experienced behaviourist and lucky for you, both Rachel and Laura are just that! In a behavioural assessment, we will visit you and your dog in your home to see them in their environment, have an in-depth talk about their lifestyle, health, social interactions, history and so on. The session will last for up to 2 hours, giving you and your dog the time and support you need for us to gain the best understanding of the issues you're having. We will also go out 'on location' to assess the issue if it's appropriate for the challenges your dog is having. A behavioural assessment is needed for issues such as dog-dog reactivity, human directed aggression, phobias and anxieties, aversion to handling and triggers etc. We believe that changing any behavioural issues requires a holistic approach, which means that you'll also receive a full written assessment of the session and our insight into all aspects of your dogs life that will positively impact and compliment the training going forward. Your mentor will create a personalised management plan for you to start as soon as you can along with training tutorials and support. This option also includes a weekly check in call with your mentor to give you the support you and your dog need in-between sessions. £200
-Training initial assessment:-
-In this session, we come to your home or meet locally to see the issues you're having. These sessions help us to get to know you and your dog AND to see the challenges you're facing so we can get started together on building a training plan suited specifically for you that you can work on straight away! This option is is suitable for issues with recall, lead walking basics, listening and life skills and so on and will need to be booked before booking further 1-1s or one of our popular packages! You'll get a written assessment of our session, including any training tutorials to compliment the session! (Think of it as homework that is actually fun!) £100
-
-Packages:
-Training Package £340 -Training Initial Assessment 1.5hr (valued at £100) -Full written training plan - X4 1hr 1-1 sessions with your mentor (valued at upto £70 each) -Homework tutorials from the sessions to work on at home Behaviour Package £560 -Discover call with one of our team and triage -Behaviour Initial Assessment 2hr (valued at £200) -Full written assessment with management plan and training tutorials -X4 1-1 sessions with your mentor (valued at upto £80 each) -Weekly phone check-ins with your mentor including any feedback on videos sent in Behaviour Package 2 £900 -Discover call with one of our team and triage -Behaviour Initial Assessment 2hr (valued at £200) -Full written assessment with management plan and training tutorials -X8 1-1 sessions with your mentor (valued at upto £80 each) -Weekly phone check-ins with your mentor including any feedback on videos sent in
-
-Training bootcamp
-Think of the walk and train but bigger and BETTER! At 5 or 10 consecutive days (1hr over each day) we supercharge your dogs training by providing a personalised bootcamp to boost their progress with whatever issue you're having with their training! the training bootcamp is for issues like: lead pulling, recall, basic manners and life skills, settling in public places etc. You'll receive recaps of the training we are doing with your dog each day, their progress and photos and videos too with a handover session on the last day to be sure you're set up for success ! Our Bootcamps are offered to people within a 30minute radius of Leek 5 days: £250 10 days: £500
-Behaviour bootcamp
-Owning a reactive dog can be a challenge and as behaviourists, we know the time and patience that it takes to be out training and changing your dogs behaviour. With our behavioural Bootcamps, we come and take your dog out for you, an hour each day, to focus on any of the issues that they're having to make positive progress, providing in-depth personalised training to really change their behaviour. These Bootcamps can be booked as 5 or 10 days with session recaps so you can be involved in what they've been doing and how well their training is coming along and of course pictures and videos for memories! We will have a handover session on the last day so you are given everything you need going forward. With this bootcamp, you'll also receive a weekly check-in call with your chosen mentor because let's face it, we need all the support we can get when owning a reactive dog. We are here for you. Our Bootcamps are offered to people living within a 30minute radius of Leek
-Walk and Train
-Our walk and train sessions are super popular at the moment because they're perfect for topping up and improving training but require less of your time as we come to take your dog out for you! At 45 minutes long, they're a great way to give dedicated 1-1 training with your dog whilst getting their walk in too! Suitable for sporadic or weekly booking. Our walk and train sessions are offered to people within a 30minute radius of Leek £45 per session
-
-Puppy supercharger
-Just got your puppy and want to have the very best start with them? Maybe you’ve had your puppy a couple of weeks and are needing some support with those challenges puppy ownership brings? From toilet training to teething, basic training to sleeping through the night, our Puppy Supercharger service will give you everything you need to make their early life at home (and out and about!) as fun and enjoyable as possible! You’ll receive our Puppy Lifeskills Guide, an hour session with one of our team and a written session recap to get you going before your next session. £100
-
-"Does my dog need training or behavioural help?" 
-It can be a little difficult to know whether your dog needs behavioural or training help so here is a list of some of the differences. There are many more that could be added to these lists so if you’re unsure, please do get in touch. If you book a training option and it later appears that your dog needs behavioural training, we will suggest a different service.
-Behavioural: 
-Barking and lunging at people and/or dogs Struggles when left home alone Can’t follow training outside if there are dogs, people or cars around Resource guarding Chasing/stalking traffic Barking and/aggressive displays to people coming into or leaving the home Fearfulness/anxiety Reactivity when on walks
-
-training: 
-Poor recall on and off lead Pulling on the lead in excitement (not reacting towards people, dogs, cars, animals) Sit, stay, basic obedience Needing calmer behaviour in the house Jumping up people in excitement Wanting to learn skills like retrieving -->
-<!-- <section id="gallery" class="pt-5 pb-3">
-  <div class="container">
-    <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-      <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="card postcard">
-            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Postcard Image 1">
-            <div class="card-body">
-              <h5 class="card-title">Postcard Title 1</h5>
-              <p class="card-text">A brief description of the postcard image.</p>
-            </div>
-          </div>
-        </div>
-    
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="card postcard">
-            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Postcard Image 2">
-            <div class="card-body">
-              <h5 class="card-title">Postcard Title 2</h5>
-              <p class="card-text">A brief description of the postcard image.</p>
-            </div>
-          </div>
-        </div>
-    
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="card postcard">
-            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Postcard Image 3">
-            <div class="card-body">
-              <h5 class="card-title">Postcard Title 3</h5>
-              <p class="card-text">A brief description of the postcard image.</p>
-            </div>
-          </div>
-        </div>
-    
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="card postcard">
-            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Postcard Image 4">
-            <div class="card-body">
-              <h5 class="card-title">Postcard Title 4</h5>
-              <p class="card-text">A brief description of the postcard image.</p>
-            </div>
-          </div>
-        </div>
-    
-      </div>
-
-    </div>
-
-    <!-- <div class="row gy-4">
-
-      <div class="col-12 col-md-2" style="position: relative; overflow:visible; min-height: 600px;">
-        <img src="/static/images/dog_behaviour_assessment.jpeg" class="img-fluid img-thumbnail"
-          style="position: absolute; top: 0; left: 30px; transform: rotate(-15deg); z-index:-10;">
-        <img src="/static/images/dog2.jpg" class="img-fluid img-thumbnail"
-          style="position: absolute; top: 140px; left: 0px;  transform: rotate(12deg); z-index:-9;">
-          <img src="/static/images/dog3.jpg" class="img-fluid img-thumbnail"
-          style="position: absolute; top: 280px; left: 0px; z-index:-8;">
-      </div>
-      <div class="col-12 col-md-8">
-        
-      </div>
-      <div class="col-12 col-md-2" style="position: relative; overflow:visible; min-height: 600px;">
-        <img src="/static/images/dog1.jpg" class="img-fluid img-thumbnail"
-          style="position: absolute; top: 0; right: 30px; transform: rotate(-15deg); z-index:-10;">
-        <img src="/static/images/training_initial_assessment.jpeg" class="img-fluid img-thumbnail"
-          style="position: absolute; top: 140px; right: 0px;  transform: rotate(12deg); z-index:-9;">
-          <img src="/static/images/dog_walk_and_train.jpeg" class="img-fluid img-thumbnail"
-          style="position: absolute; top: 280px; right: 0px; z-index:-8;">
-      </div>
-
-
-    </div> -->
-
-  <!-- </div>
-
-  </div> -->
-  <!-- </div>
-</section> -->
 
 <section id="contact" class="pt-5 pb-3  background-div">
   <div class="container">
@@ -398,10 +207,6 @@ Poor recall on and off lead Pulling on the lead in excitement (not reacting towa
           </div>
 
         </div>
-        <!-- <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2395.069906696146!2d-2.0425919228537994!3d53.108937172221395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487a40ae0a3cc433%3A0xcca0920014ad0070!2s46%20Kiln%20Ln%2C%20Leek!5e0!3m2!1sen!2suk!4v1729697500629!5m2!1sen!2suk"
-          frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe> -->
       </div>
     </div>
 
@@ -482,417 +287,4 @@ Poor recall on and off lead Pulling on the lead in excitement (not reacting towa
     }
   }
 </script>
-
-
-<!-- <section id="hero" class="d-flex align-items-center">
-  <video autoplay muted loop id="myVideo" style="filter: blur(7px);">
-    <source src="/static/videos/background.mp4" type="video/mp4">
-  </video>
-  <div class="container position-absolute ms-md-5" data-aos="fade-up" data-aos-delay="500">
-    <h1>Welcome to Dog Training Revolution</h1>
-    <h3 class="pb-3">Where Excellence in Puppy Training Begins</h3>
-    <div class="row align-items-center">
-      <div class="col-12" data-aos="fade-right" data-aos-anchor-placement="top-center">
-        <p>
-          At Dog Training Revolution, we offer exclusive, results-driven puppy training based on the acclaimed Life
-          Skills for Puppies program developed by Lincoln University. Our approach goes beyond basic obedience, focusing
-          on life skills that empower your puppy to grow into a confident, well-mannered dog ready to face any
-          situation.
-        </p>
-      </div>
-      <div class="col-12" data-aos="fade-right" data-aos-anchor-placement="top-center">
-        <div class="d-inline-flex gap-2 mb-5">
-          <a href="#classes"
-            class="d-inline-flex align-items-center btn login_button btn-lg px-4 rounded-pill">Classes</a>
-          <a href="#contact" class="btn login_button_outer btn-lg px-4 rounded-pill">Contact Us</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="classes" class="pt-5 pb-3" style="background-color: rgba(255,255,255,0.1);">
-  <div class="container">
-    <div class="text-center mb-4">
-      <h2>Our Training Classes</h2>
-      <p>Choose the perfect class for your puppy’s needs and start the journey to excellence in training.</p>
-    </div>
-
-    <div class="row">
-
-      {% for product in products%}
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">{{product.title}}</h5>
-            <p class="card-text">{{product.short_desc}}</p>
-            <button type="button" class="btn btn-link login_a mt-auto mb-2" data-bs-toggle="modal" data-bs-target="#{{product.id}}">More Information</button>
-            <a href="/external/bookings" class="btn btn-success mt-auto"><i
-                class="fas fa-sterling-sign me-1"></i>£{{product.price}}</a>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="{{product.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div
-          class="modal-dialog modal-lg modal-dialog modal-lg-centered modal-dialog modal-lg-scrollable modal-lg modal-fullscreen-lg-down">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">{{product.title}}</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-black" style="white-space: pre-line;">
-              {{product.full_desc}}
-            </div>
-          </div>
-        </div>
-      </div>
-      {%endfor%}
-    </div>
-
-
-
-  </div>
-</section>
-
-<section id="why" class="pt-5 pb-3">
-
-  <div class="container section-title aos-init aos-animate text-center pb-4" data-aos="fade-up">
-    <h2>Why Choose Our Puppy Training Classes?</h2>
-  </div>
-
-  <div class="container">
-
-    <div class="row gy-4">
-
-      <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up">
-        <div class="d-flex">
-          <div class="icon flex-shrink-0"><i class="bi bi-briefcase"></i></div>
-          <div>
-            <h4 class="title">Small Group Sizes for Personalised Attention</h4>
-            <p class="description">We limit our puppy classes to small, select groups to provide each owner and puppy
-              with the intensive, one-to-one tuition they deserve. Our professional trainers give you the personal focus
-              that larger classes simply can’t offer, ensuring both you and your puppy receive the highest level of
-              support and guidance.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200"
-        data-aos-anchor-placement="top-center">
-        <div class="d-flex">
-          <div class="icon flex-shrink-0"><i class="bi bi-card-checklist"></i></div>
-          <div>
-            <h4 class="title">Real-Life Training for Real-World Results</h4>
-            <p class="description">Our Life Skills for Puppies curriculum emphasises training in real-life situations.
-              From learning how to be calm and confident in public to managing everyday challenges like walking on a
-              lead or meeting new people, your puppy will develop essential life skills that integrate seamlessly into
-              your day-to-day life.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="300"
-        data-aos-anchor-placement="top-center">
-        <div class="d-flex">
-          <div class="icon flex-shrink-0"><i class="bi bi-bar-chart"></i></div>
-          <div>
-            <h4 class="title">Lifetime Support and Premium Resources</h4>
-            <p class="description">When you enrol in our puppy classes, you gain access to our exclusive members’ area,
-              filled with high-quality resources to support your puppy's ongoing development. From video tutorials to
-              expert advice, you will benefit from a lifetime of professional guidance, ensuring that both you and your
-              puppy are set up for long-term success.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="400"
-        data-aos-anchor-placement="top-center">
-        <div class="d-flex">
-          <div class="icon flex-shrink-0"><i class="bi bi-binoculars"></i></div>
-          <div>
-            <h4 class="title">Led by Award-Winning Dog Training Experts</h4>
-            <p class="description">Our lead trainer, Rachel Trafford, is ABTC and IAABC certified, bringing decades of
-              experience to every class. Recognised for her innovative approach to dog training, Rachel was awarded the
-              People's Pet Award for Innovation by the Mirror Newspaper in 2024. She continues to work alongside
-              veterinary surgeons to tackle more complex behavioural challenges, ensuring you receive the best possible
-              guidance.</p>
-            <div class="d-flex justify-content-evenly">
-              <img src="/static/images/ABTC.jpg" class="img-fluid me-3" style="max-width: 100px;">
-              <img src="/static/images/IAABC.png" class="img-fluid me-3 bg-white" style="max-width: 100px;">
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-<section id="about" class="pt-5 pb-3" style="background-color: rgba(255,255,255,0.1);">
-  <div class="container">
-    <h4 class="title" class="pt-5 pb-3">Meet Our Training Experts</h3>
-      <div class="row align-items-center">
-
-        <div class="col-12" data-aos="fade-right" data-aos-anchor-placement="top-center">
-          <img src="/static/images/Rachel_rbg.png" alt="Dog Training Specialist"
-            class="img-fluid float-start m-3 pt-4 pb-4" style="max-width: 200px; shape-outside: ellipse(60% 30%);"
-            data-aos="fade-left" data-aos-anchor-placement="top-center">
-          <p>
-            Rachel Trafford is an award-winning canine behaviourist with over 30 years of experience working with dogs
-            and their owners to build better, more compassionate relationships. Recognised as a leader in her field,
-            Rachel has earned accreditation from the International Association of Animal Behavior Consultants (IAABC)
-            and the Animal Behaviour and Training Council (ABTC), two of the most respected organisations in the world
-            of animal behaviour.Rachel is also a qualified counsellor, and is able to help owners to navigate the
-            difficulties and challenges of behavioural change journeys with their dogs.
-          </p>
-          <p>
-            Rachel’s passion for dogs and their well-being has been the driving force behind her career. From early on,
-            she recognised the need for a compassionate, science-based approach to dog training and behaviour
-            modification. Over the decades, she has helped countless dogs and their owners overcome behavioural
-            challenges, from anxiety and aggression to more common issues like recall and socialisation.
-          </p>
-          <p>
-            In 2024, Rachel’s dedication to animal welfare was recognised at the prestigious Mirror People’s Pet Awards,
-            where she was celebrated for her contributions to the field. Her approach blends the latest in behavioural
-            science with a deep understanding of the human-dog bond, resulting in more harmonious relationships between
-            pets and their families.
-          </p>
-          <p>
-            Rachel is committed to continual education and the dissemination of knowledge, offering a range of courses,
-            workshops, and private consultations. Whether you’re seeking help for a specific behavioural issue or
-            looking to deepen your understanding of dog training, Rachel’s expertise is trusted and respected throughout
-            the industry.
-          </p>
-          <img src="/static/images/profile.png" alt="Dog Training Specialist" class="img-fluid float-end"
-            style="max-width: 200px; shape-outside: ellipse(55% 100%);" data-aos="fade-right"
-            data-aos-anchor-placement="top-center">
-          <p>
-            Learn more about Rachel’s work and how she can help you and your dog by exploring the courses and
-            services she offers.
-          </p>
-          <p>
-            Laura has been working as a dog trainer and behaviourist since 2018 and has gained a Higher Diploma in
-            Canine Behaviour and Psychology and also in Canine Aggression amongst additional qualifications in various
-            areas of dog training and behavioural work. Specialising in life with guarding breeds, she is passionate
-            about the importance of strong bonds and relationships when it comes to addressing any issues of dog
-            ownership. In her spare time, she is also training as a decoy in dog protection sports (PSA) and personal
-            protection (PP).
-          </p>
-        </div>
-      </div>
-
-  </div>
-</section>
-
-
-<section id="what" class="pt-5">
-  <div class="container">
-    <h5>What Makes Our Life Skills Program Special?</h5>
-    <p>
-      Our puppy training classes focus on the 10 Life Skills every puppy needs, including:
-    <ul>
-      <li>Confidence-building: Helping puppies feel safe and secure in their environment.</li>
-      <li>Surprise tolerance: Teaching puppies to handle sudden changes with calmness.</li>
-      <li>Handling and self-control: Preparing puppies for vet visits and grooming with ease.</li>
-      <li>Learning to listen and follow rules: Ensuring your puppy knows how to behave in every situation.</li>
-      <li>Making the right choices: Encouraging puppies to think and act in ways that reduce tension and promote
-        harmony.</li>
-    </ul>
-    These skills are taught in practical, real-world environments to ensure your puppy is well-prepared for daily life.
-
-    <div class="row align-items-center pt-5">
-      <div class="col-12">
-        <h5>Science-Based, Modern Training Techniques</h5>
-      </div>
-      <div class="col-md-3 pb-2">
-        <img src="/static/images/waiting_patiently.jpg" class="img-fluid">
-      </div>
-      <div class="col-md-9 pb-2">
-        At Dog Training Revolution, we use only science-based, positive reinforcement methods that are rooted in the
-        latest research. Our trainers continually expand their knowledge through ongoing professional development,
-        ensuring your puppy benefits from the most up-to-date and effective training techniques available.
-      </div>
-    </div>
-
-    <div class="row align-items-center pt-5">
-      <div class="col-12">
-        <h5>Start Your Puppy’s Journey with Dog Training Revolution Today</h5>
-      </div>
-      <div class="col-md-9 pb-2">
-        If you’re ready to give your puppy the best start in life with a personalised, exclusive training experience,
-        contact us today. Our limited class sizes mean spaces fill up quickly, so don’t miss out on securing a spot in
-        the most elite puppy training program available.
-      </div>
-      <div class="col-md-3 pb-2">
-        <img src="/static/images/learning_that_hands_are_great.jpg" class="img-fluid">
-      </div>
-    </div>
-
-    </p>
-  </div>
-</section>
-
-<section id="reviews" class="pb-3">
-  <div class="container py-5">
-    <h2 class="text-center mb-4">What Our Customers Say</h2>
-
-    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-
-        <div class="carousel-item active">
-          <h5>Jane Doe</h5>
-          <p>"This is hands down the best service I have ever used. Highly recommended!"</p>
-          <span class="d-block">⭐⭐⭐⭐⭐</span>
-        </div>
-
-        <div class="carousel-item">
-          <h5>John Smith</h5>
-          <p>"A fantastic experience! Their attention to detail and customer service is top-notch."</p>
-          <span class="d-block">⭐⭐⭐⭐⭐</span>
-        </div>
-
-        <div class="carousel-item">
-          <h5>Emily Clark</h5>
-          <p>"I have never been more satisfied with a product. Excellent quality and service."</p>
-          <span class="d-block">⭐⭐⭐⭐⭐</span>
-        </div>
-
-      </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div>
-</section>
-<section id="contact" class="pt-5 pb-3" style="background-color: rgba(255,255,255,0.1);">
-  <div class="container">
-    <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100"></div>
-
-    <div class="row gy-4">
-
-      <div class="col-md-7">
-        <div class="info-wrap">
-          <div class="info-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
-            <i class="bi bi-geo-alt flex-shrink-0"></i>
-            <div>
-              <h3>Address</h3>
-              <p><i class="fas fa-location-dot me-2"></i>46 Kiln Lane ST13 8LQ</p>
-            </div>
-          </div>
-
-          <div class="info-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
-            <i class="bi bi-telephone flex-shrink-0"></i>
-            <div>
-              <h3>Call Us</h3>
-              <p><i class="fas fa-phone me-2"></i><a href="tel:07540959387" class="text-white">07540 959387</a></p>
-            </div>
-          </div>
-
-          <div class="info-item d-flex aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
-            <i class="bi bi-envelope flex-shrink-0"></i>
-            <div>
-              <h3>Email Us</h3>
-              <p><i class="fas fa-envelope me-2"></i><a href="mailto:info@example.com"
-                  class="text-white">info@example.com</a></p>
-            </div>
-          </div>
-          <div class="col-12">
-            <h4 class="pb-3">Follow Us</h4>
-            <div class="social-links d-flex">
-              <a target="_blank" href="https://www.facebook.com/profile.php?id=61565965954785"><i
-                  class="fa-brands fa-facebook social_links me-3"></i></a>
-              <a target="_blank"
-                href="https://www.instagram.com/dogtrainingrevolutionk9?fbclid=IwY2xjawGF81lleHRuA2FlbQIxMAABHdMID6ZIb5uYDXS2XmJhAedynIfTLOdVs9hYUmeksuN_WtTSZdAfUSqNfA_aem_kDBzkfFByrIYd_vTL2mELg"><i
-                  class="fa-brands fa-instagram social_links"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2395.069906696146!2d-2.0425919228537994!3d53.108937172221395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487a40ae0a3cc433%3A0xcca0920014ad0070!2s46%20Kiln%20Ln%2C%20Leek!5e0!3m2!1sen!2suk!4v1729697500629!5m2!1sen!2suk"
-          frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-    </div>
-
-  </div>
-  </div>
-</section>
-<section id="contact_form" class="pt-5 pb-3">
-  <div class="container">
-    <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100"></div>
-
-    <div class="row gy-4">
-
-      <div class="col-12 col-md-8">
-        <div class="row gy-4" style="padding-bottom: 20px; background-color: rgba(0,0,0,0.7);"
-          class="php-email-form aos-init" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-md-6">
-            <label for="name-field" class="pb-2">Your Name</label>
-            <input type="text" name="name" id="name-field" class="form-control" required>
-          </div>
-
-          <div class="col-md-6">
-            <label for="email-field" class="pb-2">Your Email</label>
-            <input type="email" class="form-control" name="email" id="email-field" required>
-          </div>
-
-          <div class="col-md-12">
-            <label for="subject-field" class="pb-2">Subject</label>
-            <input type="text" class="form-control" name="subject" id="subject-field" required>
-          </div>
-
-          <div class="col-md-12">
-            <label for="message-field" class="pb-2">Message</label>
-            <textarea class="form-control" name="message" rows="10" id="message-field" required></textarea>
-          </div>
-
-          <div class="col-md-12 text-center">
-            <div class="d-grid gap-2">
-              <button type="button" class="btn btn-outline-light" onclick="sendEmail();">Send Message</button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="col-12 col-md-4" style="position: relative; overflow:visible;">
-        <img src="/static/images/dog1.jpg" class="img-fluid img-thumbnail"
-          style="position: absolute; top: 0; left: -30px; transform: rotate(-15deg); z-index:-10;">
-        <img src="/static/images/dog2.jpg" class="img-fluid img-thumbnail"
-          style="position: absolute; top: 100px; left: 70px;  transform: rotate(12deg); z-index:-9;">
-        <img src="/static/images/dog3.jpg" class="img-fluid img-thumbnail"
-          style="position: absolute; top: 280px; left: -50px; z-index:-8;">
-      </div>
-
-
-    </div>
-
-  </div>
-
-  </div>
-  </div>
-</section>
-
-<script>
-  function sendEmail() {
-    alert(document.getElementById("name-field").value);
-    alert(document.getElementById("email-field").value);
-    alert(document.getElementById("subject-field").value);
-    alert(document.getElementById("message-field").value);
-
-  }
-</script> -->
-
 {% endblock %}
