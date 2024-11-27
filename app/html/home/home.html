@@ -1,5 +1,6 @@
 {% extends "/master/initial_page.html" %}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
 
 <section id="hero" class="d-flex align-items-center">
   <video autoplay muted loop id="myVideo" style="filter: blur(7px);">
@@ -29,19 +30,20 @@
   </div>
 </section>
 <section id="about" class="pt-5 background-div">
-  <h1 class="title text-center mt-2">Who we are:</h1>
+  
   <div class="row d-flex align-items-stretch pb-5">
     <div class="col-12 col-lg-6 mb-5">
       <div class="bio-section h-100 m-5 rounded-3">
         <div class="row align-items-center h-100">
           <div class="col-12">
+            <h1 class="title text-center pb-4">Who we are:</h1>
             <p class="bio-text">
               
               <span class="float-end col col-xs-12 col-sm-4 col-lg-12 text-center pb-5">
                 <img src="/static/images/rachel_trafford_dog_trainer.jpeg" alt="Rachel ABTC and IAABC-certified dog training professional" class="bio-image mb-3">
-                <a href="tel:+447540959387" class="h5 mt-3"><i class="fas fa-phone me-2"></i>07540 959387</a>
-                <br>
-                <a href="#contact" class="btn login_button btn-lg px-4 rounded-pill mt-5">Get in Touch</a>
+                <!-- <a href="tel:+447540959387" class="h5 mt-3"><i class="fas fa-phone me-2"></i>07540 959387</a> -->
+                <!-- <br> -->
+                <a href="#contact" class="btn login_button btn-lg px-4 rounded-pill mt-2">Get in Touch</a>
               </span>            
               Rachel Trafford is an ABTC and IAABC-certified dog training professional, bringing decades of experience and a proven track record of success to every class. Known for her pioneering approach, Rachel was honoured with the People Pet Award for Innovation by The Mirror in 2024. As the resident dog training expert for Moorlands Radio, Rachel offers practical advice to struggling dog owners during live phone-ins.
             </p>
@@ -56,12 +58,13 @@
       <div class="bio-section h-100 m-5 rounded-3">
         <div class="row align-items-center h-100">
           <div class="col-12">
+            <h1 class="title text-center pb-4">Who we are:</h1>
             <p class="bio-text">
               <span class="float-end col col-xs-12 col-sm-4 col-lg-12 text-center pb-5">
                 <img src="/static/images/laura_morgan_dog_trainer.jpeg" alt="Laura dog behavioural training" class="bio-image mb-5">
-                <a href="tel:+447412667890" class="h5 mt-3"><i class="fas fa-phone me-2"></i>07412 667890</a>
-                <br>
-                <a href="#contact" class="btn login_button btn-lg px-4 rounded-pill mt-5">Get in Touch</a>
+                <!-- <a href="tel:+447412667890" class="h5 mt-3"><i class="fas fa-phone me-2"></i>07412 667890</a>
+                <br> -->
+                <a href="#contact" class="btn login_button btn-lg px-4 rounded-pill mt-2">Get in Touch</a>
               </span>   
               Laura has an in-depth practical background working with large guarding breed dogs, gaining her knowledge and extensive skills with such dogs from working all over the country. She has spent years studying canine psychology and genetic influences and the impact such things can have on companion and working dogs to apply this in her behavioural work.
             </p>
@@ -90,7 +93,7 @@
 
           <div class="row p-3">
             <div class="col-12 text-center">
-              <h5 class="card-title">{{product.title}}</h5>
+              <h5 class="card-title" style="font-family: 'Lora', serif!important;">{{product.title}}</h5>
               <image src="/static/images/apple-touch-icon.png" class="img-fluid float-end" style="width:100px;" title="{{product.title}}"></image>
               <p class="card-text text-white text-start">{{product.short_desc}}</p>
               <a href="/external/bookings" class="btn login_button btn-lg px-4 rounded-pill mt-2 text-center me-2"><i class="fas fa-sterling-sign me-1"></i>{{ "%.2f" | format(product.price) }} Book</a>
@@ -217,38 +220,33 @@
   <div class="container py-5" style="min-height: 600px!important; align-content: center;">
     <h2 class="text-center mb-4">Hear what our clients have to say</h2>
 
-    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-
-        <div class="carousel-item active">
-          <h5>Team Ozzy. Training Package & Walk & Train</h5>
-          <p>Laura has been working with our golden retriever Ozzy for a while now, and we still make sure he has a weekly training walk with her! It’s the absolute highlight of his week. When we started training, I was genuinely at a lost cause as to how to make walks enjoyable, he was constantly pulling and I was struggling to control him on lead walks which I used to dread. Since working with Laura, we noticed an instant improvement which has only got better and better. He is a totally different dog. It was in there all along and Laura helped to bring it out of him. We now enjoy daily family walks both on and off the lead and it’s no longer a stress! Cannot recommend her enough. She is so knowledgable about so many things around behaviour, and provided loads of guidance on harnesses, leads, nutrition and more! A 10/10 from us and we will be staying with Laura for as long as she’ll have us 😄</p>
-          <span class="d-block">⭐⭐⭐⭐⭐</span>
+    <div class="row" data-masonry="{&quot;percentPosition&quot;: true }" style="position: relative; height: 690px;">
+      <div class="col-12 col-md-6 mb-4" style="position: absolute; left: 0%; top: 0px;">
+        <div class="card review_item">
+          <div class="card-body">
+            <p class="card-text">Laura has been working with our golden retriever Ozzy for a while now, and we still make sure he has a weekly training walk with her! It’s the absolute highlight of his week. When we started training, I was genuinely at a lost cause as to how to make walks enjoyable, he was constantly pulling and I was struggling to control him on lead walks which I used to dread. Since working with Laura, we noticed an instant improvement which has only got better and better. He is a totally different dog. It was in there all along and Laura helped to bring it out of him. We now enjoy daily family walks both on and off the lead and it’s no longer a stress! Cannot recommend her enough. She is so knowledgable about so many things around behaviour, and provided loads of guidance on harnesses, leads, nutrition and more! A 10/10 from us and we will be staying with Laura for as long as she’ll have us 😄</p>
+            <h5 class="card-title">Team Ozzy. Training Package & Walk & Train</h5>
+          </div>
         </div>
-
-        <div class="carousel-item">
-          <h5>John Smith</h5>
-          <p>"A fantastic experience! Their attention to detail and customer service is top-notch."</p>
-          <span class="d-block">⭐⭐⭐⭐⭐</span>
-        </div>
-
-        <div class="carousel-item">
-          <h5>Emily Clark</h5>
-          <p>"I have never been more satisfied with a product. Excellent quality and service."</p>
-          <span class="d-block">⭐⭐⭐⭐⭐</span>
-        </div>
-
       </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+      <div class="col-12 col-md-6 mb-4" style="position: absolute; left: 0%; top: 0px;">
+        <div class="card review_item">
+          <div class="card-body">
+            <p class="card-text">We are throughly enjoying our puppy training classes!<br>It has been very helpful already and only on week 2!<br>Rachel & Laura are so knowledgable and very helpful with puppy advice - thankyou !</p>
+            <h5 class="card-title">Team Nelly: Puppy Life Skills Classes</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 mb-4" style="position: absolute; left: 0%; top: 0px;">
+        <div class="card review_item">
+          <div class="card-body">
+            <p class="card-text">Rachel did a full assessment of our dogs watching their behaviour and observing the triggers.  She fully explained what was going on for the dogs and demonstrated techniques based on positive reinforcement ( which our boys loved ).  After the assessment session Rachael gave us a write up of the strategies we need to implement.<br>We found her very personable.... the dogs loved her and her approaches were based on kindness and reward a really positive experience for us all :)</p>
+            <h5 class="card-title">Team Angie: Behaviour Assessment</h5>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 </section>
 

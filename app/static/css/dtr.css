@@ -82,7 +82,8 @@ h5{
     font-family: 'Apricot', sans-serif!important;
 }
 .social_links{
-    color: white!important;
+    /* color: white!important; */
+    color: #d8b077!important;
     font-size: 28px;
     padding-right: 10px;
 }
@@ -175,6 +176,8 @@ body {
     background:black;
     border: #d4a373 1px solid;
     padding: 40px;
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
   .bio-text {
       font-size: 1.2rem;
@@ -227,3 +230,40 @@ body {
 .modal-backdrop.show {
     opacity: 0.9 !important;
 }
+
+.info-wrap {
+    color: #d8b077;
+}
+
+.review_item {
+    background-color: transparent!important;
+    border: 1px solid #d8b077;
+    color: white;
+}
+
+#reviews {
+    /* Set background image */
+    background-image: url('/static/images/dog_training_revolution_team.jpeg'); /* Replace with your URL */
+    background-size: inherit; /* Ensures the image covers the entire section */
+    background-position: center; /* Centers the image */
+    position: relative; /* Required for pseudo-elements */
+    z-index: 0; /* Ensure it's below the content */
+    overflow: hidden; /* Prevent ::before overflow */
+  }
+  
+  #reviews .container {
+    position: relative;
+    z-index: 2; /* Bring content above the background */
+  }
+  
+  #reviews::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Adjust opacity for fade effect */
+    z-index: 1; /* Layer the fade effect between the background and content */
+    pointer-events: none; /* Allow interaction with content */
+  }

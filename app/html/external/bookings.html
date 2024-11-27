@@ -12,7 +12,7 @@
     <div id="calendar" class="pt-5">
         <div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-lg modal-dialog modal-lg-centered">
-                <div class="modal-content">
+                <div class="modal-content dtr_light_bg">
                     <div class="modal-header">
                         <h5 id="eventTitle" class="modal-title">Add User & Pet</h5>
                         <p id="eventId" hidden></p> <!-- Event ID tag added here -->
@@ -24,25 +24,25 @@
                         <h6>User Information</h6>
                         <form id="userForm">
                             <div class="form-outline mb-2">
-                                <label class="form-label" for="registerEmail">Email</label>
+                                <label class="form-label text-white" for="registerEmail">Email</label>
                                 <input type="email" id="registerEmail" class="form-control" required />
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-outline mb-2">
-                                        <label class="form-label" for="registerName">First Name</label>
+                                        <label class="form-label text-white" for="registerName">First Name</label>
                                         <input type="text" id="registerName" class="form-control" required />
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-outline mb-2">
-                                        <label class="form-label" for="registersurName">Surname</label>
+                                        <label class="form-label text-white" for="registersurName">Surname</label>
                                         <input type="text" id="registersurName" class="form-control" required />
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-outline mb-2">
-                                        <label class="form-label" for="registerPhone">Phone Number</label>
+                                        <label class="form-label text-white" for="registerPhone">Phone Number</label>
                                         <input type="phone" id="registerPhone" class="form-control" required />
                                     </div>
                                 </div>
@@ -63,13 +63,13 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="form-outline mb-2">
-                                        <label class="form-label small" for="editname">Name</label>
+                                        <label class="form-label small text-white" for="editname">Name</label>
                                         <input type="text" id="editname" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="form-outline mb-2">
-                                        <label class="form-label small" for="editgender">Gender</label>
+                                        <label class="form-label small text-white" for="editgender">Gender</label>
                                         <select type="text" id="editgender" class="form-select">
                                             <option value="1">Male</option>
                                             <option value="0">Female</option>
@@ -78,13 +78,13 @@
                                 </div>
                                 <div class="col-9">
                                     <div class="form-outline mb-2">
-                                        <label class="form-label small" for="editbreed">Breed</label>
+                                        <label class="form-label small text-white" for="editbreed">Breed</label>
                                         <input type="text" id="editbreed" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="form-outline mb-2">
-                                        <label class="form-label small" for="editneutered">Neutered</label>
+                                        <label class="form-label small text-white" for="editneutered">Neutered</label>
                                         <select type="text" id="editneutered" class="form-select">
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
@@ -95,20 +95,20 @@
                             <div class="row">
                                 <div class="col-7">
                                     <div class="form-outline mb-2">
-                                        <label class="form-label" for="editchip">Microchip</label>
+                                        <label class="form-label text-white" for="editchip">Microchip</label>
                                         <input type="text" id="editchip" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-5">
                                     <div class="form-outline mb-2">
-                                        <label class="form-label" for="editdob">DOB</label>
+                                        <label class="form-label text-white" for="editdob">DOB</label>
                                         <input type="date" id="editdob" class="form-control" />
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer" style="justify-content: space-between;">
+                    <div class="modal-footer text-center" style="display: contents;">
 
                         <button type="button" class="btn btn-primary login_button" onclick="createBooking();"><i
                                 class="fas fa-save me-2"></i>Proceed to Payment</button>
