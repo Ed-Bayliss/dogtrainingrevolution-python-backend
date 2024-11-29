@@ -4,6 +4,10 @@ body{
     font-family: "Lora", serif!important;
 }
 
+html {
+    scroll-padding-top: 60px; /* Adjust this value to your desired offset */
+  }
+
 .site-text{
     color: white!important;
 }
@@ -266,4 +270,14 @@ body {
     background: rgba(0, 0, 0, 0.7); /* Adjust opacity for fade effect */
     z-index: 1; /* Layer the fade effect between the background and content */
     pointer-events: none; /* Allow interaction with content */
+  }
+
+  .sales_items{
+    align-content: center; 
+    color: #d8b077!important;
+  }
+
+  .sales_items_white{
+    align-content: center; 
+    color: #fff!important;
   }
