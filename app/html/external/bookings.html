@@ -11,30 +11,34 @@
 
 
 <style>
-
     /* Style the dropdown container */
-#bookingNameFilter {
-    background-color: #2c2c2c; /* Dark background color */
-    color: #ffffff;            /* Light text color */
-    border: 1px solid #444444; /* Border color */
-}
+    #bookingNameFilter {
+        background-color: #2c2c2c;
+        /* Dark background color */
+        color: #ffffff;
+        /* Light text color */
+        border: 1px solid #444444;
+        /* Border color */
+    }
 
-/* Change the arrow color */
-#bookingNameFilter:focus {
-    border-color: #555555;
-    box-shadow: 0 0 0 0.2rem rgba(85, 85, 85, 0.25);
-}
+    /* Change the arrow color */
+    #bookingNameFilter:focus {
+        border-color: #555555;
+        box-shadow: 0 0 0 0.2rem rgba(85, 85, 85, 0.25);
+    }
 
-/* Style the options */
-#bookingNameFilter option {
-    background-color: #2c2c2c; /* Dark background for options */
-    color: #ffffff;            /* Light text color */
-}
+    /* Style the options */
+    #bookingNameFilter option {
+        background-color: #2c2c2c;
+        /* Dark background for options */
+        color: #ffffff;
+        /* Light text color */
+    }
 
-/* Hover effect for options (may not work in all browsers) */
-#bookingNameFilter option:hover {
-    background-color: #444444;
-}
+    /* Hover effect for options (may not work in all browsers) */
+    #bookingNameFilter option:hover {
+        background-color: #444444;
+    }
 
 
     *,
@@ -46,32 +50,34 @@
     }
 
     body {
-    /* overflow: hidden; */
-    overflow-y: auto;
-    font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight",
-        "Helvetica Neue", Arial, Helvetica, sans-serif;
-    font-weight: 100;
-    color: #ececec;
-    margin: 0;
-    padding: 10px;
-    /* background: #1d1e22; */
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
+        /* overflow: hidden; */
+        overflow-y: auto;
+        font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight",
+            "Helvetica Neue", Arial, Helvetica, sans-serif;
+        font-weight: 100;
+        color: #ececec;
+        margin: 0;
+        padding: 10px;
+        /* background: #1d1e22; */
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
 
-#calendar {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    width: 100%;
-    height: auto; /* Adjusted height */
-    overflow: visible; /* Adjusted overflow */
-    margin: 0 auto;
-}
+    #calendar {
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        width: 100%;
+        height: auto;
+        /* Adjusted height */
+        overflow: visible;
+        /* Adjusted overflow */
+        margin: 0 auto;
+    }
 
 
     #calendarForm {
@@ -342,7 +348,7 @@
         background-color: black;
 
         color: rgb(212, 175, 55);
-            /* Darker blue on hover */
+        /* Darker blue on hover */
     }
 
 
@@ -660,114 +666,116 @@
             </select>
         </div>
     </div>
-    
+
 
     <div id="calendar" class="pt-5">
-        <div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-lg modal-dialog modal-lg-centered">
-                <div class="modal-content dtr_light_bg">
-                    <div class="modal-header">
-                        <h5 id="eventTitle" class="modal-title">Add User & Pet</h5>
-                        <p id="eventId" hidden></p> <!-- Event ID tag added here -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="eventDetails"></p>
-                        <!-- User Information Form -->
-                        <h6>User Information</h6>
-                        <form id="userForm">
-                            <div class="form-outline mb-2">
-                                <label class="form-label text-white" for="registerEmail">Email</label>
-                                <input type="email" id="registerEmail" class="form-control" required />
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-outline mb-2">
-                                        <label class="form-label text-white" for="registerName">First Name</label>
-                                        <input type="text" id="registerName" class="form-control" required />
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-outline mb-2">
-                                        <label class="form-label text-white" for="registersurName">Surname</label>
-                                        <input type="text" id="registersurName" class="form-control" required />
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-outline mb-2">
-                                        <label class="form-label text-white" for="registerPhone">Phone Number</label>
-                                        <input type="phone" id="registerPhone" class="form-control" required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-check d-flex justify-content-start mb-4">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
-                                    aria-describedby="registerCheckHelpText" />
-                                <label class="form-check-label" for="registerCheck">
-                                    I have read and agree to the terms
-                                </label>
-                            </div>
-                        </form>
 
-                        <!-- Pet Information Form -->
-                        <h6>Pet Information</h6>
-                        <form id="petForm">
-                            <input type="hidden" id="hfpetRef">
-                            <div class="row">
-                                <div class="col-9">
-                                    <div class="form-outline mb-2">
-                                        <label class="form-label small text-white" for="editname">Name</label>
-                                        <input type="text" id="editname" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-outline mb-2">
-                                        <label class="form-label small text-white" for="editgender">Gender</label>
-                                        <select type="text" id="editgender" class="form-select">
-                                            <option value="1">Male</option>
-                                            <option value="0">Female</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-9">
-                                    <div class="form-outline mb-2">
-                                        <label class="form-label small text-white" for="editbreed">Breed</label>
-                                        <input type="text" id="editbreed" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-outline mb-2">
-                                        <label class="form-label small text-white" for="editneutered">Neutered</label>
-                                        <select type="text" id="editneutered" class="form-select">
-                                            <option value="1">Yes</option>
-                                            <option value="0">No</option>
-                                        </select>
-                                    </div>
+    </div>
+
+    <div id="eventModal" class="modal fade" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-lg modal-dialog modal-lg-centered">
+            <div class="modal-content dtr_light_bg">
+                <div class="modal-header">
+                    <h5 id="eventTitle" class="modal-title">Add User & Pet</h5>
+                    <p id="eventId" hidden></p> <!-- Event ID tag added here -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="eventDetails"></p>
+                    <!-- User Information Form -->
+                    <h6>User Information</h6>
+                    <form id="userForm">
+                        <div class="form-outline mb-2">
+                            <label class="form-label text-white" for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" class="form-control" required />
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label text-white" for="registerName">First Name</label>
+                                    <input type="text" id="registerName" class="form-control" required />
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-7">
-                                    <div class="form-outline mb-2">
-                                        <label class="form-label text-white" for="editchip">Microchip</label>
-                                        <input type="text" id="editchip" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-5">
-                                    <div class="form-outline mb-2">
-                                        <label class="form-label text-white" for="editdob">DOB</label>
-                                        <input type="date" id="editdob" class="form-control" />
-                                    </div>
+                            <div class="col-6">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label text-white" for="registersurName">Surname</label>
+                                    <input type="text" id="registersurName" class="form-control" required />
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer text-center" style="display: contents;">
-                        <button type="button" class="btn btn-primary login_button" onclick="createBooking();"><i
-                                class="fas fa-save me-2"></i>Proceed to Payment</button>
-                    </div>
+                            <div class="col-6">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label text-white" for="registerPhone">Phone Number</label>
+                                    <input type="phone" id="registerPhone" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check d-flex justify-content-start mb-4">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
+                                aria-describedby="registerCheckHelpText" />
+                            <label class="form-check-label" for="registerCheck">
+                                I have read and agree to the terms
+                            </label>
+                        </div>
+                    </form>
+
+                    <!-- Pet Information Form -->
+                    <h6>Pet Information</h6>
+                    <form id="petForm">
+                        <input type="hidden" id="hfpetRef">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label small text-white" for="editname">Name</label>
+                                    <input type="text" id="editname" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label small text-white" for="editgender">Gender</label>
+                                    <select type="text" id="editgender" class="form-select">
+                                        <option value="1">Male</option>
+                                        <option value="0">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label small text-white" for="editbreed">Breed</label>
+                                    <input type="text" id="editbreed" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label small text-white" for="editneutered">Neutered</label>
+                                    <select type="text" id="editneutered" class="form-select">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label text-white" for="editchip">Microchip</label>
+                                    <input type="text" id="editchip" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="form-outline mb-2">
+                                    <label class="form-label text-white" for="editdob">DOB</label>
+                                    <input type="date" id="editdob" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer text-center" style="display: contents;">
+                    <button type="button" class="btn btn-primary login_button" onclick="createBooking();"><i
+                            class="fas fa-save me-2"></i>Proceed to Payment</button>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
 </div>
 
@@ -1207,22 +1215,22 @@
         });
     }
 
-    
+
     function cleanName(name) {
-    return name.replace(/^\d{2}:\d{2}\s/, '').replace(/\s\(\d+\sSpaces\)$/, '');
-}
-
-// Function to filter data based on selected product name
-function filterData(data, selectedProductName) {
-    if (selectedProductName) {
-        // Clean the selected product name
-        const cleanedSelectedName = cleanName(selectedProductName);
-
-        // Filter data by comparing cleaned names
-        data = data.filter(event => cleanName(event.eventName) === cleanedSelectedName);
+        return name.replace(/^\d{2}:\d{2}\s/, '').replace(/\s\(\d+\sSpaces\)$/, '');
     }
-    return data;
-}
+
+    // Function to filter data based on selected product name
+    function filterData(data, selectedProductName) {
+        if (selectedProductName) {
+            // Clean the selected product name
+            const cleanedSelectedName = cleanName(selectedProductName);
+
+            // Filter data by comparing cleaned names
+            data = data.filter(event => cleanName(event.eventName) === cleanedSelectedName);
+        }
+        return data;
+    }
 
     function openModal(event) {
         var modalElement = document.getElementById("eventModal");
@@ -1360,4 +1368,3 @@ function filterData(data, selectedProductName) {
     }
 </script>
 {% endblock %}
-
