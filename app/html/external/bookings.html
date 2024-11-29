@@ -1155,10 +1155,23 @@
             // Populate the dropdown with product names
             populateDropdown(data);
 
-            // Get the selected product name (initially, it's empty)
-            const selectedProductName = document.getElementById('bookingNameFilter').value;
+            // Get the filter from the query parameter
+            const filter = getQueryParam('filter');
+            if (filter) {
+                const bookingNameFilter = document.getElementById('bookingNameFilter');
+
+                // Find the option based on its textContent
+                const options = bookingNameFilter.options;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].textContent === filter) {
+                        options[i].selected = true; // Set the matching option as selected
+                        break;
+                    }
+                }
+            }
 
             // Filter data based on the selected product name
+            const selectedProductName = bookingNameFilter.selectedOptions[0]?.textContent || '';
             const filteredData = filterData(data, selectedProductName);
 
             // Initialize the calendar with filtered data
@@ -1166,8 +1179,8 @@
             hideLoadingOverlay();
 
             // Add event listener to the dropdown
-            document.getElementById('bookingNameFilter').addEventListener('change', function () {
-                const selectedProductName = this.value;
+            bookingNameFilter.addEventListener('change', function () {
+                const selectedProductName = this.selectedOptions[0]?.textContent || '';
                 showLoadingOverlay(); // Show loading overlay when fetching data
 
                 // Filter data based on the selected product name
@@ -1186,6 +1199,8 @@
             hideLoadingOverlay();
         }
     });
+
+
 
     function addDate(ev) { }
 
@@ -1263,6 +1278,13 @@
             modal.show();
         }
     }
+
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+
 
     function downloadUrl(url, callback) {
         var xmlhttp = new XMLHttpRequest();
