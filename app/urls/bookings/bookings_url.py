@@ -428,7 +428,8 @@ def external_booking_payment():
             dob=request.json['pet']['dob'],
             microchip=request.json['pet']['microchip'],
             gender=request.json['pet']['gender'] == 1,
-            neutered=request.json['pet']['neutered'] == 1
+            neutered=request.json['pet']['neutered'] == 1,
+            additonal=None,
         )
 
         db.session.add(new_pet)
