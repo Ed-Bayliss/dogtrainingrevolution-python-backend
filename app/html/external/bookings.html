@@ -1170,9 +1170,10 @@
                 }
             }
 
-            // Filter data based on the selected product name
+            // Filter data based on the selected product name or show all for "All Classes"
+            const bookingNameFilter = document.getElementById('bookingNameFilter');
             const selectedProductName = bookingNameFilter.selectedOptions[0]?.textContent || '';
-            const filteredData = filterData(data, selectedProductName);
+            const filteredData = selectedProductName === "All Classes" ? data : filterData(data, selectedProductName);
 
             // Initialize the calendar with filtered data
             var calendar = new Calendar("#calendar", filteredData);
@@ -1183,8 +1184,8 @@
                 const selectedProductName = this.selectedOptions[0]?.textContent || '';
                 showLoadingOverlay(); // Show loading overlay when fetching data
 
-                // Filter data based on the selected product name
-                const filteredData = filterData(data, selectedProductName);
+                // Filter data based on the selected product name or show all for "All Classes"
+                const filteredData = selectedProductName === "All Classes" ? data : filterData(data, selectedProductName);
 
                 // Remove the old calendar content
                 const calendarElement = document.getElementById('calendar');
@@ -1199,6 +1200,7 @@
             hideLoadingOverlay();
         }
     });
+
 
 
 

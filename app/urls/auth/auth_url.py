@@ -8,6 +8,7 @@ import smtplib
 from uuid import uuid4
 from flask import (
     Blueprint,
+    app,
     current_app,
     flash,
     jsonify,
@@ -63,7 +64,7 @@ def logout():
     return redirect("/")
 
 @auth_url.route("/send_email", methods=["POST"])
-def send_email():
+def send_contact_email():
     """
     User sign-up page.
 
@@ -79,8 +80,36 @@ def send_email():
             body = body.replace("#MESSAGE#", data['message'])
     # send email with username password
     send_email(data['email'], "david.greaves@pawtul.com", "Dog Training Revolution - Contact", body)
+    with open("app/static/emails/dtr_contact_business.html", "r") as body:
+            body = body.read()
+            body = body.replace("#NAME#", data['name'])
+            body = body.replace("#EMAIL#", data['email'])
+            body = body.replace("#SUBJECT#", data['subject'])
+            body = body.replace("#MESSAGE#", data['message'])
+    # send email with username password
+    send_email('info@dogtrainingrevolution.org', "edward.bayliss@pawtul.com", f"New Message From {data['name']}", body)
 
     return jsonify({'successful': 200})
+
+@auth_url.route("/test_email", methods=["GET"])
+def test_email():
+    """
+    User sign-up page.
+
+    GET requests serve sign-up page.
+    POST requests validate form & user creation.
+    """
+    with open("app/static/emails/dtr_contact.html", "r") as body:
+            body = body.read()
+            body = body.replace("#NAME#", "Ed")
+            body = body.replace("#EMAIL#", "edward.bayliss@icloud.com")
+            body = body.replace("#SUBJECT#", "Test Email")
+            body = body.replace("#MESSAGE#", "This is a automated test, please do not respond")
+    # send email with username password
+    send_email("edward.bayliss@icloud.com", "edward.bayliss@icloud.com", "Dog Training Revolution - Contact", body)
+
+    return jsonify({'successful': 200})
+
 
 
 @auth_url.route("/signup", methods=["POST"])
@@ -200,7 +229,7 @@ def send_email(receiver, cc_email, subject, body):
     try:
         # Create a multipart message
         message = MIMEMultipart()
-        message["From"] = "no-reply@pawtul.com"
+        message["From"] = 'info@dogtrainingrevolution.org'
         message["To"] = receiver
         message["Cc"] = cc_email
         message["Subject"] = subject
@@ -210,7 +239,7 @@ def send_email(receiver, cc_email, subject, body):
         # Connect to the SMTP server and send the email
         with smtplib.SMTP("smtp.exchange2019.ionos.co.uk", 587) as server:
             server.starttls()
-            server.login("no-reply@pawtul.com", "Ej-?bq5[X;?zfbzhX]Yf")
+            server.login('info@dogtrainingrevolution.org', 'DTREmail123!')
             server.send_message(message)
 
     except:
@@ -221,16 +250,9 @@ def send_email(receiver, cc_email, subject, body):
     also clean up the remember me cookie if it exists.
     """
 
-    if "_user_id" in session:
-        session.pop("_user_id")
-
-    if "_fresh" in session:
-        session.pop("_fresh")
-
-    if "_id" in session:
-        session.pop("_id")
-
-    session.pop()
+    session.pop("_user_id", None)
+    session.pop("_fresh", None)
+    session.pop("_id", None)
     # current_app.login_manager._update_request_context_with_user()
     return True
 
@@ -238,7 +260,7 @@ def send_email_bulk(receiver, cc_email, subject, body):
     try:
         # Create a multipart message
         message = MIMEMultipart()
-        message["From"] = "no-reply@pawtul.com"
+        message["From"] = 'info@dogtrainingrevolution.org'
         message["To"] = receiver
         message["Cc"] = cc_email
         message["Subject"] = subject
@@ -248,7 +270,7 @@ def send_email_bulk(receiver, cc_email, subject, body):
         # Connect to the SMTP server and send the email
         with smtplib.SMTP("smtp.exchange2019.ionos.co.uk", 587) as server:
             server.starttls()
-            server.login("no-reply@pawtul.com", "Ej-?bq5[X;?zfbzhX]Yf")
+            server.login('info@dogtrainingrevolution.org', 'DTREmail123!')
             server.send_message(message)
 
     except:
